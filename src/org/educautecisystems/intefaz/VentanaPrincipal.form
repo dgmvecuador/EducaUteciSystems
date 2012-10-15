@@ -84,6 +84,14 @@
                 <Property name="text" type="java.lang.String" value="Carga de Documentos"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MenuItemInSerCha">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Iniciar Servidor Chat"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemInSerChaActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MenuItemChatDoc">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Chat"/>

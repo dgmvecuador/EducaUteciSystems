@@ -42,6 +42,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -112,6 +113,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuItem6.setText("Carga de Documentos");
         jMenu2.add(jMenuItem6);
+
+        MenuItemInSerCha.setText("Iniciar Servidor Chat");
+        MenuItemInSerCha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemInSerChaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(MenuItemInSerCha);
 
         MenuItemChatDoc.setText("Chat");
         MenuItemChatDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -189,11 +198,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lis.setVisible(true);
     }//GEN-LAST:event_MenuItemLisDocActionPerformed
 
+    private void MenuItemInSerChaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemInSerChaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuItemInSerChaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemChatDoc;
     private javax.swing.JMenuItem MenuItemChatEst;
     private javax.swing.JMenuItem MenuItemEnInDo;
+    private javax.swing.JMenuItem MenuItemInSerCha;
     private javax.swing.JMenuItem MenuItemIngreso;
     private javax.swing.JMenuItem MenuItemLisDoc;
     private javax.swing.JMenuItem MenuItemSalir;
