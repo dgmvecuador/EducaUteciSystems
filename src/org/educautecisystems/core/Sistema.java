@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.educautecisystems.Esquemas.Ingreso;
+import org.educautecisystems.intefaz.VentanaPrincipal;
 
 /**
  *
@@ -22,7 +23,7 @@ public class Sistema {
         
         inicializarSistema( usuario,password );
         seleccionadoLookAndFeel();
-        new Ingreso().setVisible(true);
+        new VentanaPrincipal().setVisible(true);
     }
     
     private static void inicializarSistema( String usuario, String password ) {
