@@ -31,29 +31,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         escritorioPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        MenuItemArchivo = new javax.swing.JMenu();
         MenuItemIngreso = new javax.swing.JMenuItem();
         MenuItemSalir = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        MenuAyuda = new javax.swing.JMenu();
+        MenuEstu = new javax.swing.JMenu();
         MenuItemChatEst = new javax.swing.JMenuItem();
         MenuItemLisDoc = new javax.swing.JMenuItem();
         MenuItemEnInDo = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        MenuItemEncuesta = new javax.swing.JMenuItem();
+        MenuDoce = new javax.swing.JMenu();
+        MenuItemCarDoc = new javax.swing.JMenuItem();
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        MenuItemEstaEnc = new javax.swing.JMenuItem();
+        MenuAdmi = new javax.swing.JMenu();
+        MenuItemNuePer = new javax.swing.JMenuItem();
+        MenuItemMan = new javax.swing.JMenuItem();
+        MenuItemConf = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EducaUteciSystems");
 
-        jMenu1.setText("Archivo");
+        MenuItemArchivo.setText("Archivo");
 
         MenuItemIngreso.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         MenuItemIngreso.setText("Ingresar");
@@ -62,7 +62,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemIngresoActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuItemIngreso);
+        MenuItemArchivo.add(MenuItemIngreso);
 
         MenuItemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         MenuItemSalir.setText("Salir");
@@ -71,14 +71,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemSalirActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuItemSalir);
+        MenuItemArchivo.add(MenuItemSalir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(MenuItemArchivo);
 
-        jMenu4.setText("Ayuda");
-        jMenuBar1.add(jMenu4);
+        MenuAyuda.setText("Ayuda");
+        jMenuBar1.add(MenuAyuda);
 
-        jMenu3.setText("Estudiante");
+        MenuEstu.setText("Estudiante");
 
         MenuItemChatEst.setText("Chat");
         MenuItemChatEst.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +86,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemChatEstActionPerformed(evt);
             }
         });
-        jMenu3.add(MenuItemChatEst);
+        MenuEstu.add(MenuItemChatEst);
 
         MenuItemLisDoc.setText("Listado de Documentación");
         MenuItemLisDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +94,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemLisDocActionPerformed(evt);
             }
         });
-        jMenu3.add(MenuItemLisDoc);
+        MenuEstu.add(MenuItemLisDoc);
 
         MenuItemEnInDo.setText("Enlace Interfaz Docente");
         MenuItemEnInDo.addActionListener(new java.awt.event.ActionListener() {
@@ -102,17 +102,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemEnInDoActionPerformed(evt);
             }
         });
-        jMenu3.add(MenuItemEnInDo);
+        MenuEstu.add(MenuItemEnInDo);
 
-        jMenuItem4.setText("Encuesta");
-        jMenu3.add(jMenuItem4);
+        MenuItemEncuesta.setText("Encuesta");
+        MenuItemEncuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemEncuestaActionPerformed(evt);
+            }
+        });
+        MenuEstu.add(MenuItemEncuesta);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(MenuEstu);
 
-        jMenu2.setText("Docente");
+        MenuDoce.setText("Docente");
 
-        jMenuItem6.setText("Carga de Documentos");
-        jMenu2.add(jMenuItem6);
+        MenuItemCarDoc.setText("Carga de Documentos");
+        MenuItemCarDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemCarDocActionPerformed(evt);
+            }
+        });
+        MenuDoce.add(MenuItemCarDoc);
 
         MenuItemInSerCha.setText("Iniciar Servidor Chat");
         MenuItemInSerCha.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +130,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemInSerChaActionPerformed(evt);
             }
         });
-        jMenu2.add(MenuItemInSerCha);
+        MenuDoce.add(MenuItemInSerCha);
 
         MenuItemChatDoc.setText("Chat");
         MenuItemChatDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -128,25 +138,45 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 MenuItemChatDocActionPerformed(evt);
             }
         });
-        jMenu2.add(MenuItemChatDoc);
+        MenuDoce.add(MenuItemChatDoc);
 
-        jMenuItem7.setText("Estadistica de Encuesta");
-        jMenu2.add(jMenuItem7);
+        MenuItemEstaEnc.setText("Estadistica de Encuesta");
+        MenuItemEstaEnc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemEstaEncActionPerformed(evt);
+            }
+        });
+        MenuDoce.add(MenuItemEstaEnc);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(MenuDoce);
 
-        jMenu5.setText("Administración");
+        MenuAdmi.setText("Administración");
 
-        jMenuItem1.setText("Nuevo Personal");
-        jMenu5.add(jMenuItem1);
+        MenuItemNuePer.setText("Nuevo Personal");
+        MenuItemNuePer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemNuePerActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemNuePer);
 
-        jMenuItem2.setText("Mantenimieto ");
-        jMenu5.add(jMenuItem2);
+        MenuItemMan.setText("Mantenimieto ");
+        MenuItemMan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemManActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemMan);
 
-        jMenuItem5.setText("Configuracion");
-        jMenu5.add(jMenuItem5);
+        MenuItemConf.setText("Configuracion");
+        MenuItemConf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemConfActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemConf);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(MenuAdmi);
 
         setJMenuBar(jMenuBar1);
 
@@ -202,27 +232,63 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuItemInSerChaActionPerformed
 
+    private void MenuItemEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemEncuestaActionPerformed
+        Encuesta Enc = new Encuesta();
+        escritorioPrincipal.add(Enc);
+        Enc.setVisible(true);
+    }//GEN-LAST:event_MenuItemEncuestaActionPerformed
+
+    private void MenuItemEstaEncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemEstaEncActionPerformed
+        EstadisticaEncuesta Est = new EstadisticaEncuesta();
+        escritorioPrincipal.add(Est);
+        Est.setVisible(true);
+    }//GEN-LAST:event_MenuItemEstaEncActionPerformed
+
+    private void MenuItemNuePerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemNuePerActionPerformed
+        CrearNuevoUsuario Est = new CrearNuevoUsuario();
+        escritorioPrincipal.add(Est);
+        Est.setVisible(true);
+    }//GEN-LAST:event_MenuItemNuePerActionPerformed
+
+    private void MenuItemManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemManActionPerformed
+        Mantenimiento Est = new Mantenimiento();
+        escritorioPrincipal.add(Est);
+        Est.setVisible(true);
+    }//GEN-LAST:event_MenuItemManActionPerformed
+
+    private void MenuItemConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemConfActionPerformed
+        Configuracion Est = new Configuracion();
+        escritorioPrincipal.add(Est);
+        Est.setVisible(true);
+    }//GEN-LAST:event_MenuItemConfActionPerformed
+
+    private void MenuItemCarDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCarDocActionPerformed
+        ListadoDocumentos lis = new ListadoDocumentos();
+        escritorioPrincipal.add(lis);
+        lis.setVisible(true);
+    }//GEN-LAST:event_MenuItemCarDocActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuAdmi;
+    private javax.swing.JMenu MenuAyuda;
+    private javax.swing.JMenu MenuDoce;
+    private javax.swing.JMenu MenuEstu;
+    private javax.swing.JMenu MenuItemArchivo;
+    private javax.swing.JMenuItem MenuItemCarDoc;
     private javax.swing.JMenuItem MenuItemChatDoc;
     private javax.swing.JMenuItem MenuItemChatEst;
+    private javax.swing.JMenuItem MenuItemConf;
     private javax.swing.JMenuItem MenuItemEnInDo;
+    private javax.swing.JMenuItem MenuItemEncuesta;
+    private javax.swing.JMenuItem MenuItemEstaEnc;
     private javax.swing.JMenuItem MenuItemInSerCha;
     private javax.swing.JMenuItem MenuItemIngreso;
     private javax.swing.JMenuItem MenuItemLisDoc;
+    private javax.swing.JMenuItem MenuItemMan;
+    private javax.swing.JMenuItem MenuItemNuePer;
     private javax.swing.JMenuItem MenuItemSalir;
     private javax.swing.JDesktopPane escritorioPrincipal;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,19 +26,828 @@ public class Encuesta extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        RadButNum1a = new javax.swing.JRadioButton();
+        RadButNum2a = new javax.swing.JRadioButton();
+        RadButNum3a = new javax.swing.JRadioButton();
+        RadButNum4a = new javax.swing.JRadioButton();
+        RadButNum5a = new javax.swing.JRadioButton();
+        RadButNum6a = new javax.swing.JRadioButton();
+        RadButNum7a = new javax.swing.JRadioButton();
+        RadButNum8a = new javax.swing.JRadioButton();
+        RadButNum9a = new javax.swing.JRadioButton();
+        RadButNum10a = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        RadButNum3a3 = new javax.swing.JRadioButton();
+        RadButNum4a3 = new javax.swing.JRadioButton();
+        RadButNum1a3 = new javax.swing.JRadioButton();
+        RadButNum2a3 = new javax.swing.JRadioButton();
+        RadButNum7a3 = new javax.swing.JRadioButton();
+        RadButNum5a3 = new javax.swing.JRadioButton();
+        RadButNum6a3 = new javax.swing.JRadioButton();
+        RadButNum10a3 = new javax.swing.JRadioButton();
+        RadButNum9a3 = new javax.swing.JRadioButton();
+        RadButNum8a3 = new javax.swing.JRadioButton();
+        RadButNum3a4 = new javax.swing.JRadioButton();
+        RadButNum4a4 = new javax.swing.JRadioButton();
+        RadButNum1a4 = new javax.swing.JRadioButton();
+        RadButNum2a4 = new javax.swing.JRadioButton();
+        RadButNum7a4 = new javax.swing.JRadioButton();
+        RadButNum5a4 = new javax.swing.JRadioButton();
+        RadButNum6a4 = new javax.swing.JRadioButton();
+        RadButNum10a4 = new javax.swing.JRadioButton();
+        RadButNum9a4 = new javax.swing.JRadioButton();
+        RadButNum8a4 = new javax.swing.JRadioButton();
+        RadButNum4a5 = new javax.swing.JRadioButton();
+        RadButNum1a5 = new javax.swing.JRadioButton();
+        RadButNum3a5 = new javax.swing.JRadioButton();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        RadButNum6a5 = new javax.swing.JRadioButton();
+        RadButNum10a5 = new javax.swing.JRadioButton();
+        RadButNum9a5 = new javax.swing.JRadioButton();
+        RadButNum8a5 = new javax.swing.JRadioButton();
+        RadButNum2a5 = new javax.swing.JRadioButton();
+        RadButNum5a5 = new javax.swing.JRadioButton();
+        RadButNum7a5 = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
+
+        setClosable(true);
+        setTitle("Encuesta");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel1.setText("Encuesta de Entendimiento del tema tratado en clase");
+
+        jLabel2.setText("Porfavor que seas respuestas verdaderas que refleje lo que piensan para que el docente pueda encaminarse mejor");
+
+        jLabel3.setText("            y poder resolver cualquier duda o material que no se alla entendido de la materia  Gracias.");
+
+        jLabel4.setText("De escala de 1 al 10");
+
+        jLabel5.setText("A.- Que nivel de entendimiento esta en el tema");
+
+        jLabel6.setText("1 No entendible");
+
+        jLabel7.setText("10 Se entendio Excelentemente");
+
+        RadButNum1a.setText("1");
+        RadButNum1a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum1aActionPerformed(evt);
+            }
+        });
+
+        RadButNum2a.setText("2");
+        RadButNum2a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum2aActionPerformed(evt);
+            }
+        });
+
+        RadButNum3a.setText("3");
+        RadButNum3a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum3aActionPerformed(evt);
+            }
+        });
+
+        RadButNum4a.setText("4");
+        RadButNum4a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum4aActionPerformed(evt);
+            }
+        });
+
+        RadButNum5a.setText("5");
+        RadButNum5a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum5aActionPerformed(evt);
+            }
+        });
+
+        RadButNum6a.setText("6");
+        RadButNum6a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum6aActionPerformed(evt);
+            }
+        });
+
+        RadButNum7a.setText("7");
+        RadButNum7a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum7aActionPerformed(evt);
+            }
+        });
+
+        RadButNum8a.setText("8");
+        RadButNum8a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum8aActionPerformed(evt);
+            }
+        });
+
+        RadButNum9a.setText("9");
+        RadButNum9a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum9aActionPerformed(evt);
+            }
+        });
+
+        RadButNum10a.setText("10");
+        RadButNum10a.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum10aActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("B.- La documentación recibida fue de ayuda");
+
+        jLabel9.setText(" No fue de ayuda");
+
+        jLabel10.setText("Si Excelente Documentación");
+
+        jLabel31.setText("C.- La manera de explicar la materia fue clara");
+
+        jLabel32.setText("Si Excelente Explicación");
+
+        jLabel33.setText(" No Fue Clara");
+
+        RadButNum3a3.setText("3");
+        RadButNum3a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum3a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum4a3.setText("4");
+        RadButNum4a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum4a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum1a3.setText("1");
+        RadButNum1a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum1a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum2a3.setText("2");
+        RadButNum2a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum2a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum7a3.setText("7");
+        RadButNum7a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum7a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum5a3.setText("5");
+        RadButNum5a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum5a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum6a3.setText("6");
+        RadButNum6a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum6a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum10a3.setText("10");
+        RadButNum10a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum10a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum9a3.setText("9");
+        RadButNum9a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum9a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum8a3.setText("8");
+        RadButNum8a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum8a3ActionPerformed(evt);
+            }
+        });
+
+        RadButNum3a4.setText("3");
+        RadButNum3a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum3a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum4a4.setText("4");
+        RadButNum4a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum4a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum1a4.setText("1");
+        RadButNum1a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum1a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum2a4.setText("2");
+        RadButNum2a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum2a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum7a4.setText("7");
+        RadButNum7a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum7a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum5a4.setText("5");
+        RadButNum5a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum5a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum6a4.setText("6");
+        RadButNum6a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum6a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum10a4.setText("10");
+        RadButNum10a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum10a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum9a4.setText("9");
+        RadButNum9a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum9a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum8a4.setText("8");
+        RadButNum8a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum8a4ActionPerformed(evt);
+            }
+        });
+
+        RadButNum4a5.setText("4");
+        RadButNum4a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum4a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum1a5.setText("1");
+        RadButNum1a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum1a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum3a5.setText("3");
+        RadButNum3a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum3a5ActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setText(" No me respondio bien");
+
+        jLabel35.setText("Si Excelentemente  ");
+
+        jLabel36.setText("D.- Resolvio Satisfatoriamente las inquietudes tuyas al docente");
+
+        RadButNum6a5.setText("6");
+        RadButNum6a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum6a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum10a5.setText("10");
+        RadButNum10a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum10a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum9a5.setText("9");
+        RadButNum9a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum9a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum8a5.setText("8");
+        RadButNum8a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum8a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum2a5.setText("2");
+        RadButNum2a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum2a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum5a5.setText("5");
+        RadButNum5a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum5a5ActionPerformed(evt);
+            }
+        });
+
+        RadButNum7a5.setText("7");
+        RadButNum7a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadButNum7a5ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Enviar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(RadButNum1a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum2a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum3a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum4a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum5a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum6a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum7a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel33))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(RadButNum8a4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum9a4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RadButNum10a4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(RadButNum1a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum2a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum3a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum4a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum5a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum6a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum7a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(RadButNum8a3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum9a3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RadButNum10a3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(RadButNum1a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum2a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum3a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum4a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum5a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum6a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum7a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel34))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(RadButNum8a5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(RadButNum9a5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(RadButNum10a5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(RadButNum1a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum2a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum3a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum4a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum5a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum6a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum7a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum8a, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum9a, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RadButNum10a, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(282, 282, 282)
+                                .addComponent(jLabel7))
+                            .addComponent(jLabel8))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RadButNum1a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum2a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum3a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum4a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum5a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum6a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum7a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum8a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(RadButNum9a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RadButNum10a, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(25, 25, 25)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RadButNum1a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum2a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum3a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum4a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum5a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum6a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum7a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum8a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(RadButNum9a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RadButNum10a3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RadButNum1a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum2a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum3a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum4a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum5a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum6a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum7a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum8a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(RadButNum9a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RadButNum10a4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RadButNum1a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum2a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum3a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum4a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum5a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum6a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum7a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadButNum8a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(RadButNum9a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RadButNum10a5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void RadButNum1aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum1aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum1aActionPerformed
+
+    private void RadButNum2aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum2aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum2aActionPerformed
+
+    private void RadButNum3aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum3aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum3aActionPerformed
+
+    private void RadButNum4aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum4aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum4aActionPerformed
+
+    private void RadButNum5aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum5aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum5aActionPerformed
+
+    private void RadButNum6aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum6aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum6aActionPerformed
+
+    private void RadButNum7aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum7aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum7aActionPerformed
+
+    private void RadButNum8aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum8aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum8aActionPerformed
+
+    private void RadButNum9aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum9aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum9aActionPerformed
+
+    private void RadButNum10aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum10aActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum10aActionPerformed
+
+    private void RadButNum3a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum3a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum3a3ActionPerformed
+
+    private void RadButNum4a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum4a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum4a3ActionPerformed
+
+    private void RadButNum1a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum1a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum1a3ActionPerformed
+
+    private void RadButNum2a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum2a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum2a3ActionPerformed
+
+    private void RadButNum7a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum7a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum7a3ActionPerformed
+
+    private void RadButNum5a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum5a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum5a3ActionPerformed
+
+    private void RadButNum6a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum6a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum6a3ActionPerformed
+
+    private void RadButNum10a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum10a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum10a3ActionPerformed
+
+    private void RadButNum9a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum9a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum9a3ActionPerformed
+
+    private void RadButNum8a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum8a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum8a3ActionPerformed
+
+    private void RadButNum3a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum3a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum3a4ActionPerformed
+
+    private void RadButNum4a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum4a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum4a4ActionPerformed
+
+    private void RadButNum1a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum1a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum1a4ActionPerformed
+
+    private void RadButNum2a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum2a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum2a4ActionPerformed
+
+    private void RadButNum7a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum7a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum7a4ActionPerformed
+
+    private void RadButNum5a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum5a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum5a4ActionPerformed
+
+    private void RadButNum6a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum6a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum6a4ActionPerformed
+
+    private void RadButNum10a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum10a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum10a4ActionPerformed
+
+    private void RadButNum9a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum9a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum9a4ActionPerformed
+
+    private void RadButNum8a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum8a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum8a4ActionPerformed
+
+    private void RadButNum4a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum4a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum4a5ActionPerformed
+
+    private void RadButNum1a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum1a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum1a5ActionPerformed
+
+    private void RadButNum3a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum3a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum3a5ActionPerformed
+
+    private void RadButNum6a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum6a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum6a5ActionPerformed
+
+    private void RadButNum10a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum10a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum10a5ActionPerformed
+
+    private void RadButNum9a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum9a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum9a5ActionPerformed
+
+    private void RadButNum8a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum8a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum8a5ActionPerformed
+
+    private void RadButNum2a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum2a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum2a5ActionPerformed
+
+    private void RadButNum5a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum5a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum5a5ActionPerformed
+
+    private void RadButNum7a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadButNum7a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadButNum7a5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton RadButNum10a;
+    private javax.swing.JRadioButton RadButNum10a3;
+    private javax.swing.JRadioButton RadButNum10a4;
+    private javax.swing.JRadioButton RadButNum10a5;
+    private javax.swing.JRadioButton RadButNum1a;
+    private javax.swing.JRadioButton RadButNum1a3;
+    private javax.swing.JRadioButton RadButNum1a4;
+    private javax.swing.JRadioButton RadButNum1a5;
+    private javax.swing.JRadioButton RadButNum2a;
+    private javax.swing.JRadioButton RadButNum2a3;
+    private javax.swing.JRadioButton RadButNum2a4;
+    private javax.swing.JRadioButton RadButNum2a5;
+    private javax.swing.JRadioButton RadButNum3a;
+    private javax.swing.JRadioButton RadButNum3a3;
+    private javax.swing.JRadioButton RadButNum3a4;
+    private javax.swing.JRadioButton RadButNum3a5;
+    private javax.swing.JRadioButton RadButNum4a;
+    private javax.swing.JRadioButton RadButNum4a3;
+    private javax.swing.JRadioButton RadButNum4a4;
+    private javax.swing.JRadioButton RadButNum4a5;
+    private javax.swing.JRadioButton RadButNum5a;
+    private javax.swing.JRadioButton RadButNum5a3;
+    private javax.swing.JRadioButton RadButNum5a4;
+    private javax.swing.JRadioButton RadButNum5a5;
+    private javax.swing.JRadioButton RadButNum6a;
+    private javax.swing.JRadioButton RadButNum6a3;
+    private javax.swing.JRadioButton RadButNum6a4;
+    private javax.swing.JRadioButton RadButNum6a5;
+    private javax.swing.JRadioButton RadButNum7a;
+    private javax.swing.JRadioButton RadButNum7a3;
+    private javax.swing.JRadioButton RadButNum7a4;
+    private javax.swing.JRadioButton RadButNum7a5;
+    private javax.swing.JRadioButton RadButNum8a;
+    private javax.swing.JRadioButton RadButNum8a3;
+    private javax.swing.JRadioButton RadButNum8a4;
+    private javax.swing.JRadioButton RadButNum8a5;
+    private javax.swing.JRadioButton RadButNum9a;
+    private javax.swing.JRadioButton RadButNum9a3;
+    private javax.swing.JRadioButton RadButNum9a4;
+    private javax.swing.JRadioButton RadButNum9a5;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }
