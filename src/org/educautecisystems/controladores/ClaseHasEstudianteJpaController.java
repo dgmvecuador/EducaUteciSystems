@@ -38,11 +38,11 @@ public class ClaseHasEstudianteJpaController implements Serializable {
         if (claseHasEstudiante.getClaseHasEstudiantePK() == null) {
             claseHasEstudiante.setClaseHasEstudiantePK(new ClaseHasEstudiantePK());
         }
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
         claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteIdEstudiante(claseHasEstudiante.getEstudiante().getEstudiantePK().getIdEstudiante());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -80,11 +80,11 @@ public class ClaseHasEstudianteJpaController implements Serializable {
     }
 
     public void edit(ClaseHasEstudiante claseHasEstudiante) throws NonexistentEntityException, Exception {
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
         claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteIdEstudiante(claseHasEstudiante.getEstudiante().getEstudiantePK().getIdEstudiante());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         EntityManager em = null;
         try {
             em = getEntityManager();

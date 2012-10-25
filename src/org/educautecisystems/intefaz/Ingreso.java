@@ -115,6 +115,7 @@ public class Ingreso extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         AdministradorJpaController controladorAdministrador =
         new AdministradorJpaController(Sistema.getEmf());
 

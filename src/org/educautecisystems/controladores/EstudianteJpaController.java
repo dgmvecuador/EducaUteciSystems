@@ -44,8 +44,8 @@ public class EstudianteJpaController implements Serializable {
         if (estudiante.getClaseHasEstudianteList() == null) {
             estudiante.setClaseHasEstudianteList(new ArrayList<ClaseHasEstudiante>());
         }
-        estudiante.getEstudiantePK().setNivelIdNivel(estudiante.getNivel().getIdNivel());
         estudiante.getEstudiantePK().setModalidadIdModalidad(estudiante.getModalidad().getIdModalidad());
+        estudiante.getEstudiantePK().setNivelIdNivel(estudiante.getNivel().getIdNivel());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -98,8 +98,8 @@ public class EstudianteJpaController implements Serializable {
     }
 
     public void edit(Estudiante estudiante) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        estudiante.getEstudiantePK().setNivelIdNivel(estudiante.getNivel().getIdNivel());
         estudiante.getEstudiantePK().setModalidadIdModalidad(estudiante.getModalidad().getIdModalidad());
+        estudiante.getEstudiantePK().setNivelIdNivel(estudiante.getNivel().getIdNivel());
         EntityManager em = null;
         try {
             em = getEntityManager();
