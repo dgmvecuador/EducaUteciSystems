@@ -32,6 +32,12 @@ public class Sistema {
         parametros.put("javax.persistence.jdbc.user", usuario);
         
         emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU", parametros);
+
+		/* No se pudo detectar la base de datos */
+		if ( !emf.isOpen() ) {
+			System.err.println("No se pudo abrir la base de datos.");
+			System.exit(-1);
+		}
     }
     
     public static void cerrarSistema() {
