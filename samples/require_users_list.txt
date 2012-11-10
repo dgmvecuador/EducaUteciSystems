@@ -1,0 +1,6 @@
+CHAT-SERVER 1.0
+Command: getListUsers
+User-Token: {md5-token}
+Format: XML
+
+

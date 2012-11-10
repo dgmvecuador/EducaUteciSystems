@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chat:users xmlns:chat="http://free.chat.com/">
+    <chat:user>
+        <id>1</id>
+        <real_name>Name LastName</real_name>
+        <nickname>nlastname</nickname>
+    </chat:user>
+    <chat:user>
+        <id>2</id>
+        <real_name>Name2 LastName2</real_name>
+        <nickname>nlastname2</nickname>
+    </chat:user>
+    <chat:user>
+        <id>3</id>
+        <real_name>Name3 LastName3</real_name>
+        <nickname>nlastname3</nickname>
+    </chat:user>
+</chat:users>
