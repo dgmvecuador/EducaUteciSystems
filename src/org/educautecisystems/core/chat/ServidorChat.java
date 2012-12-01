@@ -21,6 +21,7 @@ package org.educautecisystems.core.chat;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import org.educautecisystems.core.chat.elements.UserChat;
 
 /**
  *
@@ -30,6 +31,7 @@ public class ServidorChat extends Thread {
 	/* Datos escenciales para el servidor */
 	private ServerSocket socketServidor;
 	private ArrayList<AtenderClienteServidor> clientes;
+	private static final ArrayList<UserChat> usuarios = new ArrayList<UserChat>();
 	private Socket cliente;
 	private boolean continuar;
 
@@ -55,6 +57,29 @@ public class ServidorChat extends Thread {
 			}
 		} catch ( Exception e ) {
 			
+		}
+	}
+	
+	public static boolean testToken( String token ) {
+		return true;
+	}
+	
+	public static ArrayList<UserChat> getUserList() {
+		return usuarios;
+	}
+	
+	public void insertarUsuario( UserChat userChat ) {
+		usuarios.add(userChat);
+	}
+	
+	public void quitarUsuario( UserChat userChat ) {
+		usuarios.remove(userChat);
+		
+		/* Cerrar Cliente */
+		for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
+			if ( atenderClienteServidor.esCliente(userChat.getId()) ) {
+				atenderClienteServidor.detenerCliente();
+			}
 		}
 	}
 

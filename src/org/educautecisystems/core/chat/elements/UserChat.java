@@ -1,5 +1,5 @@
 /*
- *  AtenderClienteServidor.java
+ *  UserChat.java
  *  Copyright (C) 2012  Diego Estévez <dgmvecuador@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -37,17 +37,20 @@ public class UserChat {
 	private int id;
 	private String realName;
 	private String nickName;
+	private String token;
 	
 	public UserChat() {
 		this.id = 0;
 		this.realName = "";
 		this.nickName = "";
+		this.token = "";
 	}
 	
 	public UserChat( int id, String realName, String nickName ) {
 		this.id = id;
 		this.realName = realName;
 		this.nickName = nickName;
+		this.token = "";
 	}
 	
 	public static String generateXMLFromList ( ArrayList<UserChat> users ) {
@@ -151,5 +154,19 @@ public class UserChat {
 	 */
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
 	}
 }
