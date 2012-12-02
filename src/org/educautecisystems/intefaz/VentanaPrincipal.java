@@ -40,15 +40,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemLisDoc = new javax.swing.JMenuItem();
         MenuItemEnInDo = new javax.swing.JMenuItem();
         MenuItemEncuesta = new javax.swing.JMenuItem();
+        MenuAdmi = new javax.swing.JMenu();
+        MenuItemNuePer = new javax.swing.JMenuItem();
+        MenuItemMan = new javax.swing.JMenuItem();
+        MenuItemConf = new javax.swing.JMenuItem();
         MenuDoce = new javax.swing.JMenu();
         MenuItemCarDoc = new javax.swing.JMenuItem();
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
         MenuItemEstaEnc = new javax.swing.JMenuItem();
-        MenuAdmi = new javax.swing.JMenu();
-        MenuItemNuePer = new javax.swing.JMenuItem();
-        MenuItemMan = new javax.swing.JMenuItem();
-        MenuItemConf = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EducaUteciSystems");
@@ -116,6 +116,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuEstu);
 
+        MenuAdmi.setText("Administración");
+
+        MenuItemNuePer.setText("Nuevo Personal");
+        MenuItemNuePer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemNuePerActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemNuePer);
+
+        MenuItemMan.setText("Mantenimieto ");
+        MenuItemMan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemManActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemMan);
+
+        MenuItemConf.setText("Configuracion");
+        MenuItemConf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemConfActionPerformed(evt);
+            }
+        });
+        MenuAdmi.add(MenuItemConf);
+
+        jMenuBar1.add(MenuAdmi);
+
         MenuDoce.setText("Docente");
 
         MenuItemCarDoc.setText("Carga de Documentos");
@@ -151,34 +179,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuDoce.add(MenuItemEstaEnc);
 
         jMenuBar1.add(MenuDoce);
-
-        MenuAdmi.setText("Administración");
-
-        MenuItemNuePer.setText("Nuevo Personal");
-        MenuItemNuePer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemNuePerActionPerformed(evt);
-            }
-        });
-        MenuAdmi.add(MenuItemNuePer);
-
-        MenuItemMan.setText("Mantenimieto ");
-        MenuItemMan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemManActionPerformed(evt);
-            }
-        });
-        MenuAdmi.add(MenuItemMan);
-
-        MenuItemConf.setText("Configuracion");
-        MenuItemConf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemConfActionPerformed(evt);
-            }
-        });
-        MenuAdmi.add(MenuItemConf);
-
-        jMenuBar1.add(MenuAdmi);
 
         setJMenuBar(jMenuBar1);
 
