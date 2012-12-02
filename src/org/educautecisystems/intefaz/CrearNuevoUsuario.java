@@ -17,8 +17,8 @@ import org.educautecisystems.entidades.Docente;
  */
 public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
     /* Constantes */
-    private static final int TIPO_USUARIO_ADMINISTRADOR =   1;
-    private static final int TIPO_USUARIO_DOCENTE =         2;
+    private static final int TIPO_USUARIO_ADMINISTRADOR =   0;
+    private static final int TIPO_USUARIO_DOCENTE =         1;
     
     /**
      * Creates new form CrearNuevoUsuario
@@ -70,6 +70,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         buttonRegistrar = new javax.swing.JButton();
         txtClave = new javax.swing.JPasswordField();
+        buttonCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Nuevo Usuario");
@@ -96,29 +97,40 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             }
         });
 
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonRegistrar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(18, 18, 18)
-                            .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNombre)
-                                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre)
+                            .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonRegistrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonCancelar)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,19 +150,26 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(buttonRegistrar)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonRegistrar)
+                    .addComponent(buttonCancelar))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
+        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty() ) {
+            Sistema.mostrarMensajeError("Por favor llene todos los campos.");
+            return;
+        }
+        
         int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
         
         if ( idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR ) {
             if ( !comprobarUsuarioAdministrador() ) {
-                System.err.println("Administrador ya existe.");
+                Sistema.mostrarMensajeError("Administrador ya existe.");
                 return;
             }
             
@@ -165,11 +184,15 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             try {
                 controlandorAdministrador.create(nuevoAdministrador);
             } catch ( Exception e ) {
-                System.err.println("No se pudo crear el nuevo usuario.");
+                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
             }
+            
+            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
+            this.setVisible(false);
+            this.dispose();
         } else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
             if ( comprobarUsuarioDocente() ) {
-                System.err.println("Docente ya existe.");
+                Sistema.mostrarMensajeError("Docente ya existe.");
                 return;
             }
             Docente nuevoDocente = new Docente();
@@ -182,14 +205,24 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             try {
                 controladorDocente.create(nuevoDocente);
             } catch ( Exception e ) {
-                System.err.println("No se pudo crear el nuevo usuario.");
+                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
             }
+            
+            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
+            this.setVisible(false);
+            this.dispose();
         } else {
-            System.err.println("Tipo de usuario no soportado.");
+            Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
         }
     }//GEN-LAST:event_buttonRegistrarActionPerformed
 
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_buttonCancelarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
