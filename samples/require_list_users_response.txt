@@ -1,5 +1,4 @@
 Response: OK
 Content-Length: {size in bytes}
 
-
 {xml_users}
