@@ -233,7 +233,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemLisDocActionPerformed
 
     private void MenuItemInSerChaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemInSerChaActionPerformed
-        // TODO add your handling code here:
+        ChatServerInterface csi = new ChatServerInterface();
+		escritorioPrincipal.add(csi);
+		csi.setVisible(true);
     }//GEN-LAST:event_MenuItemInSerChaActionPerformed
 
     private void MenuItemEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemEncuestaActionPerformed

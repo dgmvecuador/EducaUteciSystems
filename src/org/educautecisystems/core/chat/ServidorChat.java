@@ -34,29 +34,42 @@ public class ServidorChat extends Thread {
 	private static final ArrayList<UserChat> usuarios = new ArrayList<UserChat>();
 	private Socket cliente;
 	private boolean continuar;
+	private LogChatManager logChatManager;
 
 	/* Valores constantes */
 	public static final int PUERTO_SERVIDOR = 7586;
 
-	public ServidorChat() {
+	public ServidorChat( LogChatManager logChatManager ) {
 		continuar = true;
 		clientes = new ArrayList<AtenderClienteServidor>();
+		this.logChatManager = logChatManager;
 	}
 
 	@Override
 	public void run () {
+		/* Evitar que problemas */
+		if ( logChatManager == null ) {
+			System.err.println("No existe interface para el log.");
+			System.exit(-1);
+			return;
+		}
+		
 		try {
+			logChatManager.logInfo("Arrancando servidor chat..");
 			socketServidor = new ServerSocket(PUERTO_SERVIDOR);
+			logChatManager.logInfo("Se esta escuchando el puerto: "+PUERTO_SERVIDOR);
 
 			while ( continuar ) {
+				logChatManager.logInfo("Esperando cliente nuevo.");
 				cliente = socketServidor.accept();
-				AtenderClienteServidor atencionCliente = new AtenderClienteServidor(cliente);
+				logChatManager.logInfo("Nuevo cliente en: "+cliente.getLocalAddress()+"/"+cliente.getPort());
+				AtenderClienteServidor atencionCliente = new AtenderClienteServidor(cliente, logChatManager);
 				atencionCliente.start();
 				insertarCliente(atencionCliente);
 				depurarListaClientes();
 			}
 		} catch ( Exception e ) {
-			
+			logChatManager.logError("Problema en el servidor: "+e);
 		}
 	}
 	

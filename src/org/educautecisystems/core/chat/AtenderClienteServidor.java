@@ -31,15 +31,18 @@ import org.educautecisystems.core.chat.elements.UserChat;
  */
 public class AtenderClienteServidor extends Thread {
 	/* Flujos del cliente */
-
 	private Socket clienteSocket;
 	private ObjectInputStream entrada;
 	private ObjectOutputStream salida;
 	private boolean continuar;
+	
+	/* Para el log */
+	private LogChatManager logChatManager;
 
-	public AtenderClienteServidor(Socket clienteSocket) {
+	public AtenderClienteServidor(Socket clienteSocket, LogChatManager logChatManager) {
 		this.clienteSocket = clienteSocket;
 		continuar = true;
+		this.logChatManager = logChatManager;
 	}
 	
 	public boolean esCliente( int idUsuario ) {
@@ -48,6 +51,13 @@ public class AtenderClienteServidor extends Thread {
 
 	@Override
 	public void run() {
+		/* Evitar que problemas */
+		if ( logChatManager == null ) {
+			System.err.println("No existe interface para el log.");
+			System.exit(-1);
+			return;
+		}
+		
 		try {
 			if (clienteSocket == null) {
 				return;
