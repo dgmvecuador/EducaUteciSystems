@@ -74,11 +74,14 @@ public class AtenderClienteServidor extends Thread {
 			
 			MessageHeaderParser header = MessageHeaderParser.parseMessageHeader(entrada);
 			logChatManager.logInfo("Leido mensaje.");
-			if (header.getCommand().equals(ChatConstants.CHAT_HEADER_MAIN_COMMAND)) {
-				if (!header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_LOGIN)) {
-					procesarRequerimiento(header);
-					return;
-				}
+			if (!header.getCommand().equals(ChatConstants.CHAT_HEADER_MAIN_COMMAND)) {
+				logChatManager.logError("Formato incorrecto.");
+				return;
+			}
+			
+			if (!header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_LOGIN)) {
+				procesarRequerimiento(header);
+				return;
 			}
 			
 			String realName = header.getVar(ChatConstants.LABEL_REAL_NAME);

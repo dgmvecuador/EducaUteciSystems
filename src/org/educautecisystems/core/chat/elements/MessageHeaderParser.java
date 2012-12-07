@@ -33,7 +33,7 @@ public class MessageHeaderParser {
 	private String headerText;
 	private String command;
 
-	private MessageHeaderParser(String headerText) {
+	private MessageHeaderParser(String headerText) throws Exception {
 		this.headerText = headerText;
 		this.command = null;
 		parseMessageHeaderReal();
@@ -43,8 +43,12 @@ public class MessageHeaderParser {
 		return vars.get(varName).toString();
 	}
 
-	private void parseMessageHeaderReal() {
+	private void parseMessageHeaderReal() throws Exception {
 		String[] lines = headerText.split("\r\n");
+		
+		if ( lines.length < 2 ) {
+			throw new Exception("Formato incorrecto.");
+		}
 
 		for (String line : lines) {
 			if (getCommand() == null) {
@@ -53,17 +57,21 @@ public class MessageHeaderParser {
 			}
 
 			String[] info = line.split(": ", 2);
+			
+			if (info.length != 2) {
+				throw new Exception("Formato incorrecto en elementos.");
+			}
+			
 			String var = info[1];
 
 			vars.put(info[0], var);
 		}
 	}
 
-	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws IOException {
+	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws Exception {
 		StringBuilder headerRAW = new StringBuilder();
 		int readByte = entrada.read();
 
-		System.out.println("Leyando entrada:\n");
 		while (readByte != -1) {
 			headerRAW.append((char) readByte);
 			
