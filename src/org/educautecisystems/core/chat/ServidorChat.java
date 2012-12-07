@@ -63,7 +63,7 @@ public class ServidorChat extends Thread {
 				logChatManager.logInfo("Esperando cliente nuevo.");
 				cliente = socketServidor.accept();
 				logChatManager.logInfo("Nuevo cliente en: "+cliente.getLocalAddress()+"/"+cliente.getPort());
-				AtenderClienteServidor atencionCliente = new AtenderClienteServidor(cliente, logChatManager);
+				AtenderClienteServidor atencionCliente = new AtenderClienteServidor(cliente, logChatManager, this);
 				logChatManager.logInfo("Arrancando hilo de atención..");
 				atencionCliente.start();
 				insertarCliente(atencionCliente);
@@ -75,7 +75,12 @@ public class ServidorChat extends Thread {
 	}
 	
 	public static boolean testToken( String token ) {
-		return true;
+		for ( UserChat usuario:usuarios ) {
+			if ( token.equals(usuario.getToken()) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static ArrayList<UserChat> getUserList() {
@@ -116,7 +121,13 @@ public class ServidorChat extends Thread {
 	public void detenerServidor() {
 		continuar = false;
 		try {
-			socketServidor.close();
+			for ( AtenderClienteServidor clienteAtencion:clientes ) {
+				clienteAtencion.detenerCliente();
+			}
+			
+			if ( socketServidor != null ) {
+				socketServidor.close();
+			}
 		} catch ( Exception e ) {
 			
 		}

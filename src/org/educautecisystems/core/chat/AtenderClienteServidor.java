@@ -37,16 +37,19 @@ public class AtenderClienteServidor extends Thread {
 	private InputStream entrada = null;
 	private OutputStream salida = null;
 	private boolean continuar;
+	private UserChat nuevoUsuario = null;
 	
-	/* Para el log */
+	/* Elmeentos de comunicación */
 	private LogChatManager logChatManager;
+	private ServidorChat servidorChat;
 	
 	public static int number = 0;
 
-	public AtenderClienteServidor(Socket clienteSocket, LogChatManager logChatManager) {
+	public AtenderClienteServidor(Socket clienteSocket, LogChatManager logChatManager, ServidorChat servidorChat ) {
 		this.clienteSocket = clienteSocket;
 		continuar = true;
 		this.logChatManager = logChatManager;
+		this.servidorChat = servidorChat;
 	}
 	
 	public boolean esCliente( int idUsuario ) {
@@ -61,8 +64,11 @@ public class AtenderClienteServidor extends Thread {
 			System.exit(-1);
 			return;
 		}
-		
-		logChatManager.logInfo("Atendiendo cliente...");
+		if ( servidorChat == null ) {
+			logChatManager.logError("No existe un servidor con el cual comuinicarse.");
+			detenerCliente();
+			return;
+		}
 		
 		try {
 			if (clienteSocket == null) {
@@ -73,7 +79,6 @@ public class AtenderClienteServidor extends Thread {
 			salida = clienteSocket.getOutputStream();
 			
 			MessageHeaderParser header = MessageHeaderParser.parseMessageHeader(entrada);
-			logChatManager.logInfo("Leido mensaje.");
 			if (!header.getCommand().equals(ChatConstants.CHAT_HEADER_MAIN_COMMAND)) {
 				logChatManager.logError("Formato incorrecto.");
 				return;
@@ -101,17 +106,40 @@ public class AtenderClienteServidor extends Thread {
 			salida.write(response.getBytes());
 			salida.flush();
 			
-//			while (continuar) {
-//				
-//			}
+			nuevoUsuario = new UserChat();
+			nuevoUsuario.setRealName(realName);
+			nuevoUsuario.setNickName(nickName);
+			nuevoUsuario.setToken(token);
 			
+			servidorChat.insertarUsuario(nuevoUsuario);
+			
+			while (continuar) {
+				/* TODO Enviar mensajes de chat. */
+			}
+			
+			/* Quitar usuario de la lista si se pierde la conexión. */
+			servidorChat.quitarUsuario(nuevoUsuario);
 		} catch (Exception e) {
 			logChatManager.logError("Problema en la atención a un cliente: "+e);
+			
+			/* Quitar usuario de la lista si se pierde la conexión. */
+			if ( nuevoUsuario != null ) {
+				servidorChat.quitarUsuario(nuevoUsuario);
+			}
 			
 			detenerCliente();
 		}
 		
 		detenerCliente();
+	}
+	
+	public boolean detenerUsuario ( UserChat userChat ) {
+		if ( nuevoUsuario != null && userChat.getId() == nuevoUsuario.getId() ) {
+			detenerCliente();
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private String generarToken() {
@@ -121,12 +149,13 @@ public class AtenderClienteServidor extends Thread {
 
 	private void procesarRequerimiento(MessageHeaderParser header) throws Exception {
 		/* List of users */
-		if ( header.getCommand().equals(ChatConstants.COMMAND_GET_USERS) ) {
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_USERS) ) {
 			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
 			String format =		header.getVar(ChatConstants.LABEL_FORMAT);
 			
 			/* Must be a valid token */
 			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
 				detenerCliente();
 				return;
 			}
@@ -138,8 +167,9 @@ public class AtenderClienteServidor extends Thread {
 			}
 			
 			ArrayList<UserChat> users = ServidorChat.getUserList();
-			byte [] xmlUsers = UserChat.generateXMLFromList(users).getBytes();
-			long size = xmlUsers.length;
+			String xmlUsers = UserChat.generateXMLFromList(users);
+			long size = xmlUsers.getBytes().length;
+			System.out.println(xmlUsers);
 			
 			/* Genering response */
 			String headerResponse = "";
@@ -157,6 +187,8 @@ public class AtenderClienteServidor extends Thread {
 			detenerCliente();
 			return;
 		}
+		
+		detenerCliente();
 	}
 	
 	private String generateHeaderValue( String name, String val ) {
@@ -171,9 +203,19 @@ public class AtenderClienteServidor extends Thread {
 		continuar = false;
 
 		try {
-			entrada.close();
-			salida.close();
-			clienteSocket.close();
+			if ( entrada != null ) {
+				entrada.close();
+				entrada = null;
+			}
+			if ( salida != null ) {
+				salida.close();
+				salida = null;
+			}
+			
+			if ( clienteSocket != null ) {
+				clienteSocket.close();
+				clienteSocket = null;
+			}
 		} catch (Exception e) {
 		}
 	}
