@@ -164,14 +164,14 @@ public class AtenderClienteServidor extends Thread {
 			/* Must be a valid token */
 			if ( !ServidorChat.testToken(userToken) ) {
 				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
-				detenerCliente();
+				sendResponseError("User not found.");
 				return;
 			}
 			
 			/* Only XML is valid */
 			if ( !format.equals("XML") ) {
 				logChatManager.logError("No se soporta el formato: " + format);
-				detenerCliente();
+				sendResponseError("Format not supported.");
 				return;
 			}
 			
