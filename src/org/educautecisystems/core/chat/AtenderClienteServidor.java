@@ -17,10 +17,12 @@
  */
 package org.educautecisystems.core.chat;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.UserChat;
@@ -32,12 +34,14 @@ import org.educautecisystems.core.chat.elements.UserChat;
 public class AtenderClienteServidor extends Thread {
 	/* Flujos del cliente */
 	private Socket clienteSocket;
-	private ObjectInputStream entrada;
-	private ObjectOutputStream salida;
+	private InputStream entrada = null;
+	private OutputStream salida = null;
 	private boolean continuar;
 	
 	/* Para el log */
 	private LogChatManager logChatManager;
+	
+	public static int number = 0;
 
 	public AtenderClienteServidor(Socket clienteSocket, LogChatManager logChatManager) {
 		this.clienteSocket = clienteSocket;
@@ -58,31 +62,61 @@ public class AtenderClienteServidor extends Thread {
 			return;
 		}
 		
+		logChatManager.logInfo("Atendiendo cliente...");
+		
 		try {
 			if (clienteSocket == null) {
 				return;
 			}
 			
+			entrada = clienteSocket.getInputStream();
+			salida = clienteSocket.getOutputStream();
+			
 			MessageHeaderParser header = MessageHeaderParser.parseMessageHeader(entrada);
+			logChatManager.logInfo("Leido mensaje.");
 			if (header.getCommand().equals(ChatConstants.CHAT_HEADER_MAIN_COMMAND)) {
 				if (!header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_LOGIN)) {
 					procesarRequerimiento(header);
 					return;
-				} else {
-					String realName = header.getVar(ChatConstants.LABEL_REAL_NAME);
-					String nickName = header.getVar(ChatConstants.LABEL_NICKNAME);
 				}
 			}
 			
-			while (continuar) {
-				
-			}
+			String realName = header.getVar(ChatConstants.LABEL_REAL_NAME);
+			String nickName = header.getVar(ChatConstants.LABEL_NICKNAME);
+			
+			logChatManager.logInfo("Entra nuevo usuario: "+nickName+"("+realName+")");
+			
+			String token = generarToken();
+			int idUsuario = number;
+			
+			String response = "";
+			response += generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_OK);
+			response += generateHeaderValue(ChatConstants.LABEL_USER_ID, ""+idUsuario);
+			response += generateHeaderValue(ChatConstants.LABEL_USER_TOKEN, token);
+			
+			salida.write(response.getBytes());
+			salida.flush();
+			
+//			while (continuar) {
+//				
+//			}
 			
 		} catch (Exception e) {
+			logChatManager.logError("Problema en la atención a un cliente: "+e);
+			
+			detenerCliente();
 		}
+		
+		detenerCliente();
+	}
+	
+	private String generarToken() {
+		number++;
+		return Sistema.getMD5("TOKEN-SALT"+number);
 	}
 
-	private void procesarRequerimiento(MessageHeaderParser header) {
+	private void procesarRequerimiento(MessageHeaderParser header) throws Exception {
 		/* List of users */
 		if ( header.getCommand().equals(ChatConstants.COMMAND_GET_USERS) ) {
 			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
@@ -114,13 +148,16 @@ public class AtenderClienteServidor extends Thread {
 			headerResponse += ChatConstants.CHAT_END_HEADER;
 			headerResponse += xmlUsers;
 			
+			salida.write(headerResponse.getBytes());
+			salida.flush();
+			
 			detenerCliente();
 			return;
 		}
 	}
 	
 	private String generateHeaderValue( String name, String val ) {
-		return name + ": " + val + "\n";
+		return name + ": " + val + "\r\n";
 	}
 
 	public boolean estaCorriendo() {

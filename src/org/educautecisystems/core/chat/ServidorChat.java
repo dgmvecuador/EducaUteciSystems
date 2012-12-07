@@ -64,6 +64,7 @@ public class ServidorChat extends Thread {
 				cliente = socketServidor.accept();
 				logChatManager.logInfo("Nuevo cliente en: "+cliente.getLocalAddress()+"/"+cliente.getPort());
 				AtenderClienteServidor atencionCliente = new AtenderClienteServidor(cliente, logChatManager);
+				logChatManager.logInfo("Arrancando hilo de atención..");
 				atencionCliente.start();
 				insertarCliente(atencionCliente);
 				depurarListaClientes();

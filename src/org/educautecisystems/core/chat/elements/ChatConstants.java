@@ -26,7 +26,7 @@ public class ChatConstants {
 	/* Main Commands */
 	public static final String CHAT_HEADER_MAIN_COMMAND =		"CHAT-SERVER 1.0";
 	public static final String CHAT_HEADER_RESPONSE_COMMAND =	"Response";
-	public static final String CHAT_END_HEADER =				"\n";
+	public static final String CHAT_END_HEADER =				"\r\n";
 	
 	/* Labels */
 	public static final String LABEL_COMMAND =			"Command";
@@ -35,6 +35,7 @@ public class ChatConstants {
 	public static final String LABEL_USER_TOKEN =		"User-Token";
 	public static final String LABEL_FORMAT =			"Format";
 	public static final String LABEL_CONTENT_LENGHT =	"Content-Length";
+	public static final String LABEL_USER_ID =			"User-ID";
 	
 	/* Commands */
 	public static final String COMMAND_LOGIN =		"login";

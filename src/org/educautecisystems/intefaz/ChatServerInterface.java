@@ -44,24 +44,30 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 	}
 	
 	@Override
-	public void logWarning( String txt ) {
-		String linea = "<font color=\"#D87F01\"><b>["+new Date()+"] Info:&nbsp;</b>"+txt+"</font><br>";
-		bitacora.append(linea);
-		actualizarBitacoraPrivado();
+	public void logWarning( String txt )  {
+		synchronized ( this ) {
+			String linea = "<font color=\"#D87F01\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
+			bitacora.append(linea);
+			actualizarBitacoraPrivado();
+		}
 	}
 	
 	@Override
 	public void logError( String txt ) {
-		String linea = "<font color=\"red\"><b>["+new Date()+"] Info:&nbsp;</b>"+txt+"</font><br>";
-		bitacora.append(linea);
-		actualizarBitacoraPrivado();
+		synchronized ( this ) {
+			String linea = "<font color=\"red\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
+			bitacora.append(linea);
+			actualizarBitacoraPrivado();
+		}
 	}
 	
 	@Override
 	public void logInfo( String txt ) {
-		String linea = "<font color=\"blue\"><b>["+new Date()+"] Info:&nbsp;</b>"+txt+"</font><br>";
-		bitacora.append(linea);
-		actualizarBitacoraPrivado();
+		synchronized ( this ) {
+			String linea = "<font color=\"blue\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
+			bitacora.append(linea);
+			actualizarBitacoraPrivado();
+		}
 	}
 	
 	private void actualizarBitacoraPrivado() {

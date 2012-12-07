@@ -44,7 +44,7 @@ public class MessageHeaderParser {
 	}
 
 	private void parseMessageHeaderReal() {
-		String[] lines = headerText.split("\n");
+		String[] lines = headerText.split("\r\n");
 
 		for (String line : lines) {
 			if (getCommand() == null) {
@@ -52,12 +52,8 @@ public class MessageHeaderParser {
 				continue;
 			}
 
-			String[] info = line.split(":", 2);
+			String[] info = line.split(": ", 2);
 			String var = info[1];
-
-			if (var.length() > 1 && var.charAt(0) == ' ') {
-				var = var.substring(1, var.length() - 1);
-			}
 
 			vars.put(info[0], var);
 		}
@@ -66,14 +62,15 @@ public class MessageHeaderParser {
 	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws IOException {
 		StringBuilder headerRAW = new StringBuilder();
 		int readByte = entrada.read();
-		int lastByte = readByte;
 
+		System.out.println("Leyando entrada:\n");
 		while (readByte != -1) {
 			headerRAW.append((char) readByte);
-			if (lastByte == (int) '\n' && readByte == '\n') {
+			
+			if (headerRAW.toString().endsWith("\r\n\r\n")  ) {
 				break;
 			}
-			lastByte = readByte;
+
 			readByte = entrada.read();
 		}
 
