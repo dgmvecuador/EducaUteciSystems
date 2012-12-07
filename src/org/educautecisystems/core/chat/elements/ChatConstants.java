@@ -36,10 +36,12 @@ public class ChatConstants {
 	public static final String LABEL_FORMAT =			"Format";
 	public static final String LABEL_CONTENT_LENGHT =	"Content-Length";
 	public static final String LABEL_USER_ID =			"User-ID";
+	public static final String LABEL_DESCRIPTION =		"Description";
 	
 	/* Commands */
 	public static final String COMMAND_LOGIN =		"login";
 	public static final String COMMAND_GET_USERS =	"getListUsers";
+	public static final String COMMAND_LOGOUT =		"logout";
 	
 	/* Responses */
 	public static final String RESPONSE_OK =	"OK";

@@ -133,6 +133,14 @@ public class AtenderClienteServidor extends Thread {
 		detenerCliente();
 	}
 	
+	public boolean detenerUsuarioToken ( String token ) {
+		if ( nuevoUsuario != null && nuevoUsuario.getToken().equals(token) ) {
+			detenerCliente();
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean detenerUsuario ( UserChat userChat ) {
 		if ( nuevoUsuario != null && userChat.getId() == nuevoUsuario.getId() ) {
 			detenerCliente();
@@ -162,6 +170,7 @@ public class AtenderClienteServidor extends Thread {
 			
 			/* Only XML is valid */
 			if ( !format.equals("XML") ) {
+				logChatManager.logError("No se soporta el formato: " + format);
 				detenerCliente();
 				return;
 			}
@@ -187,6 +196,51 @@ public class AtenderClienteServidor extends Thread {
 			detenerCliente();
 			return;
 		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_LOGOUT) ) {
+			String userToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				detenerCliente();
+				return;
+			}
+			
+			if (servidorChat.logoutCliente(userToken)) {
+				logChatManager.logInfo("A salido el usuario con el token: "+userToken);
+				sendResponseOk();
+			} else {
+				logChatManager.logWarning("Se ha intendo cerrar la sesión de un usuario que no existe.");
+				sendResponseError("User not found.");
+			}
+			return;
+		}
+		
+		sendResponseError("Command not valid.");
+		detenerCliente();
+	}
+	
+	private void sendResponseOk () throws Exception {
+		StringBuilder response = new StringBuilder();
+		response.append(generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_OK));
+		response.append(ChatConstants.CHAT_END_HEADER);
+		
+		salida.write(response.toString().getBytes());
+		salida.flush();
+		
+		detenerCliente();
+	}
+	
+	private void sendResponseError ( String description ) throws Exception {
+		StringBuilder response = new StringBuilder();
+		response.append(generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_ERROR));
+		response.append(generateHeaderValue(ChatConstants.LABEL_DESCRIPTION, description));
+		response.append(ChatConstants.CHAT_END_HEADER);
+		
+		salida.write(response.toString().getBytes());
+		salida.flush();
 		
 		detenerCliente();
 	}

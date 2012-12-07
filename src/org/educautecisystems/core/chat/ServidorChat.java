@@ -101,6 +101,24 @@ public class ServidorChat extends Thread {
 			}
 		}
 	}
+	
+	public boolean logoutCliente( String token ) {
+		for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
+			if ( atenderClienteServidor.detenerUsuarioToken(token) ) {
+				/* Borrar usuario. */
+				for ( UserChat usuario:usuarios ) {
+					if ( usuario.getToken().equals(token) ) {
+						usuarios.remove(usuario);
+						break;
+					}
+				}
+				
+				clientes.remove(atenderClienteServidor);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private void insertarCliente ( AtenderClienteServidor atencionCliente ) {
 		clientes.add(atencionCliente);
