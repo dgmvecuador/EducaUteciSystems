@@ -152,8 +152,6 @@ public class ServidorChat extends Thread {
 						break;
 					}
 				}
-				
-				clientes.remove(atenderClienteServidor);
 				return true;
 			}
 		}

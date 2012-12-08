@@ -166,8 +166,13 @@ public class AtenderClienteServidor extends Thread {
 	}
 	
 	public boolean detenerUsuarioToken ( String token ) {
-		if ( nuevoUsuario != null && nuevoUsuario.getToken().equals(token) ) {
+		if ( nuevoUsuario == null ) {
+			return false;
+		}
+		
+		if ( nuevoUsuario.getToken().equals(token) ) {
 			detenerCliente();
+			System.err.println( nuevoUsuario.getToken() +" = "+token );
 			return true;
 		}
 		return false;
