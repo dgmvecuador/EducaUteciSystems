@@ -299,6 +299,15 @@ public class AtenderClienteServidor extends Thread {
 	}
 	
 	public void sendMessage( int idUser, String message, int idUserOrigin ) {
+		/* Filtrar usuarios. */
+		if ( nuevoUsuario == null ) {
+			return;
+		}
+		
+		if ( idUser != nuevoUsuario.getId() && idUser != 0 ) {
+			return;
+		}
+		
 		synchronized(messages) {
 			ChatMessage newMessage = new ChatMessage();
 			
