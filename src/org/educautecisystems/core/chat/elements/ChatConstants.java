@@ -37,13 +37,18 @@ public class ChatConstants {
 	public static final String LABEL_CONTENT_LENGHT =	"Content-Length";
 	public static final String LABEL_USER_ID =			"User-ID";
 	public static final String LABEL_DESCRIPTION =		"Description";
+	public static final String LABEL_TO =				"To";
 	
 	/* Commands */
-	public static final String COMMAND_LOGIN =		"login";
-	public static final String COMMAND_GET_USERS =	"getListUsers";
-	public static final String COMMAND_LOGOUT =		"logout";
+	public static final String COMMAND_LOGIN =			"login";
+	public static final String COMMAND_GET_USERS =		"getListUsers";
+	public static final String COMMAND_LOGOUT =			"logout";
+	public static final String COMMAND_SEND_MESSAGE =	"sendMessage";
 	
 	/* Responses */
 	public static final String RESPONSE_OK =	"OK";
 	public static final String RESPONSE_ERROR = "Error";
+	
+	/* Others */
+	public static final int WAIT_TIME_FOR_READ = 250;
 }

@@ -74,6 +74,46 @@ public class ServidorChat extends Thread {
 		}
 	}
 	
+	public void sendMessage( String toVar, String message, int idUserOrigin ) {
+		String []usersId = toVar.split(",");
+		
+		for ( String userId:usersId ) {
+			if ( userId.equals("all") ) {
+				for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
+					atenderClienteServidor.sendMessage(0, message, idUserOrigin);
+				}
+			} else {
+				int idUser = 0;
+				
+				try {
+					idUser = Integer.parseInt(userId);
+				} catch ( NumberFormatException nfe ) {
+					logChatManager.logWarning("Invalid user number\""+userId+"\".");
+					continue;
+				}
+				
+				if ( idUser == 0 ) {
+					logChatManager.logWarning("");
+					continue;
+				}
+				
+				for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
+					atenderClienteServidor.sendMessage(idUser, message, idUserOrigin);
+				}
+			}
+		}
+	}
+	
+	public int getUserIdFromToken ( String token ) {
+		for ( UserChat usuario:usuarios ) {
+			if ( usuario.getToken().equals(token) ) {
+				return usuario.getId();
+			}
+		}
+		
+		return 0;
+	}
+	
 	public static boolean testToken( String token ) {
 		for ( UserChat usuario:usuarios ) {
 			if ( token.equals(usuario.getToken()) ) {

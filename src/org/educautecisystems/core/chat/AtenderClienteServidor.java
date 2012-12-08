@@ -23,6 +23,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
+import org.educautecisystems.core.chat.elements.ChatMessage;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.UserChat;
 
@@ -38,9 +39,10 @@ public class AtenderClienteServidor extends Thread {
 	private boolean continuar;
 	private UserChat nuevoUsuario = null;
 	
-	/* Elmeentos de comunicación */
+	/* Elmentos de comunicación */
 	private LogChatManager logChatManager;
 	private ServidorChat servidorChat;
+	private final ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
 	
 	public static int number = 0;
 
@@ -101,11 +103,13 @@ public class AtenderClienteServidor extends Thread {
 					ChatConstants.RESPONSE_OK);
 			response += generateHeaderValue(ChatConstants.LABEL_USER_ID, ""+idUsuario);
 			response += generateHeaderValue(ChatConstants.LABEL_USER_TOKEN, token);
+			response += ChatConstants.CHAT_END_HEADER;
 			
 			salida.write(response.getBytes());
 			salida.flush();
 			
 			nuevoUsuario = new UserChat();
+			nuevoUsuario.setId(number);
 			nuevoUsuario.setRealName(realName);
 			nuevoUsuario.setNickName(nickName);
 			nuevoUsuario.setToken(token);
@@ -113,7 +117,15 @@ public class AtenderClienteServidor extends Thread {
 			servidorChat.insertarUsuario(nuevoUsuario);
 			
 			while (continuar) {
-				/* TODO Enviar mensajes de chat. */
+				Thread.sleep(ChatConstants.WAIT_TIME_FOR_READ);
+				
+				/* Evitar problemas con los hilos. */
+				synchronized ( messages ) {
+					for ( ChatMessage chatMessage:messages ) {
+						sendUserMessageReal(chatMessage);
+					}
+					messages.clear();
+				}
 			}
 			
 			/* Quitar usuario de la lista si se pierde la conexión. */
@@ -130,6 +142,27 @@ public class AtenderClienteServidor extends Thread {
 		}
 		
 		detenerCliente();
+	}
+	
+	private void sendUserMessageReal( ChatMessage chatMessage ) throws Exception {
+		StringBuilder response = new StringBuilder();
+		response.append(generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_OK));
+		response.append(generateHeaderValue(ChatConstants.LABEL_USER_ID, 
+				""+chatMessage.getIdUserOrigin()));
+		
+		if ( chatMessage.getMessage() == null ) {
+			logChatManager.logError("Not message found to send.");
+			return;
+		}
+		
+		response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, 
+				""+chatMessage.getMessage().getBytes().length));
+		response.append(ChatConstants.CHAT_END_HEADER);
+		response.append(chatMessage.getMessage());
+		
+		salida.write(response.toString().getBytes());
+		salida.flush();
 	}
 	
 	public boolean detenerUsuarioToken ( String token ) {
@@ -201,7 +234,7 @@ public class AtenderClienteServidor extends Thread {
 			
 			if ( !ServidorChat.testToken(userToken) ) {
 				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
-				detenerCliente();
+				sendResponseError("User not found.");
 				return;
 			}
 			
@@ -215,8 +248,66 @@ public class AtenderClienteServidor extends Thread {
 			return;
 		}
 		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_SEND_MESSAGE) ) {
+			/* Leyendo todos los parámetros. */
+			String toVar =			header.getVar(ChatConstants.LABEL_TO);
+			String userToken =		header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String contentLength =	header.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+			
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
+			}
+			
+			long contentLengthLong = -1;
+			
+			try {
+				contentLengthLong = Long.parseLong(contentLength);
+			} catch ( NumberFormatException nfe ) {
+				sendResponseError("Number format not supported.");
+				return;
+			}
+			
+			int idUserOrigin = servidorChat.getUserIdFromToken(userToken);
+			
+			if ( idUserOrigin == 0 ) {
+				sendResponseError("UserId not found.");
+				return;
+			}
+			
+			StringBuilder message = new StringBuilder();
+			int byteRead = entrada.read();
+			
+			for ( long i=0; i<contentLengthLong; i++ ) {
+				if ( byteRead != -1 ) {
+					message.append((char) byteRead);
+					byteRead = entrada.read();
+				} else {
+					sendResponseError("Not Enought bytes read.");
+					return;
+				}
+			}
+			
+			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
+			sendResponseOk();
+			return;
+		}
+		
 		sendResponseError("Command not valid.");
 		detenerCliente();
+	}
+	
+	public void sendMessage( int idUser, String message, int idUserOrigin ) {
+		synchronized(messages) {
+			ChatMessage newMessage = new ChatMessage();
+			
+			newMessage.setIdUser(idUser);
+			newMessage.setIdUserOrigin(idUserOrigin);
+			newMessage.setMessage(message);
+			
+			messages.add(newMessage);
+		}
 	}
 	
 	private void sendResponseOk () throws Exception {
