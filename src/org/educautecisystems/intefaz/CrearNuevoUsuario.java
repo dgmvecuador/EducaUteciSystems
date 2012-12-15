@@ -7,9 +7,12 @@ package org.educautecisystems.intefaz;
 import java.util.List;
 import org.educautecisystems.controladores.AdministradorJpaController;
 import org.educautecisystems.controladores.DocenteJpaController;
+import org.educautecisystems.controladores.MateriaJpaController;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.entidades.Administrador;
 import org.educautecisystems.entidades.Docente;
+import org.educautecisystems.entidades.Materia;
+import org.educautecisystems.intefaz.objects.ObjComboBoxMateria;
 
 /**
  *
@@ -25,6 +28,25 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
      */
     public CrearNuevoUsuario() {
         initComponents();
+        jLabel2.setVisible(false);
+        jComboBoxMateria.setVisible(false);
+        cargarMaterias();
+    }
+    
+    private void cargarMaterias() {
+        MateriaJpaController controladorMateria = new MateriaJpaController(Sistema.getEmf());
+        List<Materia> materias = controladorMateria.findMateriaEntities();
+        
+        /* Cerrar ventana cuando no hay materias */
+        if (materias.isEmpty()) {
+            Sistema.mostrarMensajeError("No se han ingresado materias.");
+            this.dispose();
+            return;
+        }
+        
+        for ( Materia materia:materias ) {
+            jComboBoxMateria.addItem(new ObjComboBoxMateria(materia));
+        }
     }
     
     private boolean comprobarUsuarioAdministrador() {
@@ -33,7 +55,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         List <Administrador> administradores = controladorAdministrador.findAdministradorEntities();
         
         for ( Administrador administrador:administradores ) {
-            if ( administrador.getUsuario() == txtNombre.getText() ) {
+            if ( administrador.getUsuario().equals(txtNombre.getText()) ) {
                 return false;
             }
         }
@@ -46,7 +68,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         List <Docente> docentes = controladorDocente.findDocenteEntities();
         
         for ( Docente docente:docentes ) {
-            if ( docente.getUsuario() == txtNombre.getText() ) {
+            if ( docente.getUsuario().equals(txtNombre.getText()) ) {
                 return false;
             }
         }
@@ -71,11 +93,18 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         buttonRegistrar = new javax.swing.JButton();
         txtClave = new javax.swing.JPasswordField();
         buttonCancelar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxMateria = new javax.swing.JComboBox();
 
         setClosable(true);
         setTitle("Nuevo Usuario");
 
         tipoUsuarioCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admistrador", "Docente" }));
+        tipoUsuarioCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoUsuarioComboboxActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel4.setText("Tipo:");
@@ -104,6 +133,9 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
+        jLabel2.setText("Materia:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,26 +143,30 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(buttonRegistrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(buttonCancelar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre)
-                            .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jComboBoxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonRegistrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonCancelar)
-                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,16 +187,20 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonRegistrar)
                     .addComponent(buttonCancelar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
-        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty() ) {
+        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { //|| jComboBoxMateria
             Sistema.mostrarMensajeError("Por favor llene todos los campos.");
             return;
         }
@@ -191,7 +231,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             this.setVisible(false);
             this.dispose();
         } else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
-            if ( comprobarUsuarioDocente() ) {
+            if ( !comprobarUsuarioDocente() ) {
                 Sistema.mostrarMensajeError("Docente ya existe.");
                 return;
             }
@@ -199,7 +239,10 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             
             nuevoDocente.setUsuario(txtNombre.getText());
             nuevoDocente.setContrasena(new String(txtClave.getPassword()));
-            
+//            int y;
+//            y = Integer.parseInt(jComboBoxMateria.getSelectedItem());
+            ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
+            nuevoDocente.setMateria(materiaActual.getMateria());          
             DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
             
             try {
@@ -221,10 +264,26 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
+    private void tipoUsuarioComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoUsuarioComboboxActionPerformed
+        String x = (String) tipoUsuarioCombobox.getSelectedItem();
+        if( "Docente".equals(x))
+           {
+            jLabel2.setVisible(true);
+            jComboBoxMateria.setVisible(true);
+           }
+        else
+          {
+            jLabel2.setVisible(false);
+            jComboBoxMateria.setVisible(false);
+          }   
+    }//GEN-LAST:event_tipoUsuarioComboboxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonRegistrar;
+    private javax.swing.JComboBox jComboBoxMateria;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
