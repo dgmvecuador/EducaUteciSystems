@@ -36,7 +36,6 @@ public class AtenderClienteServidor extends Thread {
 	private Socket clienteSocket;
 	private InputStream entrada = null;
 	private OutputStream salida = null;
-	private boolean continuar;
 	private UserChat nuevoUsuario = null;
 	
 	/* Elmentos de comunicación */
@@ -48,7 +47,6 @@ public class AtenderClienteServidor extends Thread {
 
 	public AtenderClienteServidor(Socket clienteSocket, LogChatManager logChatManager, ServidorChat servidorChat ) {
 		this.clienteSocket = clienteSocket;
-		continuar = true;
 		this.logChatManager = logChatManager;
 		this.servidorChat = servidorChat;
 	}
@@ -116,8 +114,12 @@ public class AtenderClienteServidor extends Thread {
 			
 			servidorChat.insertarUsuario(nuevoUsuario);
 			
-			while (continuar) {
+			while (true) {
 				Thread.sleep(ChatConstants.WAIT_TIME_FOR_READ);
+				
+				if ( clienteSocket == null ) {
+					break;
+				}
 				
 				/* Evitar problemas con los hilos. */
 				synchronized ( messages ) {
@@ -128,6 +130,7 @@ public class AtenderClienteServidor extends Thread {
 				}
 			}
 			
+			logChatManager.logInfo("Cliente ha sido cerrado.");
 			/* Quitar usuario de la lista si se pierde la conexión. */
 			servidorChat.quitarUsuario(nuevoUsuario);
 		} catch (Exception e) {
@@ -168,16 +171,13 @@ public class AtenderClienteServidor extends Thread {
 		salida.flush();
 	}
 	
-	public boolean detenerUsuarioToken ( String token ) {
+	public boolean compararUsuarioToken ( String token ) {
 		synchronized ( this ) {
 			if (nuevoUsuario == null) {
 				return false;
 			}
 
 			if (nuevoUsuario.getToken().equals(token)) {
-				detenerCliente();
-				logChatManager.logInfo("Cerrando usuario con el token: "+
-						token+":"+nuevoUsuario.getNickName());
 				return true;
 			}
 			return false;
@@ -350,22 +350,21 @@ public class AtenderClienteServidor extends Thread {
 		return name + ": " + val + "\r\n";
 	}
 
-	public boolean estaCorriendo() {
-		return continuar;
-	}
-
 	public void detenerCliente() {
-		continuar = false;
+		/* Informar si se esta cerrado el cliente. */
+		if ( nuevoUsuario != null ) {
+			logChatManager.logInfo("Deteniendo cliente  \""+nuevoUsuario.getNickName()+"\"");
+		}
 
 		try {
-			if ( entrada != null ) {
-				entrada.close();
-				entrada = null;
-			}
-			if ( salida != null ) {
-				salida.close();
-				salida = null;
-			}
+//			if ( entrada != null ) {
+//				entrada.close();
+//				entrada = null;
+//			}
+//			if ( salida != null ) {
+//				salida.close();
+//				salida = null;
+//			}
 			
 			if ( clienteSocket != null ) {
 				clienteSocket.close();

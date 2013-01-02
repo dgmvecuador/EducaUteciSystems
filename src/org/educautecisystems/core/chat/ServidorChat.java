@@ -66,7 +66,6 @@ public class ServidorChat extends Thread {
 				logChatManager.logInfo("Arrancando hilo de atención..");
 				atencionCliente.start();
 				insertarCliente(atencionCliente);
-				depurarListaClientes();
 			}
 		} catch ( Exception e ) {
 			logChatManager.logError("Problema en el servidor: "+e);
@@ -159,7 +158,8 @@ public class ServidorChat extends Thread {
 	public boolean logoutCliente( String token ) {
 		synchronized( clientes ) {
 			for (AtenderClienteServidor atenderClienteServidor : clientes) {
-				if (atenderClienteServidor.detenerUsuarioToken(token)) {
+				if (atenderClienteServidor.compararUsuarioToken(token)) {
+					atenderClienteServidor.detenerCliente();
 					/* Borrar usuario. */
 					synchronized( usuarios ) {
 						for (UserChat usuario : usuarios) {
@@ -188,16 +188,6 @@ public class ServidorChat extends Thread {
 	private void quitarCliente( AtenderClienteServidor atencionCliente) {
 		synchronized ( clientes ) {
 			clientes.remove(atencionCliente);
-		}
-	}
-
-	public void depurarListaClientes () {
-		synchronized( clientes ) {
-			for (AtenderClienteServidor atencionCliente : clientes) {
-				if (!atencionCliente.estaCorriendo()) {
-					quitarCliente(atencionCliente);
-				}
-			}
 		}
 	}
 
