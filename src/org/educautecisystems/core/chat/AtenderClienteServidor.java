@@ -178,15 +178,6 @@ public class AtenderClienteServidor extends Thread {
 		return false;
 	}
 	
-	public boolean detenerUsuario ( UserChat userChat ) {
-		if ( nuevoUsuario != null && userChat.getId() == nuevoUsuario.getId() ) {
-			detenerCliente();
-			return true;
-		}
-		
-		return false;
-	}
-	
 	private String generarToken() {
 		number++;
 		return Sistema.getMD5("TOKEN-SALT"+number);
@@ -375,6 +366,7 @@ public class AtenderClienteServidor extends Thread {
 				clienteSocket = null;
 			}
 		} catch (Exception e) {
+			logChatManager.logError("Problemas cerrando usuario: "+e);
 		}
 	}
 }

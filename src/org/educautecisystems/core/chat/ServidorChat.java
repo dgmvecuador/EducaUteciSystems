@@ -30,7 +30,7 @@ import org.educautecisystems.core.chat.elements.UserChat;
 public class ServidorChat extends Thread {
 	/* Datos escenciales para el servidor */
 	private ServerSocket socketServidor;
-	private ArrayList<AtenderClienteServidor> clientes;
+	private final ArrayList<AtenderClienteServidor> clientes = new ArrayList<AtenderClienteServidor>();
 	private static final ArrayList<UserChat> usuarios = new ArrayList<UserChat>();
 	private Socket cliente;
 	private boolean continuar;
@@ -41,7 +41,6 @@ public class ServidorChat extends Thread {
 
 	public ServidorChat( LogChatManager logChatManager ) {
 		continuar = true;
-		clientes = new ArrayList<AtenderClienteServidor>();
 		this.logChatManager = logChatManager;
 	}
 
@@ -143,19 +142,24 @@ public class ServidorChat extends Thread {
 	}
 	
 	public boolean logoutCliente( String token ) {
-		for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
-			if ( atenderClienteServidor.detenerUsuarioToken(token) ) {
-				/* Borrar usuario. */
-				for ( UserChat usuario:usuarios ) {
-					if ( usuario.getToken().equals(token) ) {
-						usuarios.remove(usuario);
-						break;
+		synchronized( clientes ) {
+			for (AtenderClienteServidor atenderClienteServidor : clientes) {
+				if (atenderClienteServidor.detenerUsuarioToken(token)) {
+					/* Borrar usuario. */
+					synchronized( usuarios ) {
+						for (UserChat usuario : usuarios) {
+							if (usuario.getToken().equals(token)) {
+								usuarios.remove(usuario);
+								break;
+							}
+						}
 					}
+					clientes.remove(atenderClienteServidor);
+					return true;
 				}
-				return true;
 			}
+			return false;
 		}
-		return false;
 	}
 
 	private void insertarCliente ( AtenderClienteServidor atencionCliente ) {
