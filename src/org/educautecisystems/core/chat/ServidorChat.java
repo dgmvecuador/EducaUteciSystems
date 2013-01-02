@@ -76,67 +76,82 @@ public class ServidorChat extends Thread {
 	public void sendMessage( String toVar, String message, int idUserOrigin ) {
 		String []usersId = toVar.split(",");
 		
-		for ( String userId:usersId ) {
-			if ( userId.equals("all") ) {
-				for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
-					atenderClienteServidor.sendMessage(0, message, idUserOrigin);
-				}
-			} else {
-				int idUser = 0;
-				
-				try {
-					idUser = Integer.parseInt(userId);
-				} catch ( NumberFormatException nfe ) {
-					logChatManager.logWarning("Invalid user number\""+userId+"\".");
-					continue;
-				}
-				
-				if ( idUser == 0 ) {
-					logChatManager.logWarning("");
-					continue;
-				}
-				
-				for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
-					atenderClienteServidor.sendMessage(idUser, message, idUserOrigin);
+		/* Todo bloque con acceso a datos compartidos debe ser sincronizado. */
+		synchronized ( clientes ) {
+			for (String userId : usersId) {
+				if (userId.equals("all")) {
+					for (AtenderClienteServidor atenderClienteServidor : clientes) {
+						atenderClienteServidor.sendMessage(0, message, idUserOrigin);
+					}
+				} else {
+					int idUser = 0;
+
+					try {
+						idUser = Integer.parseInt(userId);
+					} catch (NumberFormatException nfe) {
+						logChatManager.logWarning("Invalid user number\"" + userId + "\".");
+						continue;
+					}
+
+					if (idUser == 0) {
+						logChatManager.logWarning("");
+						continue;
+					}
+
+					for (AtenderClienteServidor atenderClienteServidor : clientes) {
+						atenderClienteServidor.sendMessage(idUser, message, idUserOrigin);
+					}
 				}
 			}
 		}
 	}
 	
 	public int getUserIdFromToken ( String token ) {
-		for ( UserChat usuario:usuarios ) {
-			if ( usuario.getToken().equals(token) ) {
-				return usuario.getId();
+		synchronized ( usuarios ) {
+			for (UserChat usuario : usuarios) {
+				if (usuario.getToken().equals(token)) {
+					return usuario.getId();
+				}
 			}
+
+			return 0;
 		}
-		
-		return 0;
 	}
 	
 	public static boolean testToken( String token ) {
-		for ( UserChat usuario:usuarios ) {
-			if ( token.equals(usuario.getToken()) ) {
-				return true;
+		synchronized ( usuarios ) {
+			for (UserChat usuario : usuarios) {
+				if (token.equals(usuario.getToken())) {
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
 	}
 	
 	public static ArrayList<UserChat> getUserList() {
-		return usuarios;
+		synchronized ( usuarios ) {
+			return usuarios;
+		}
 	}
 	
 	public void insertarUsuario( UserChat userChat ) {
-		usuarios.add(userChat);
+		synchronized( usuarios ) {
+			usuarios.add(userChat);
+		}
 	}
 	
 	public void quitarUsuario( UserChat userChat ) {
-		usuarios.remove(userChat);
+		synchronized ( usuarios ) {
+			usuarios.remove(userChat);
+		}
 		
 		/* Cerrar Cliente */
-		for ( AtenderClienteServidor atenderClienteServidor:clientes ) {
-			if ( atenderClienteServidor.esCliente(userChat.getId()) ) {
-				atenderClienteServidor.detenerCliente();
+		synchronized ( clientes ) {
+			for (AtenderClienteServidor atenderClienteServidor : clientes) {
+				if (atenderClienteServidor.esCliente(userChat.getId())) {
+					atenderClienteServidor.detenerCliente();
+				}
 			}
 		}
 	}
@@ -163,33 +178,42 @@ public class ServidorChat extends Thread {
 	}
 
 	private void insertarCliente ( AtenderClienteServidor atencionCliente ) {
-		clientes.add(atencionCliente);
+		synchronized( clientes ) {
+			clientes.add(atencionCliente);
+		}
 	}
 
 	private void quitarCliente( AtenderClienteServidor atencionCliente) {
-		clientes.remove(atencionCliente);
+		synchronized ( clientes ) {
+			clientes.remove(atencionCliente);
+		}
 	}
 
 	public void depurarListaClientes () {
-		for( AtenderClienteServidor atencionCliente : clientes ) {
-			if ( !atencionCliente.estaCorriendo() ) {
-				quitarCliente(atencionCliente);
+		synchronized( clientes ) {
+			for (AtenderClienteServidor atencionCliente : clientes) {
+				if (!atencionCliente.estaCorriendo()) {
+					quitarCliente(atencionCliente);
+				}
 			}
 		}
 	}
 
 	public void detenerServidor() {
 		continuar = false;
-		try {
-			for ( AtenderClienteServidor clienteAtencion:clientes ) {
-				clienteAtencion.detenerCliente();
+		
+		synchronized ( clientes ) {
+			try {
+				for (AtenderClienteServidor clienteAtencion : clientes) {
+					clienteAtencion.detenerCliente();
+				}
+
+				if (socketServidor != null) {
+					socketServidor.close();
+				}
+			} catch (Exception e) {
+				logChatManager.logError(e.getMessage());
 			}
-			
-			if ( socketServidor != null ) {
-				socketServidor.close();
-			}
-		} catch ( Exception e ) {
-			
 		}
 	}
 }
