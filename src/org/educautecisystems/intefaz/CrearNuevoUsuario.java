@@ -200,7 +200,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
-        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { //|| jComboBoxMateria
+        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { 
             Sistema.mostrarMensajeError("Por favor llene todos los campos.");
             return;
         }
@@ -239,8 +239,6 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             
             nuevoDocente.setUsuario(txtNombre.getText());
             nuevoDocente.setContrasena(new String(txtClave.getPassword()));
-//            int y;
-//            y = Integer.parseInt(jComboBoxMateria.getSelectedItem());
             ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
             nuevoDocente.setMateria(materiaActual.getMateria());          
             DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());

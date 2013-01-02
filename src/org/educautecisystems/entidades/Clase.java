@@ -41,7 +41,7 @@ public class Clase implements Serializable {
     protected ClasePK clasePK;
     @Basic(optional = false)
     @Column(name = "Fecha")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clase")
     private List<ClaseHasEstudiante> claseHasEstudianteList;

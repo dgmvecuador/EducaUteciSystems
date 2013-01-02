@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
-import org.educautecisystems.Esquemas.Ingreso;
+import org.educautecisystems.intefaz.Ingreso;
 import org.educautecisystems.intefaz.VentanaPrincipal;
 
 /**

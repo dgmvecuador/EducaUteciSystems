@@ -8,8 +8,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
@@ -24,7 +25,8 @@ public class AdministradorJpaController implements Serializable {
     public AdministradorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU");
+
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();

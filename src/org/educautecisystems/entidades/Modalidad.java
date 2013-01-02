@@ -48,11 +48,11 @@ public class Modalidad implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @Column(name = "Hora_Inicio")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaInicio;
     @Basic(optional = false)
     @Column(name = "Hora_Final")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaFinal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modalidad")
     private List<Estudiante> estudianteList;
