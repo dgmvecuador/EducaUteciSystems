@@ -164,6 +164,8 @@ public class ServidorChat extends Thread {
 					synchronized( usuarios ) {
 						for (UserChat usuario : usuarios) {
 							if (usuario.getToken().equals(token)) {
+								logChatManager.logInfo(
+										"Quitando usuario \""+usuario.getNickName()+"\" de la lista.");
 								usuarios.remove(usuario);
 								break;
 							}

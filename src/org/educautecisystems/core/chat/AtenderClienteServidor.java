@@ -131,7 +131,7 @@ public class AtenderClienteServidor extends Thread {
 			/* Quitar usuario de la lista si se pierde la conexión. */
 			servidorChat.quitarUsuario(nuevoUsuario);
 		} catch (Exception e) {
-			logChatManager.logError("Problema en la atención a un cliente: "+e);
+			logChatManager.logError("Problema en la atención a un cliente: "+e.getMessage());
 			
 			/* Quitar usuario de la lista si se pierde la conexión. */
 			if ( nuevoUsuario != null ) {
@@ -139,8 +139,11 @@ public class AtenderClienteServidor extends Thread {
 			}
 			
 			detenerCliente();
+			return;
 		}
 		
+		logChatManager.logInfo("Cerrando cliente .."+ (nuevoUsuario == null ? "" : 
+				(" ["+nuevoUsuario.getNickName()+"]")) );
 		detenerCliente();
 	}
 	
@@ -166,16 +169,19 @@ public class AtenderClienteServidor extends Thread {
 	}
 	
 	public boolean detenerUsuarioToken ( String token ) {
-		if ( nuevoUsuario == null ) {
+		synchronized ( this ) {
+			if (nuevoUsuario == null) {
+				return false;
+			}
+
+			if (nuevoUsuario.getToken().equals(token)) {
+				detenerCliente();
+				logChatManager.logInfo("Cerrando usuario con el token: "+
+						token+":"+nuevoUsuario.getNickName());
+				return true;
+			}
 			return false;
-		}
-		
-		if ( nuevoUsuario.getToken().equals(token) ) {
-			detenerCliente();
-			System.err.println( nuevoUsuario.getToken() +" = "+token );
-			return true;
-		}
-		return false;
+		}	
 	}
 	
 	private String generarToken() {
