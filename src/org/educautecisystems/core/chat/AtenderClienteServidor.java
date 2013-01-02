@@ -52,7 +52,15 @@ public class AtenderClienteServidor extends Thread {
 	}
 	
 	public boolean esCliente( int idUsuario ) {
-		return true;
+		if ( nuevoUsuario == null ) {
+			return false;
+		}
+		
+		if ( nuevoUsuario.getId() == idUsuario ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -118,6 +126,7 @@ public class AtenderClienteServidor extends Thread {
 				Thread.sleep(ChatConstants.WAIT_TIME_FOR_READ);
 				
 				if ( clienteSocket == null ) {
+					logChatManager.logInfo("Cliente ha sido cerrado.");
 					break;
 				}
 				
@@ -130,7 +139,6 @@ public class AtenderClienteServidor extends Thread {
 				}
 			}
 			
-			logChatManager.logInfo("Cliente ha sido cerrado.");
 			/* Quitar usuario de la lista si se pierde la conexión. */
 			servidorChat.quitarUsuario(nuevoUsuario);
 		} catch (Exception e) {
@@ -357,14 +365,14 @@ public class AtenderClienteServidor extends Thread {
 		}
 
 		try {
-//			if ( entrada != null ) {
-//				entrada.close();
-//				entrada = null;
-//			}
-//			if ( salida != null ) {
-//				salida.close();
-//				salida = null;
-//			}
+			if ( entrada != null ) {
+				entrada.close();
+				entrada = null;
+			}
+			if ( salida != null ) {
+				salida.close();
+				salida = null;
+			}
 			
 			if ( clienteSocket != null ) {
 				clienteSocket.close();
