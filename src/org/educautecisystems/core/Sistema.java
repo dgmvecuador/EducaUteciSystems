@@ -37,7 +37,13 @@ public class Sistema {
 	
 	/* Configuración de Chat */
 	private static ChatServerConf	chatServerConf;
-	private static ChatSessionConf chatSessionConf;
+	private static ChatSessionConf	chatSessionConf;
+	
+	/* Archivo por defecto */
+	private static final String ip_defecto = "localhost";
+	private static final String port_defecto = "7586";
+	private static final String nickname_defecto = "nLastName";
+	private static final String realName_defecto = "Name LastName";
 	
     public static void main( String []args ) {
         String usuario = "root";
@@ -180,14 +186,14 @@ public class Sistema {
 		
 		/* Datos servidor */
 		Element eServidor = new Element("server", baseNamespace);
-		eServidor.addContent(new Element("ip").setText("localhost"));
-		eServidor.addContent(new Element("port").setText("7586"));
+		eServidor.addContent(new Element("ip").setText(ip_defecto));
+		eServidor.addContent(new Element("port").setText(port_defecto));
 		root.addContent(eServidor);
 		
 		/* Datos sesión */
 		Element eSession = new Element("session", baseNamespace);
-		eSession.addContent(new Element("nickname").setText("nLastName"));
-		eSession.addContent(new Element("real_name").setText("Name LastName"));
+		eSession.addContent(new Element("nickname").setText(nickname_defecto));
+		eSession.addContent(new Element("real_name").setText(realName_defecto));
 		root.addContent(eSession);
 		
 		/* Guardar archivo */
@@ -199,5 +205,9 @@ public class Sistema {
 		} catch( IOException ioe ) {
 			System.err.println("No se puedo crear archivo de configuración.");
 		}
+		
+		/* Iniciar información */
+		chatServerConf = new ChatServerConf(ip_defecto, port_defecto);
+		chatSessionConf = new ChatSessionConf(nickname_defecto, realName_defecto);
 	}
 }
