@@ -36,6 +36,7 @@ public class Sistema {
 	public static final String CHAT_CONF_XML = "ChatServerConf.xml";
 	
 	/* Configuración de Chat */
+	private static String pathChatConf = null;
 	private static ChatServerConf	chatServerConf;
 	private static ChatSessionConf	chatSessionConf;
 	
@@ -137,6 +138,7 @@ public class Sistema {
 		
 		/* Archivos de configuración */
 		File archivoConfChatXML = new File(carpetaConfChat, CHAT_CONF_XML);
+		pathChatConf = archivoConfChatXML.getAbsolutePath();
 		
 		if ( archivoConfChatXML.exists() && archivoConfChatXML.isFile() ) {
 			cargarChatConf(archivoConfChatXML);
@@ -209,5 +211,55 @@ public class Sistema {
 		/* Iniciar información */
 		chatServerConf = new ChatServerConf(ip_defecto, port_defecto);
 		chatSessionConf = new ChatSessionConf(nickname_defecto, realName_defecto);
+	}
+	
+	public static void guardarChatConf () {
+		File archivoConfChatXML = new File(pathChatConf);
+		
+		/* Borrar archivo, si existe. */
+		if ( archivoConfChatXML.exists() ) {
+			archivoConfChatXML.delete();
+		}
+				
+		Document document = new Document();
+		
+		Namespace baseNamespace = Namespace.getNamespace("chat", "http://free.chat.com/");
+		Element root = new Element("config", baseNamespace);
+		
+		/* Datos servidor */
+		Element eServidor = new Element("server", baseNamespace);
+		eServidor.addContent(new Element("ip").setText(chatServerConf.getIp()));
+		eServidor.addContent(new Element("port").setText(chatServerConf.getPort()));
+		root.addContent(eServidor);
+		
+		/* Datos sesión */
+		Element eSession = new Element("session", baseNamespace);
+		eSession.addContent(new Element("nickname").setText(chatSessionConf.getNickname()));
+		eSession.addContent(new Element("real_name").setText(chatSessionConf.getRealName()));
+		root.addContent(eSession);
+		
+		/* Guardar archivo */
+		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		document.setRootElement(root);
+		
+		try {
+			outputter.output(document, new FileOutputStream(archivoConfChatXML));
+		} catch( IOException ioe ) {
+			System.err.println("No se puedo crear archivo de configuración.");
+		}
+	}
+
+	/**
+	 * @return the chatServerConf
+	 */
+	public static ChatServerConf getChatServerConf() {
+		return chatServerConf;
+	}
+
+	/**
+	 * @return the chatSessionConf
+	 */
+	public static ChatSessionConf getChatSessionConf() {
+		return chatSessionConf;
 	}
 }

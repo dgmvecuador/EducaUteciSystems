@@ -235,9 +235,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemChatEstActionPerformed
 
     private void MenuItemChatDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatDocActionPerformed
-         Chat chat = new Chat();
-        escritorioPrincipal.add(chat);
-        chat.setVisible(true);
+        ChatOptions chatOptions = new ChatOptions();
+        escritorioPrincipal.add(chatOptions);
+        chatOptions.setVisible(true);
     }//GEN-LAST:event_MenuItemChatDocActionPerformed
 
     private void MenuItemLisDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemLisDocActionPerformed
