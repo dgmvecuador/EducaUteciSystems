@@ -4,12 +4,25 @@
  */
 package org.educautecisystems.core;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.educautecisystems.Esquemas.Ingreso;
+import org.educautecisystems.core.config.ChatServerConf;
+import org.educautecisystems.core.config.ChatSessionConf;
 import org.educautecisystems.intefaz.VentanaPrincipal;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -17,12 +30,22 @@ import org.educautecisystems.intefaz.VentanaPrincipal;
  */
 public class Sistema {
     private static EntityManagerFactory emf = null;
+	public static final String NOMBRE_CARPETA_CONFIGURACION = "EducaUteciSystems";
+	public static final String NOMBRE_CARPETA_CONF_CHAT = "Chat";
+	public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS = "Compartido";
+	public static final String CHAT_CONF_XML = "ChatServerConf.xml";
+	
+	/* Configuración de Chat */
+	private static ChatServerConf	chatServerConf;
+	private static ChatSessionConf chatSessionConf;
+	
     public static void main( String []args ) {
         String usuario = "root";
         String password = "admin";
         
         inicializarSistema( usuario,password );
         seleccionadoLookAndFeel();
+		cargarCarpeta();
         new VentanaPrincipal().setVisible(true);
     }
     
@@ -85,4 +108,96 @@ public class Sistema {
             java.util.logging.Logger.getLogger(Ingreso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
+	
+	private static void cargarCarpeta() {
+		Properties propiedadesSistema = System.getProperties();
+		String carpetaUsuario =			propiedadesSistema.getProperty("user.home");
+		
+		/* Carpetas de configuraciones */
+		File carpetaConfiguracion = new File(carpetaUsuario, NOMBRE_CARPETA_CONFIGURACION);
+		File carpetaConfChat =		new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_CHAT);
+		File carpetaConfArchivos =	new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS);
+		
+		/* Crear carpetas si no existen */
+		if ( !carpetaConfiguracion.exists() ) {
+			carpetaConfiguracion.mkdirs();
+		}
+		if ( !carpetaConfChat.exists() ) {
+			carpetaConfChat.mkdirs();
+		}
+		if ( !carpetaConfArchivos.exists() ) {
+			carpetaConfArchivos.mkdirs();
+		}
+		
+		/* Archivos de configuración */
+		File archivoConfChatXML = new File(carpetaConfChat, CHAT_CONF_XML);
+		
+		if ( archivoConfChatXML.exists() && archivoConfChatXML.isFile() ) {
+			cargarChatConf(archivoConfChatXML);
+		} else {
+			generarChatConf(archivoConfChatXML);
+		}
+	}
+	
+	private static void cargarChatConf ( File archivoConfChatXML ) {
+		ChatServerConf	lChatServerConf =	new ChatServerConf();
+		ChatSessionConf lChatSessionConf =	new ChatSessionConf();
+		
+		SAXBuilder builder = new SAXBuilder();
+		Document documento = null;
+		
+		try {
+			documento = builder.build(archivoConfChatXML);
+		} catch ( JDOMException jdome ) {
+			System.err.println("JDOME: "+jdome);
+		} catch ( IOException ioe ) {
+			System.err.println("IOE: "+ioe);
+		}
+		
+		Namespace baseNamespace = Namespace.getNamespace("chat", "http://free.chat.com/");
+		Element root = documento.getRootElement();
+		
+		/* Datos del servidor */
+		Element eServidor = root.getChild("server", baseNamespace);
+		lChatServerConf.setIp(eServidor.getChildText("ip"));
+		lChatServerConf.setPort(eServidor.getChildText("port"));
+		
+		/* Datos de la sesión */
+		Element eSession = root.getChild("session", baseNamespace);
+		lChatSessionConf.setNickname(eSession.getChildText("nickname"));
+		lChatSessionConf.setRealName(eSession.getChildText("real_name"));
+		
+		/* Guardar información */
+		Sistema.chatServerConf = lChatServerConf;
+		Sistema.chatSessionConf = lChatSessionConf;
+	}
+	
+	private static void generarChatConf( File archivoConfChatXML ) {
+		Document document = new Document();
+		
+		Namespace baseNamespace = Namespace.getNamespace("chat", "http://free.chat.com/");
+		Element root = new Element("config", baseNamespace);
+		
+		/* Datos servidor */
+		Element eServidor = new Element("server", baseNamespace);
+		eServidor.addContent(new Element("ip").setText("localhost"));
+		eServidor.addContent(new Element("port").setText("7586"));
+		root.addContent(eServidor);
+		
+		/* Datos sesión */
+		Element eSession = new Element("session", baseNamespace);
+		eSession.addContent(new Element("nickname").setText("nLastName"));
+		eSession.addContent(new Element("real_name").setText("Name LastName"));
+		root.addContent(eSession);
+		
+		/* Guardar archivo */
+		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		document.setRootElement(root);
+		
+		try {
+			outputter.output(document, new FileOutputStream(archivoConfChatXML));
+		} catch( IOException ioe ) {
+			System.err.println("No se puedo crear archivo de configuración.");
+		}
+	}
 }

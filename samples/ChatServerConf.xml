@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chat:config xmlns:chat="http://free.chat.com/">
+    <chat:server>
+        <ip>localhost</ip>
+	<port>7586</port>
+    </chat:server>
+    <chat:session>
+    	<nickname>nLastName</nickname>
+    	<real_name>Name LastName</real_name>
+    </chat:session>
+</chat:config>
