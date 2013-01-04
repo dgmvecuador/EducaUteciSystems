@@ -8,16 +8,17 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
 import org.educautecisystems.controladores.exceptions.PreexistingEntityException;
-import org.educautecisystems.entidades.Estudiante;
 import org.educautecisystems.entidades.Clase;
 import org.educautecisystems.entidades.ClaseHasEstudiante;
 import org.educautecisystems.entidades.ClaseHasEstudiantePK;
+import org.educautecisystems.entidades.Estudiante;
 
 /**
  *
@@ -28,7 +29,7 @@ public class ClaseHasEstudianteJpaController implements Serializable {
     public ClaseHasEstudianteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU");
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -38,11 +39,11 @@ public class ClaseHasEstudianteJpaController implements Serializable {
         if (claseHasEstudiante.getClaseHasEstudiantePK() == null) {
             claseHasEstudiante.setClaseHasEstudiantePK(new ClaseHasEstudiantePK());
         }
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteIdEstudiante(claseHasEstudiante.getEstudiante().getEstudiantePK().getIdEstudiante());
         claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -80,11 +81,11 @@ public class ClaseHasEstudianteJpaController implements Serializable {
     }
 
     public void edit(ClaseHasEstudiante claseHasEstudiante) throws NonexistentEntityException, Exception {
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
+        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
+        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteIdEstudiante(claseHasEstudiante.getEstudiante().getEstudiantePK().getIdEstudiante());
         claseHasEstudiante.getClaseHasEstudiantePK().setClaseIdClase(claseHasEstudiante.getClase().getClasePK().getIdClase());
-        claseHasEstudiante.getClaseHasEstudiantePK().setClaseMateriaIdMateria(claseHasEstudiante.getClase().getClasePK().getMateriaIdMateria());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteNivelIdNivel(claseHasEstudiante.getEstudiante().getEstudiantePK().getNivelIdNivel());
-        claseHasEstudiante.getClaseHasEstudiantePK().setEstudianteModalidadIdModalidad(claseHasEstudiante.getEstudiante().getEstudiantePK().getModalidadIdModalidad());
         EntityManager em = null;
         try {
             em = getEntityManager();

@@ -4,21 +4,75 @@
  */
 package org.educautecisystems.intefaz;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.List;
 import org.educautecisystems.controladores.AdministradorJpaController;
+import org.educautecisystems.controladores.DocenteJpaController;
+import org.educautecisystems.controladores.MateriaJpaController;
+import org.educautecisystems.core.Sistema;
+import org.educautecisystems.entidades.Administrador;
+import org.educautecisystems.entidades.Docente;
+import org.educautecisystems.entidades.Materia;
+import org.educautecisystems.intefaz.objects.ObjComboBoxMateria;
 
 /**
  *
  * @author Shadow2012
  */
 public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
-
+    /* Constantes */
+    private static final int TIPO_USUARIO_ADMINISTRADOR =   0;
+    private static final int TIPO_USUARIO_DOCENTE =         1;
+    
     /**
      * Creates new form CrearNuevoUsuario
      */
     public CrearNuevoUsuario() {
         initComponents();
+        jLabel2.setVisible(false);
+        jComboBoxMateria.setVisible(false);
+        cargarMaterias();
+    }
+    
+    private void cargarMaterias() {
+        MateriaJpaController controladorMateria = new MateriaJpaController(Sistema.getEmf());
+        List<Materia> materias = controladorMateria.findMateriaEntities();
+        
+        /* Cerrar ventana cuando no hay materias */
+        if (materias.isEmpty()) {
+            Sistema.mostrarMensajeError("No se han ingresado materias.");
+            this.dispose();
+            return;
+        }
+        
+        for ( Materia materia:materias ) {
+            jComboBoxMateria.addItem(new ObjComboBoxMateria(materia));
+        }
+    }
+    
+    private boolean comprobarUsuarioAdministrador() {
+        AdministradorJpaController controladorAdministrador = 
+                new AdministradorJpaController(Sistema.getEmf());
+        List <Administrador> administradores = controladorAdministrador.findAdministradorEntities();
+        
+        for ( Administrador administrador:administradores ) {
+            if ( administrador.getUsuario().equals(txtNombre.getText()) ) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private boolean comprobarUsuarioDocente () {
+        DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
+        List <Docente> docentes = controladorDocente.findDocenteEntities();
+        
+        for ( Docente docente:docentes ) {
+            if ( docente.getUsuario().equals(txtNombre.getText()) ) {
+                return false;
+            }
+        }
+        return true;  
     }
 
     /**
@@ -30,22 +84,25 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox();
+        tipoUsuarioCombobox = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        buttonRegistrar = new javax.swing.JButton();
+        txtClave = new javax.swing.JPasswordField();
+        buttonCancelar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxMateria = new javax.swing.JComboBox();
 
         setClosable(true);
         setTitle("Nuevo Usuario");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admistrador", "Docente" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        tipoUsuarioCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admistrador", "Docente" }));
+        tipoUsuarioCombobox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                tipoUsuarioComboboxActionPerformed(evt);
             }
         });
 
@@ -55,25 +112,29 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setText("Crear Nuevo Usuario");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel5.setText("Nombre:");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("Clave:");
 
-        jButton1.setText("Registrar");
-        jButton1.setToolTipText("");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonRegistrar.setText("Registrar");
+        buttonRegistrar.setToolTipText("");
+        buttonRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonRegistrarActionPerformed(evt);
             }
         });
+
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
+        jLabel2.setText("Materia:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,22 +142,30 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(18, 18, 18)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(buttonRegistrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(buttonCancelar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxMateria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,48 +176,117 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tipoUsuarioCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonRegistrar)
+                    .addComponent(buttonCancelar))
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+    private void buttonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistrarActionPerformed
+        if ( txtNombre.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { 
+            Sistema.mostrarMensajeError("Por favor llene todos los campos.");
+            return;
+        }
+        
+        int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
+        
+        if ( idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR ) {
+            if ( !comprobarUsuarioAdministrador() ) {
+                Sistema.mostrarMensajeError("Administrador ya existe.");
+                return;
+            }
+            
+            Administrador nuevoAdministrador = new Administrador();
+            
+            nuevoAdministrador.setUsuario(txtNombre.getText());
+            nuevoAdministrador.setContrasena(new String(txtClave.getPassword()));
+            
+            AdministradorJpaController controlandorAdministrador = 
+                    new AdministradorJpaController(Sistema.getEmf());
+            
+            try {
+                controlandorAdministrador.create(nuevoAdministrador);
+            } catch ( Exception e ) {
+                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
+            }
+            
+            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
+            this.setVisible(false);
+            this.dispose();
+        } else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
+            if ( !comprobarUsuarioDocente() ) {
+                Sistema.mostrarMensajeError("Docente ya existe.");
+                return;
+            }
+            Docente nuevoDocente = new Docente();
+            
+            nuevoDocente.setUsuario(txtNombre.getText());
+            nuevoDocente.setContrasena(new String(txtClave.getPassword()));
+            ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
+            nuevoDocente.setMateria(materiaActual.getMateria());          
+            DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
+            
+            try {
+                controladorDocente.create(nuevoDocente);
+            } catch ( Exception e ) {
+                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
+            }
+            
+            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
+            this.setVisible(false);
+            this.dispose();
+        } else {
+            Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
+        }
+    }//GEN-LAST:event_buttonRegistrarActionPerformed
 
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_buttonCancelarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        EntityManagerFactory emf = null;
-        emf = Persistence.createEntityManagerFactory("org.EducaUteciSystemsPU");
-        AdministradorJpaController controladorAdministrador = new AdministradorJpaController(emf);
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void tipoUsuarioComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoUsuarioComboboxActionPerformed
+        String x = (String) tipoUsuarioCombobox.getSelectedItem();
+        if( "Docente".equals(x))
+           {
+            jLabel2.setVisible(true);
+            jComboBoxMateria.setVisible(true);
+           }
+        else
+          {
+            jLabel2.setVisible(false);
+            jComboBoxMateria.setVisible(false);
+          }   
+    }//GEN-LAST:event_tipoUsuarioComboboxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton buttonCancelar;
+    private javax.swing.JButton buttonRegistrar;
+    private javax.swing.JComboBox jComboBoxMateria;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox tipoUsuarioCombobox;
+    private javax.swing.JPasswordField txtClave;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

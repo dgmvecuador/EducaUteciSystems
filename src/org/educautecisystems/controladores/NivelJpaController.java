@@ -5,17 +5,18 @@
 package org.educautecisystems.controladores;
 
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import org.educautecisystems.entidades.Estudiante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.IllegalOrphanException;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
+import org.educautecisystems.entidades.Estudiante;
 import org.educautecisystems.entidades.Nivel;
 
 /**
@@ -27,7 +28,7 @@ public class NivelJpaController implements Serializable {
     public NivelJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU");
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();

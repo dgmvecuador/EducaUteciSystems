@@ -5,21 +5,22 @@
 package org.educautecisystems.controladores;
 
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import org.educautecisystems.entidades.Materia;
-import org.educautecisystems.entidades.ClaseHasEstudiante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.IllegalOrphanException;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
 import org.educautecisystems.controladores.exceptions.PreexistingEntityException;
 import org.educautecisystems.entidades.Clase;
+import org.educautecisystems.entidades.ClaseHasEstudiante;
 import org.educautecisystems.entidades.ClasePK;
+import org.educautecisystems.entidades.Materia;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ClaseJpaController implements Serializable {
     public ClaseJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU");
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();

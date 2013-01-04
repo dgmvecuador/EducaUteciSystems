@@ -33,7 +33,6 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jTextField4 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -54,8 +53,6 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador Guillermo", "Docente Juan C. Viera", "Docente Miguel Ortiz", "Docente" }));
 
-        jButton2.setText("Nuevo");
-
         jButton3.setText("Modificar");
 
         jButton4.setText("Eliminar");
@@ -68,11 +65,9 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
-                        .addGap(18, 18, 18)
+                        .addGap(39, 39, 39)
                         .addComponent(jButton4))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -110,16 +105,14 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(jButton4))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBox2;
