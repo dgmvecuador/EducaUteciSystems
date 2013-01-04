@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<eus:users xmlns:eus="http://educautecisystems.org/">
+<eus:config xmlns:eus="http://educautecisystems.org/">
     <eus:database>
         <host>localhost</host>
         <port>3306</port>
@@ -7,4 +7,4 @@
         <!-- TODO: Find out a method to hide password. -->
         <password>admin</password>
     </eus:database>
-</eus:users>
+</eus:config>

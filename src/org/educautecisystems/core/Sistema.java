@@ -31,6 +31,15 @@ import org.jdom2.output.XMLOutputter;
  */
 public class Sistema {
     private static EntityManagerFactory emf = null;
+	private static final ConfBaseDeDatos confBaseDeDatos = new ConfBaseDeDatos();
+	private static final String GENERAL_CONF_XML = "config.xml";
+	private static String pathGeneralConf = null;
+	
+	/* Valores por defecto de la configuración principal */
+	public static final String g_host_defecto = "root";
+	public static final String g_port_defecto = "3306";
+	public static final String g_user_defecto = "root";
+	public static final String g_password_defecto = "admin";
     
     /* Constantes */
     public static final int VERSION_MAYOR = 1;
@@ -59,12 +68,9 @@ public class Sistema {
 	private static final String realName_defecto = "Name LastName";
 	
     public static void main( String []args ) {
-        String usuario = "root";
-        String password = "admin";
-        
-        inicializarSistema( usuario,password );
         seleccionadoLookAndFeel();
 		cargarCarpeta();
+		inicializarSistema( confBaseDeDatos.getUser(),confBaseDeDatos.getPassword() );
         new VentanaPrincipal().setVisible(true);
     }
     
@@ -158,12 +164,76 @@ public class Sistema {
 		
 		/* Archivos de configuración */
 		File archivoConfChatXML = new File(carpetaConfChat, CHAT_CONF_XML);
+		File archivoConfPrincipal = new File( carpetaConfiguracion, GENERAL_CONF_XML );
 		pathChatConf = archivoConfChatXML.getAbsolutePath();
+		pathGeneralConf = archivoConfPrincipal.getAbsolutePath();
 		
 		if ( archivoConfChatXML.exists() && archivoConfChatXML.isFile() ) {
 			cargarChatConf(archivoConfChatXML);
 		} else {
 			generarChatConf(archivoConfChatXML);
+		}
+		
+		if ( archivoConfPrincipal.exists() && archivoConfPrincipal.isFile() ) {
+			cargarConfPrincipal(archivoConfPrincipal);
+		} else {
+			confBaseDeDatos.setHost(g_host_defecto);
+			confBaseDeDatos.setPort(g_port_defecto);
+			confBaseDeDatos.setUser(g_user_defecto);
+			confBaseDeDatos.setPassword(g_password_defecto);
+			guardarConfPrincipal();
+		}
+	}
+	
+	private static void cargarConfPrincipal ( File archivoConfPrincipal ) {
+		SAXBuilder builder = new SAXBuilder();
+		Document documento = null;
+		
+		try {
+			documento = builder.build(archivoConfPrincipal);
+		} catch ( JDOMException jdome ) {
+			System.err.println("JDOME: "+jdome);
+		} catch ( IOException ioe ) {
+			System.err.println("IOE: "+ioe);
+		}
+		
+		Namespace baseNamespace = Namespace.getNamespace("eus", "http://educautecisystems.org/");
+		Element root = documento.getRootElement();
+		
+		/* Información de la base de datos. */
+		Element eBaseDeDatos = root.getChild("database", baseNamespace);
+		confBaseDeDatos.setHost(eBaseDeDatos.getChildText("host"));
+		confBaseDeDatos.setPort(eBaseDeDatos.getChildText("port"));
+		confBaseDeDatos.setUser(eBaseDeDatos.getChildText("user"));
+		confBaseDeDatos.setPassword(eBaseDeDatos.getChildText("password"));
+	}
+	
+	public static void guardarConfPrincipal () {
+		File archivoConfPrincipal = new File(pathGeneralConf);
+		
+		if ( archivoConfPrincipal.exists() ) {
+			archivoConfPrincipal.delete();
+		}
+		
+		Document documento = new Document();
+		
+		Namespace baseNamespace = Namespace.getNamespace("eus", "http://educautecisystems.org/");
+		Element root = new Element("config", baseNamespace);
+		documento.setRootElement(root);
+		
+		Element eBaseDeDatos = new Element("database", baseNamespace);
+		eBaseDeDatos.addContent(new Element("host").setText(confBaseDeDatos.getHost()));
+		eBaseDeDatos.addContent(new Element("port").setText(confBaseDeDatos.getPort()));
+		eBaseDeDatos.addContent(new Element("user").setText(confBaseDeDatos.getUser()));
+		eBaseDeDatos.addContent(new Element("password").setText(confBaseDeDatos.getPassword()));
+		root.addContent(eBaseDeDatos);
+		
+		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		
+		try {
+			outputter.output(documento, new FileOutputStream(archivoConfPrincipal));
+		} catch ( IOException ioe ) {
+			System.err.println("No se pudo escribor configuración principal.");
 		}
 	}
 	
