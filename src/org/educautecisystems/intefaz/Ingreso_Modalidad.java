@@ -4,7 +4,6 @@
  */
 package org.educautecisystems.intefaz;
 
-import java.util.Date;
 import java.util.List;
 import org.educautecisystems.controladores.ModalidadJpaController;
 import org.educautecisystems.core.Sistema;
@@ -196,7 +195,7 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
         for ( Modalidad modalidad:modalidades ) {
             System.out.println(modalidad.getNombre());
             ComboIngTi.addItem(new ObjComboBoxModalidad(modalidad));
-//            textIniHoraA.getText(new getHoraInicio());
+//            textIniHoraA.getText(new Calender.getHoraInicio());
 //            textFinHoraA.getText(new getHoraFinal());
         }
       }
