@@ -46,10 +46,10 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="textFinHoraB" min="-2" pref="70" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                                      <Component id="ButtonIngreso" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jButCancelar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                                      <Component id="buttonIngreso" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="ButCancelar" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -114,10 +114,10 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="textIniHoraB" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="textFinHoraB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ButtonIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,20 +158,20 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TextIngreso">
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonIngreso">
+    <Component class="javax.swing.JButton" name="buttonIngreso">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ingresar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonIngresoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonIngresoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButCancelar">
+    <Component class="javax.swing.JButton" name="ButCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButCancelarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButCancelarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

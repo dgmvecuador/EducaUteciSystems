@@ -10,7 +10,6 @@ import org.educautecisystems.core.Sistema;
 import org.educautecisystems.entidades.Modalidad;
 import org.educautecisystems.intefaz.objects.ObjComboBoxModalidad;
 
-
 /**
  *
  * @author Shadow2013
@@ -39,8 +38,8 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
         ComboIngTi = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         TextIngreso = new javax.swing.JTextField();
-        ButtonIngreso = new javax.swing.JButton();
-        jButCancelar = new javax.swing.JButton();
+        buttonIngreso = new javax.swing.JButton();
+        ButCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         textIniHoraB = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -65,17 +64,17 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("Ingrese Nuevo:");
 
-        ButtonIngreso.setText("Ingresar");
-        ButtonIngreso.addActionListener(new java.awt.event.ActionListener() {
+        buttonIngreso.setText("Ingresar");
+        buttonIngreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonIngresoActionPerformed(evt);
+                buttonIngresoActionPerformed(evt);
             }
         });
 
-        jButCancelar.setText("Cancelar");
-        jButCancelar.addActionListener(new java.awt.event.ActionListener() {
+        ButCancelar.setText("Cancelar");
+        ButCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButCancelarActionPerformed(evt);
+                ButCancelarActionPerformed(evt);
             }
         });
 
@@ -123,10 +122,10 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel7))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(textFinHoraB, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(64, 64, 64)
-                                        .addComponent(ButtonIngreso)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButCancelar))))
+                                        .addGap(68, 68, 68)
+                                        .addComponent(buttonIngreso)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ButCancelar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,53 +173,54 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textIniHoraB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFinHoraB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonIngreso)
-                    .addComponent(jButCancelar))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(buttonIngreso)
+                    .addComponent(ButCancelar))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     private void cargarModalidades() {
         ModalidadJpaController controladorModalidad = new ModalidadJpaController(Sistema.getEmf());
         List<Modalidad> modalidades = controladorModalidad.findModalidadEntities();
-        
+
         /* Cerrar ventana cuando no hay materias */
         if (modalidades.isEmpty()) {
             Sistema.mostrarMensajeError("No se han ingresado modalidades.");
             this.dispose();
             return;
         }
-        
-        for ( Modalidad modalidad:modalidades ) {
+
+        for (Modalidad modalidad : modalidades) {
             System.out.println(modalidad.getNombre());
             ComboIngTi.addItem(new ObjComboBoxModalidad(modalidad));
 //            textIniHoraA.getText(new Calender.getHoraInicio());
 //            textFinHoraA.getText(new getHoraFinal());
         }
-      }
-     
+    }
+
     private boolean comprobarModalidad() {
-        ModalidadJpaController controladorModalidad = 
+        ModalidadJpaController controladorModalidad =
                 new ModalidadJpaController(Sistema.getEmf());
-        List <Modalidad> modalidades = controladorModalidad.findModalidadEntities();
-        
-        for ( Modalidad modalidad: modalidades ) {
-            if ( modalidad.getNombre().equals(TextIngreso.getText()) ) {
+        List<Modalidad> modalidades = controladorModalidad.findModalidadEntities();
+
+        for (Modalidad modalidad : modalidades) {
+            if (modalidad.getNombre().equals(TextIngreso.getText())) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
-    private void ButtonIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonIngresoActionPerformed
-        if ( TextIngreso.getText().isEmpty()|| textIniHoraB.getText().isEmpty() || textFinHoraB.getText().isEmpty()) {
+
+    private void buttonIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIngresoActionPerformed
+        if (TextIngreso.getText().isEmpty() || textIniHoraB.getText().isEmpty() || textFinHoraB.getText().isEmpty()) {
             Sistema.mostrarMensajeError("Por favor llene el campos.");
             return;
         }
 
-        if ( !comprobarModalidad() ) {
+        if (!comprobarModalidad()) {
             Sistema.mostrarMensajeError("La Modalidad ya existe.");
             return;
         }
@@ -232,27 +232,26 @@ public class Ingreso_Modalidad extends javax.swing.JInternalFrame {
 //        nuevoModalidad.setHoraFinal(Date.parse(textIniHoraB.getText()) );
 
         ModalidadJpaController controlandorModalidad =
-        new ModalidadJpaController(Sistema.getEmf());
+                new ModalidadJpaController(Sistema.getEmf());
 
         try {
             controlandorModalidad.create(nuevoModalidad);
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             Sistema.mostrarMensajeError("No se pudo crear la nueva modalidad.");
         }
 
         Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente la modalidad.");
-        
-    }//GEN-LAST:event_ButtonIngresoActionPerformed
 
-    private void jButCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButCancelarActionPerformed
+    }//GEN-LAST:event_buttonIngresoActionPerformed
+
+    private void ButCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButCancelarActionPerformed
-
+    }//GEN-LAST:event_ButCancelarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonIngreso;
+    private javax.swing.JButton ButCancelar;
     private javax.swing.JComboBox ComboIngTi;
     private javax.swing.JTextField TextIngreso;
-    private javax.swing.JButton jButCancelar;
+    private javax.swing.JButton buttonIngreso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
