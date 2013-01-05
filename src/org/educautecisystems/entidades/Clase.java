@@ -6,9 +6,7 @@ package org.educautecisystems.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,12 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,8 +39,6 @@ public class Clase implements Serializable {
     @Column(name = "Fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clase")
-    private List<ClaseHasEstudiante> claseHasEstudianteList;
     @JoinColumn(name = "Materia_Id_Materia", referencedColumnName = "Id_Materia", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Materia materia;
@@ -81,15 +75,6 @@ public class Clase implements Serializable {
         this.fecha = fecha;
     }
 
-    @XmlTransient
-    public List<ClaseHasEstudiante> getClaseHasEstudianteList() {
-        return claseHasEstudianteList;
-    }
-
-    public void setClaseHasEstudianteList(List<ClaseHasEstudiante> claseHasEstudianteList) {
-        this.claseHasEstudianteList = claseHasEstudianteList;
-    }
-
     public Materia getMateria() {
         return materia;
     }
@@ -120,7 +105,7 @@ public class Clase implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.entidades.Clase[ clasePK=" + clasePK + " ]";
+        return "org.educautecisystems.endidades.Clase[ clasePK=" + clasePK + " ]";
     }
     
 }

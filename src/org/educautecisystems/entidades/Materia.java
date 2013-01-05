@@ -125,7 +125,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.entidades.Materia[ idMateria=" + idMateria + " ]";
+        return "org.educautecisystems.endidades.Materia[ idMateria=" + idMateria + " ]";
     }
     
 }

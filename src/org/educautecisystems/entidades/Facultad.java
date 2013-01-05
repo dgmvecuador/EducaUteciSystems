@@ -102,7 +102,7 @@ public class Facultad implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.entidades.Facultad[ idFacultad=" + idFacultad + " ]";
+        return "org.educautecisystems.endidades.Facultad[ idFacultad=" + idFacultad + " ]";
     }
     
 }

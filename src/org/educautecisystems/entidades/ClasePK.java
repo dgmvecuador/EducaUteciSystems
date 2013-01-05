@@ -72,7 +72,7 @@ public class ClasePK implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.entidades.ClasePK[ idClase=" + idClase + ", materiaIdMateria=" + materiaIdMateria + " ]";
+        return "org.educautecisystems.endidades.ClasePK[ idClase=" + idClase + ", materiaIdMateria=" + materiaIdMateria + " ]";
     }
     
 }
