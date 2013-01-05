@@ -1,0 +1,5 @@
+CHAT-SERVER 1.0
+Command: login
+Real-Name: Name LastName
+Nickname: nlastname
+

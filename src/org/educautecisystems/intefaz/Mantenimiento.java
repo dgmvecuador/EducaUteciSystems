@@ -30,9 +30,16 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jComboAdmi = new javax.swing.JComboBox();
         jTextUsua = new javax.swing.JTextField();
         jtextClave = new javax.swing.JTextField();
+        jComboBox2 = new javax.swing.JComboBox();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -93,6 +100,7 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(39, 39, 39)
                         .addComponent(jButton4))
@@ -131,7 +139,9 @@ public class Mantenimiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
+                    .addComponent(jButton4))
                 .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();

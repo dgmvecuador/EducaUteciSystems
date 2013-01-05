@@ -1,0 +1,7 @@
+CHAT-SERVER 1.0
+Command: sendMessage
+To: [all|{user-id}|{user-id1,user-id2,..}]
+User-Token: {md5-token}
+Content-Length: {size in bytes}
+
+{message}

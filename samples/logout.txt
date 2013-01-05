@@ -1,0 +1,4 @@
+CHAT-SERVER 1.0
+Command: logout
+User-Token: {md5-token}
+
