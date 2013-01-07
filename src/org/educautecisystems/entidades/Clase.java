@@ -105,7 +105,7 @@ public class Clase implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.endidades.Clase[ clasePK=" + clasePK + " ]";
+        return "org.educautecisystems.entidades.Clase[ clasePK=" + clasePK + " ]";
     }
     
 }

@@ -31,6 +31,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+//        MenuDoce.setVisible(false);
+//        MenuAdmi.setVisible(false);
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 

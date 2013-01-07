@@ -174,6 +174,7 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
                         }
         
                     Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente la materia.");
+                    this.dispose();
                    
     }//GEN-LAST:event_ButtonIngresoActionPerformed
 

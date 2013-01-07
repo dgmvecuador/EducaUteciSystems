@@ -72,7 +72,7 @@ public class DocentePK implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.endidades.DocentePK[ idDocente=" + idDocente + ", idMateria=" + idMateria + " ]";
+        return "org.educautecisystems.entidades.DocentePK[ idDocente=" + idDocente + ", idMateria=" + idMateria + " ]";
     }
     
 }

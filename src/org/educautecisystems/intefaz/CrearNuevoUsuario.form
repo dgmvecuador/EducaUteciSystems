@@ -87,7 +87,7 @@
                   <Component id="jComboBoxMateria" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="buttonRegistrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>

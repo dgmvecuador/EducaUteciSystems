@@ -101,7 +101,7 @@ public class Administrador implements Serializable {
 
     @Override
     public String toString() {
-        return "org.educautecisystems.endidades.Administrador[ idAdministrador=" + idAdministrador + " ]";
+        return "org.educautecisystems.entidades.Administrador[ idAdministrador=" + idAdministrador + " ]";
     }
     
 }

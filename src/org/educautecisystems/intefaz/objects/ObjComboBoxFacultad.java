@@ -28,14 +28,14 @@ public class ObjComboBoxFacultad {
     }
 
     /**
-     * @return the materia
+     * @return the facultad
      */
     public Facultad getFacultad() {
         return facultad;
     }
 
     /**
-     * @param materia the materia to set
+     * @param facultad the facultad to set
      */
     public void setFacultad(Facultad facultad) {
         this.facultad = facultad;

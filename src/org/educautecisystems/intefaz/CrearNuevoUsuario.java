@@ -68,7 +68,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         List <Docente> docentes = controladorDocente.findDocenteEntities();
         
         for ( Docente docente:docentes ) {
-            if ( docente.getUsuario().equals(txtNombre.getText()) ) {
+            if ( docente.getUsuario().equals(txtNombre.getText())) {
                 return false;
             }
         }

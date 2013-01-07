@@ -180,6 +180,7 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
                         }
         
                     Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente la facultad.");
+                    this.dispose();
              
     }//GEN-LAST:event_ButtonIngresoActionPerformed
 
