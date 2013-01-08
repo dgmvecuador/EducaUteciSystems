@@ -1,0 +1,5 @@
+CHAT-SERVER 1.0
+Command: getListFiles
+User-Token: {md5-token}
+Format: XML
+

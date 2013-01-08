@@ -42,6 +42,7 @@ public class ChatConstants {
 	/* Commands */
 	public static final String COMMAND_LOGIN =			"login";
 	public static final String COMMAND_GET_USERS =		"getListUsers";
+	public static final String COMMAND_GET_FILES =		"getListFiles";
 	public static final String COMMAND_LOGOUT =			"logout";
 	public static final String COMMAND_SEND_MESSAGE =	"sendMessage";
 	

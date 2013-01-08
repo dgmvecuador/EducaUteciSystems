@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.ChatMessage;
+import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.UserChat;
 
@@ -301,6 +302,46 @@ public class AtenderClienteServidor extends Thread {
 			
 			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
 			sendResponseOk();
+			return;
+		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_FILES) ) {
+			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String format =		header.getVar(ChatConstants.LABEL_FORMAT);
+			
+			/* Must be a valid token */
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
+			}
+			
+			/* Only XML is valid */
+			if ( !format.equals("XML") ) {
+				logChatManager.logError("No se soporta el formato: " + format);
+				sendResponseError("Format not supported.");
+				return;
+			}
+			
+			ArrayList<FileChat> files = Sistema.getFileChatList();
+			String xmlFiles = FileChat.generateXMLFromList(files);
+			long size = xmlFiles.getBytes().length;
+			System.out.println(xmlFiles);
+			
+			/* Genering response */
+			String headerResponse = "";
+			headerResponse += 
+					generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_OK);
+			headerResponse +=
+					generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+size);
+			headerResponse += ChatConstants.CHAT_END_HEADER;
+			headerResponse += xmlFiles;
+			
+			salida.write(headerResponse.getBytes());
+			salida.flush();
+			
+			detenerCliente();
 			return;
 		}
 		
