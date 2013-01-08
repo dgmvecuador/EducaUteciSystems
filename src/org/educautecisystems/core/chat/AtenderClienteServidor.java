@@ -221,7 +221,6 @@ public class AtenderClienteServidor extends Thread {
 			ArrayList<UserChat> users = ServidorChat.getUserList();
 			String xmlUsers = UserChat.generateXMLFromList(users);
 			long size = xmlUsers.getBytes().length;
-			System.out.println(xmlUsers);
 			
 			/* Genering response */
 			String headerResponse = "";
@@ -326,7 +325,6 @@ public class AtenderClienteServidor extends Thread {
 			ArrayList<FileChat> files = Sistema.getFileChatList();
 			String xmlFiles = FileChat.generateXMLFromList(files);
 			long size = xmlFiles.getBytes().length;
-			System.out.println(xmlFiles);
 			
 			/* Genering response */
 			String headerResponse = "";
