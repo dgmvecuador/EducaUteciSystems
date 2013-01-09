@@ -1,6 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *  ChatServerInterface.java
+ *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.educautecisystems.intefaz;
 
@@ -194,7 +207,8 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         Docente modificador = docenteMantenimiento.getDocente();
         modificador.setUsuario(jtextUsuario.getText());
         modificador.setContrasena(new String(jPasClave.getPassword()));
-        
+        String maselect = (String) cmbMateria.getSelectedItem();
+        modificador.setMateria(maselect);
         try {
             controladorDocente.edit(modificador);
               Sistema.mostrarMensajeInformativo("Se a modificado el docente con exito");      
@@ -236,8 +250,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DocenteMantenimiento docenteMantenimiento = (DocenteMantenimiento) cmbDocentes.getSelectedItem();
         jtextUsuario.setText(docenteMantenimiento.getDocente().getUsuario());  
-//        cmbMateria.
-//                setSelectedItem(docenteMantenimiento.getDocente().getMateria());
+//        cmbMateria.setSelectedItem(docenteMantenimiento.getDocente().getMateria());
 //                (docenteMantenimiento.getDocente().getMateria());
     }//GEN-LAST:event_cmbDocentesItemStateChanged
 

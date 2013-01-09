@@ -1,7 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *  ChatServerInterface.java
+ *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.educautecisystems.intefaz;
 
 import java.util.List;
@@ -161,19 +175,32 @@ private VentanaPrincipal principal;
        if ( txtUsuario.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { 
             Sistema.mostrarMensajeError("Por favor llene todos los campos.");
             return;
-        }
-        if (!new String (jPasClave.getPassword()).equals(new String(jConfClave.getPassword()))) {
+       }
+        int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
+        
+        if ( idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR ) {
+              
+        if (new String (txtUsuario.getText()).equals(new String(jConfClave.getPassword()))) {
+        if (new String (txtClave.getPassword().equals(new String(jConfClave.getPassword())))) {
             Sistema.mostrarMensajeError("Las contraseña no conciden");
             return;
         }
+        
         AdministradorJpaController controladorAdministrador = new AdministradorJpaController(Sistema.getEmf());
         comprobarUsuarioAdministrador administradorMantenimiento = (comprobarUsuarioAdministrador) txtUsuario.getText();
         
         Administrador modificador = administradorMantenimiento.getAdministrador();
+        //administrador  principal.MostrarAdministrador();       
+       }
+       }
+       else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
+           //docente        principal.MostrarDocente();
+       }
        
-       
-//administrador  principal.MostrarAdministrador();
-//docente        principal.MostrarDocente();
+       else 
+        {
+            Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
+        }
     }//GEN-LAST:event_ButtonIngresoActionPerformed
 
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
