@@ -36,6 +36,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
+    public void MostrarAdministrador()
+    {
+        MenuAdmi.setVisible(true);
+    }
+    
+    public void MostrarDocente()
+    {
+        MenuDoce.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +67,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemChatDoc = new javax.swing.JMenuItem();
         MenuAdmi = new javax.swing.JMenu();
         MenuItemNuePer = new javax.swing.JMenuItem();
-        MenuItemMan = new javax.swing.JMenuItem();
+        MenManteni = new javax.swing.JMenu();
+        MenManteAdmin = new javax.swing.JMenuItem();
+        MenManteDoce = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         MenuItemIngFac = new javax.swing.JMenuItem();
         MenuItemIngMat = new javax.swing.JMenuItem();
@@ -135,13 +146,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         MenuAdmi.add(MenuItemNuePer);
 
-        MenuItemMan.setText("Mantenimieto ");
-        MenuItemMan.addActionListener(new java.awt.event.ActionListener() {
+        MenManteni.setText("Mantenimiento");
+
+        MenManteAdmin.setText("Administador");
+        MenManteAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemManActionPerformed(evt);
+                MenManteAdminActionPerformed(evt);
             }
         });
-        MenuAdmi.add(MenuItemMan);
+        MenManteni.add(MenManteAdmin);
+
+        MenManteDoce.setText("Docente");
+        MenManteDoce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenManteDoceActionPerformed(evt);
+            }
+        });
+        MenManteni.add(MenManteDoce);
+
+        MenuAdmi.add(MenManteni);
 
         jMenu1.setText("Ingreso Nuevos Datos");
 
@@ -184,7 +207,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuItemIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngresoActionPerformed
-       Ingreso usuarios = new Ingreso();
+        Ingreso usuarios = new Ingreso(this);
         escritorioPrincipal.add(usuarios);
         usuarios.setVisible(true);
     }//GEN-LAST:event_MenuItemIngresoActionPerformed
@@ -205,11 +228,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         Est.setVisible(true);
     }//GEN-LAST:event_MenuItemNuePerActionPerformed
 
-    private void MenuItemManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemManActionPerformed
-        Mantenimiento Est = new Mantenimiento();
+    private void MenManteDoceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenManteDoceActionPerformed
+        MantenimientoDocente Est = new MantenimientoDocente();
         escritorioPrincipal.add(Est);
         Est.setVisible(true);
-    }//GEN-LAST:event_MenuItemManActionPerformed
+    }//GEN-LAST:event_MenManteDoceActionPerformed
 
     private void MenuItemIngMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngMatActionPerformed
         Ingreso_Materia Est = new Ingreso_Materia();
@@ -235,8 +258,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         csi.setVisible(true);
     }//GEN-LAST:event_MenuItemInSerChaActionPerformed
 
+    private void MenManteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenManteAdminActionPerformed
+        // TODO add your handling code here:
+        MantenimientoAdministrador dea = new MantenimientoAdministrador();
+        escritorioPrincipal.add(dea);
+        dea.setVisible(true);
+    }//GEN-LAST:event_MenManteAdminActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenManteAdmin;
+    private javax.swing.JMenuItem MenManteDoce;
+    private javax.swing.JMenu MenManteni;
     private javax.swing.JMenu MenuAdmi;
     private javax.swing.JMenu MenuAyuda;
     private javax.swing.JMenu MenuDoce;
@@ -248,7 +281,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemIngFac;
     private javax.swing.JMenuItem MenuItemIngMat;
     private javax.swing.JMenuItem MenuItemIngreso;
-    private javax.swing.JMenuItem MenuItemMan;
     private javax.swing.JMenuItem MenuItemNuePer;
     private javax.swing.JMenuItem MenuItemSalir;
     private javax.swing.JDesktopPane escritorioPrincipal;

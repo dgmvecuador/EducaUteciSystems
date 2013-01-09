@@ -84,7 +84,7 @@
                   <Component id="ButtonIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace pref="56" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -125,9 +125,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsuario">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsuarioActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtClave">
     </Component>

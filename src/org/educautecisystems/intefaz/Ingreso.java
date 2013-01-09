@@ -18,11 +18,14 @@ import org.educautecisystems.entidades.Docente;
 public class Ingreso extends javax.swing.JInternalFrame {
 private static final int TIPO_USUARIO_ADMINISTRADOR =0;
 private static final int TIPO_USUARIO_DOCENTE =1;  
+private VentanaPrincipal principal;
     /**
      * Creates new form Ingreso
      */
-    public Ingreso() {
+   
+    public Ingreso(VentanaPrincipal principal) {
         initComponents();
+        this.principal = principal;
     }
 
     /**
@@ -92,12 +95,6 @@ private static final int TIPO_USUARIO_DOCENTE =1;
             }
         });
 
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Tipo:");
 
         tipoUsuarioCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admistrador", "Docente" }));
@@ -153,7 +150,7 @@ private static final int TIPO_USUARIO_DOCENTE =1;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonIngreso)
                     .addComponent(buttonCancelar))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,68 +162,23 @@ private static final int TIPO_USUARIO_DOCENTE =1;
             Sistema.mostrarMensajeError("Por favor llene todos los campos.");
             return;
         }
+        if (!new String (jPasClave.getPassword()).equals(new String(jConfClave.getPassword()))) {
+            Sistema.mostrarMensajeError("Las contraseña no conciden");
+            return;
+        }
+        AdministradorJpaController controladorAdministrador = new AdministradorJpaController(Sistema.getEmf());
+        comprobarUsuarioAdministrador administradorMantenimiento = (comprobarUsuarioAdministrador) txtUsuario.getText();
+        
+        Administrador modificador = administradorMantenimiento.getAdministrador();
        
-//        int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
-//        
-//        if ( idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR ) {
-//            if ( !comprobarUsuarioAdministrador() ) {
-//                Sistema.mostrarMensajeError("Administrador ya existe.");
-//                return;
-//            }
-//            
-//            Administrador nuevoAdministrador = new Administrador();
-//            
-//            nuevoAdministrador.setUsuario(txtNombre.getText());
-//            nuevoAdministrador.setContrasena(new String(txtClave.getPassword()));
-//            
-//            AdministradorJpaController controlandorAdministrador = 
-//                    new AdministradorJpaController(Sistema.getEmf());
-//            
-//            try {
-//                controlandorAdministrador.create(nuevoAdministrador);
-//            } catch ( Exception e ) {
-//                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
-//            }
-//            
-//            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
-//            this.setVisible(false);
-//            this.dispose();
-//            
-//        } else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
-//            if ( !comprobarUsuarioDocente() ) {
-//                Sistema.mostrarMensajeError("Docente ya existe.");
-//                return;
-//            }
-//            Docente nuevoDocente = new Docente();
-//            
-//            nuevoDocente.setUsuario(txtNombre.getText());
-//            nuevoDocente.setContrasena(new String(txtClave.getPassword()));
-//            ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
-//            nuevoDocente.setMateria(materiaActual.getMateria());          
-//            DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
-//            
-//            try {
-//                controladorDocente.create(nuevoDocente);
-//            } catch ( Exception e ) {
-//                Sistema.mostrarMensajeError("No se pudo crear el nuevo usuario.");
-//            }
-//            
-//            Sistema.mostrarMensajeInformativo("Se ha ingresado satisfactoriamente el usuario.");
-//            this.setVisible(false);
-//            this.dispose();
-//        } else {
-//            Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
-//        }   
        
+//administrador  principal.MostrarAdministrador();
+//docente        principal.MostrarDocente();
     }//GEN-LAST:event_ButtonIngresoActionPerformed
 
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
-
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonIngreso;
