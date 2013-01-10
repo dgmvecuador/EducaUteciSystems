@@ -63,7 +63,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemArchivo = new javax.swing.JMenu();
         MenuItemIngreso = new javax.swing.JMenuItem();
         MenuItemSalir = new javax.swing.JMenuItem();
-        MenuAyuda = new javax.swing.JMenu();
         MenuEstu = new javax.swing.JMenu();
         MenuItemChatEst = new javax.swing.JMenuItem();
         MenuDoce = new javax.swing.JMenu();
@@ -77,6 +76,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         MenuItemIngFac = new javax.swing.JMenuItem();
         MenuItemIngMat = new javax.swing.JMenuItem();
+        MenuAyuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EducaUteciSystems");
@@ -104,9 +104,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemArchivo.add(MenuItemSalir);
 
         jMenuBar1.add(MenuItemArchivo);
-
-        MenuAyuda.setText("Ayuda");
-        jMenuBar1.add(MenuAyuda);
 
         MenuEstu.setText("Estudiante");
 
@@ -191,6 +188,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuAdmi.add(jMenu1);
 
         jMenuBar1.add(MenuAdmi);
+
+        MenuAyuda.setText("Ayuda");
+        jMenuBar1.add(MenuAyuda);
 
         setJMenuBar(jMenuBar1);
 

@@ -33,11 +33,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="MenuAyuda">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ayuda"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="MenuEstu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Estudiante"/>
@@ -136,6 +131,11 @@
               </SubComponents>
             </Menu>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="MenuAyuda">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ayuda"/>
+          </Properties>
         </Menu>
       </SubComponents>
     </Menu>
