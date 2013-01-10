@@ -31,19 +31,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-//        MenuDoce.setVisible(false);
-//        MenuAdmi.setVisible(false);
+        MenuDoce.setVisible(false);
+        MenuAdmi.setVisible(false);
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     public void MostrarAdministrador()
     {
         MenuAdmi.setVisible(true);
+        MenuEstu.setVisible(false);
     }
     
     public void MostrarDocente()
     {
         MenuDoce.setVisible(true);
+        MenuEstu.setVisible(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.

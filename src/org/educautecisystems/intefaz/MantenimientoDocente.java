@@ -17,6 +17,7 @@
  */
 package org.educautecisystems.intefaz;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.educautecisystems.controladores.DocenteJpaController;
 import org.educautecisystems.controladores.MateriaJpaController;
@@ -32,7 +33,7 @@ import org.educautecisystems.intefaz.objects.ObjComboBoxMateria;
  * @author Shadow2012
  */
 public class MantenimientoDocente extends javax.swing.JInternalFrame {
-
+    private ArrayList <ObjComboBoxMateria> objMaterias = new ArrayList<ObjComboBoxMateria>();
     /**
      * Creates new form MatenimientoDocente
      */
@@ -52,6 +53,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         {
             ObjComboBoxMateria objMateria = new ObjComboBoxMateria(materia);
             cmbMateria.addItem(objMateria);
+            objMaterias.add(objMateria);
         }
     }
 
@@ -207,8 +209,8 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         Docente modificador = docenteMantenimiento.getDocente();
         modificador.setUsuario(jtextUsuario.getText());
         modificador.setContrasena(new String(jPasClave.getPassword()));
-        String maselect = (String) cmbMateria.getSelectedItem();
-        modificador.setMateria(maselect);
+        ObjComboBoxMateria maselect = (ObjComboBoxMateria) cmbMateria.getSelectedItem();
+        modificador.setMateria(maselect.getMateria());
         try {
             controladorDocente.edit(modificador);
               Sistema.mostrarMensajeInformativo("Se a modificado el docente con exito");      
@@ -249,9 +251,16 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
     private void cmbDocentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDocentesItemStateChanged
         // TODO add your handling code here:
         DocenteMantenimiento docenteMantenimiento = (DocenteMantenimiento) cmbDocentes.getSelectedItem();
-        jtextUsuario.setText(docenteMantenimiento.getDocente().getUsuario());  
-//        cmbMateria.setSelectedItem(docenteMantenimiento.getDocente().getMateria());
-//                (docenteMantenimiento.getDocente().getMateria());
+        jtextUsuario.setText(docenteMantenimiento.getDocente().getUsuario());
+        ObjComboBoxMateria objMateria = null;
+        
+        /* Encontrar la materia que corresponde. */
+        for ( ObjComboBoxMateria ocmm:objMaterias ) {
+            if ( ocmm.getMateria().getIdMateria() == docenteMantenimiento.getDocente().getMateria().getIdMateria() ) {
+                objMateria = ocmm;
+            }
+        }
+        cmbMateria.setSelectedItem(objMateria);//      
     }//GEN-LAST:event_cmbDocentesItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

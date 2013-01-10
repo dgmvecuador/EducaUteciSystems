@@ -172,33 +172,33 @@ private VentanaPrincipal principal;
 
     private void ButtonIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonIngresoActionPerformed
         
-       if ( txtUsuario.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) { 
+        if (txtUsuario.getText().isEmpty() || new String(txtClave.getPassword()).isEmpty()) {
             Sistema.mostrarMensajeError("Por favor llene todos los campos.");
             return;
-       }
-        int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
-        
-        if ( idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR ) {
-              
-        if (new String (txtUsuario.getText()).equals(new String(jConfClave.getPassword()))) {
-        if (new String (txtClave.getPassword().equals(new String(jConfClave.getPassword())))) {
-            Sistema.mostrarMensajeError("Las contraseña no conciden");
-            return;
         }
-        
-        AdministradorJpaController controladorAdministrador = new AdministradorJpaController(Sistema.getEmf());
-        comprobarUsuarioAdministrador administradorMantenimiento = (comprobarUsuarioAdministrador) txtUsuario.getText();
-        
-        Administrador modificador = administradorMantenimiento.getAdministrador();
-        //administrador  principal.MostrarAdministrador();       
-       }
-       }
-       else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
-           //docente        principal.MostrarDocente();
-       }
-       
-       else 
-        {
+        int idTipoUsuario = tipoUsuarioCombobox.getSelectedIndex();
+
+        if (idTipoUsuario == TIPO_USUARIO_ADMINISTRADOR) {
+            String user = txtUsuario.getText();
+            String password = new String (txtClave.getPassword());
+            
+            AdministradorJpaController controladorAdministrador = new AdministradorJpaController(Sistema.getEmf());
+            List <Administrador> administradores = controladorAdministrador.findAdministradorEntities();
+            
+            for ( Administrador administrador:administradores ) {
+                if ( administrador.getUsuario().equals(user) && administrador.getContrasena().equals(password) ) {
+                    principal.MostrarAdministrador();
+                    this.setVisible(false);
+                    this.dispose();
+                    Sistema.mostrarMensajeInformativo("Sesión de administrador ingresada correctamente.");
+                    return;
+                }
+            }
+            Sistema.mostrarMensajeError("Contraseña incorrecta o usuario no existen.");
+            return;
+        } else if (idTipoUsuario == TIPO_USUARIO_DOCENTE) {
+            //docente        principal.MostrarDocente();
+        } else {
             Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
         }
     }//GEN-LAST:event_ButtonIngresoActionPerformed
