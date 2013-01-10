@@ -17,6 +17,8 @@
  */
 package org.educautecisystems.core.chat;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -337,6 +339,64 @@ public class AtenderClienteServidor extends Thread {
 			headerResponse += xmlFiles;
 			
 			salida.write(headerResponse.getBytes());
+			salida.flush();
+			
+			detenerCliente();
+			return;
+		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_FILE) ) {
+			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String fileName =	header.getVar(ChatConstants.LABEL_FILE_NAME);
+			
+			/* Must be a valid token */
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
+			}
+			
+			/* Don't allow other folder file */
+			fileName = fileName.replace("/", "_");
+			File folderShare = Sistema.getShareFolder();
+			
+			/* Don't allow "null" errors. */
+			if ( folderShare == null ) {
+				sendResponseError("Share folder not founnd.");
+				return;
+			}
+			
+			File fileResponse = new File(folderShare, fileName);
+			if ( !fileResponse.exists() ) {
+				sendResponseError("File not found.");
+				return;
+			}
+			
+			long fileSize = fileResponse.length();
+			
+			if ( fileSize <= 0 ) {
+				sendResponseError("File has a 0 size.");
+				return;
+			}
+			
+			StringBuilder response = new StringBuilder();
+			response.append(
+					generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND, 
+					ChatConstants.RESPONSE_OK));
+			response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+fileSize));
+			response.append(ChatConstants.CHAT_END_HEADER);
+			
+			FileInputStream fis = new FileInputStream(fileResponse);
+			int singleByte = fis.read();
+			
+			while ( singleByte != -1 ) {
+				response.append((char)singleByte);
+				singleByte = fis.read();
+			}
+			
+			fis.close();
+			
+			salida.write(response.toString().getBytes());
 			salida.flush();
 			
 			detenerCliente();

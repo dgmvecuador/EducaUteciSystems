@@ -284,4 +284,8 @@ public class Sistema {
 		
 		return files;
 	}
+	
+	public static File getShareFolder() {
+		return new File (pathShareFolder);
+	}
 }
