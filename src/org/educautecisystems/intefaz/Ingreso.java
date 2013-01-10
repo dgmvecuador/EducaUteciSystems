@@ -197,7 +197,21 @@ private VentanaPrincipal principal;
             Sistema.mostrarMensajeError("Contraseña incorrecta o usuario no existen.");
             return;
         } else if (idTipoUsuario == TIPO_USUARIO_DOCENTE) {
-            //docente        principal.MostrarDocente();
+            String user = txtUsuario.getText();
+            String password = new String (txtClave.getPassword());
+            
+            DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
+            List <Docente> docentes = controladorDocente.findDocenteEntities();
+            
+            for ( Docente docente:docentes) {
+                if (docente.getUsuario().equals(user) && docente.getContrasena().equals(password)){
+                    principal.MostrarDocente();
+                    this.setVisible(false);
+                    this.dispose();
+                    Sistema.mostrarMensajeInformativo("Sesión de Docente ingresada correctamente");
+                    return;
+                }
+            }
         } else {
             Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
         }

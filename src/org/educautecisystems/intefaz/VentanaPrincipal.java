@@ -40,12 +40,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     {
         MenuAdmi.setVisible(true);
         MenuEstu.setVisible(false);
+        MenuItemIngreso.setEnabled(false);
     }
     
     public void MostrarDocente()
     {
         MenuDoce.setVisible(true);
         MenuEstu.setVisible(false);
+        MenuItemIngreso.setEnabled(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
