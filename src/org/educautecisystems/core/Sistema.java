@@ -70,12 +70,23 @@ public class Sistema {
     public static void main( String []args ) {
         seleccionadoLookAndFeel();
 		cargarCarpeta();
-		inicializarSistema( confBaseDeDatos.getUser(),confBaseDeDatos.getPassword() );
+		inicializarSistema( confBaseDeDatos.getUser(),confBaseDeDatos.getPassword(), 
+                        confBaseDeDatos.getHost(), confBaseDeDatos.getPort() );
         new VentanaPrincipal().setVisible(true);
     }
     
-    private static void inicializarSistema( String usuario, String password ) {
+    private static String generarJDBC_URL( String host, String port, String esquema ) {
+        System.out.println("Se conecta con el servidor:");
+        System.out.println("\tHost: "+host);
+        System.out.println("\tPuerto: "+port);
+        System.out.println("\tEsquema: "+esquema);
+        System.out.println("\tBase de datos: MySQL");
+        return "jdbc:mysql://"+host+":"+port+"/"+esquema+"?zeroDateTimeBehavior=convertToNull";
+    }
+    
+    private static void inicializarSistema( String usuario, String password, String host, String port ) {
         Map parametros = new HashMap();
+        parametros.put("javax.persistence.jdbc.url", generarJDBC_URL(host, port, "mydb"));
         parametros.put("javax.persistence.jdbc.password", password);
         parametros.put("javax.persistence.jdbc.user", usuario);
         
