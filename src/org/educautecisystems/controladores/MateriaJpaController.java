@@ -9,14 +9,13 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.educautecisystems.entidades.Clase;
+import org.educautecisystems.entidades.Docente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.educautecisystems.controladores.exceptions.IllegalOrphanException;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
-import org.educautecisystems.entidades.Docente;
 import org.educautecisystems.entidades.Materia;
 
 /**
@@ -35,9 +34,6 @@ public class MateriaJpaController implements Serializable {
     }
 
     public void create(Materia materia) {
-        if (materia.getClaseList() == null) {
-            materia.setClaseList(new ArrayList<Clase>());
-        }
         if (materia.getDocenteList() == null) {
             materia.setDocenteList(new ArrayList<Docente>());
         }
@@ -45,12 +41,6 @@ public class MateriaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Clase> attachedClaseList = new ArrayList<Clase>();
-            for (Clase claseListClaseToAttach : materia.getClaseList()) {
-                claseListClaseToAttach = em.getReference(claseListClaseToAttach.getClass(), claseListClaseToAttach.getClasePK());
-                attachedClaseList.add(claseListClaseToAttach);
-            }
-            materia.setClaseList(attachedClaseList);
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : materia.getDocenteList()) {
                 docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getDocentePK());
@@ -58,15 +48,6 @@ public class MateriaJpaController implements Serializable {
             }
             materia.setDocenteList(attachedDocenteList);
             em.persist(materia);
-            for (Clase claseListClase : materia.getClaseList()) {
-                Materia oldMateriaOfClaseListClase = claseListClase.getMateria();
-                claseListClase.setMateria(materia);
-                claseListClase = em.merge(claseListClase);
-                if (oldMateriaOfClaseListClase != null) {
-                    oldMateriaOfClaseListClase.getClaseList().remove(claseListClase);
-                    oldMateriaOfClaseListClase = em.merge(oldMateriaOfClaseListClase);
-                }
-            }
             for (Docente docenteListDocente : materia.getDocenteList()) {
                 Materia oldMateriaOfDocenteListDocente = docenteListDocente.getMateria();
                 docenteListDocente.setMateria(materia);
@@ -90,19 +71,9 @@ public class MateriaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Materia persistentMateria = em.find(Materia.class, materia.getIdMateria());
-            List<Clase> claseListOld = persistentMateria.getClaseList();
-            List<Clase> claseListNew = materia.getClaseList();
             List<Docente> docenteListOld = persistentMateria.getDocenteList();
             List<Docente> docenteListNew = materia.getDocenteList();
             List<String> illegalOrphanMessages = null;
-            for (Clase claseListOldClase : claseListOld) {
-                if (!claseListNew.contains(claseListOldClase)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Clase " + claseListOldClase + " since its materia field is not nullable.");
-                }
-            }
             for (Docente docenteListOldDocente : docenteListOld) {
                 if (!docenteListNew.contains(docenteListOldDocente)) {
                     if (illegalOrphanMessages == null) {
@@ -114,13 +85,6 @@ public class MateriaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Clase> attachedClaseListNew = new ArrayList<Clase>();
-            for (Clase claseListNewClaseToAttach : claseListNew) {
-                claseListNewClaseToAttach = em.getReference(claseListNewClaseToAttach.getClass(), claseListNewClaseToAttach.getClasePK());
-                attachedClaseListNew.add(claseListNewClaseToAttach);
-            }
-            claseListNew = attachedClaseListNew;
-            materia.setClaseList(claseListNew);
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
                 docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getDocentePK());
@@ -129,17 +93,6 @@ public class MateriaJpaController implements Serializable {
             docenteListNew = attachedDocenteListNew;
             materia.setDocenteList(docenteListNew);
             materia = em.merge(materia);
-            for (Clase claseListNewClase : claseListNew) {
-                if (!claseListOld.contains(claseListNewClase)) {
-                    Materia oldMateriaOfClaseListNewClase = claseListNewClase.getMateria();
-                    claseListNewClase.setMateria(materia);
-                    claseListNewClase = em.merge(claseListNewClase);
-                    if (oldMateriaOfClaseListNewClase != null && !oldMateriaOfClaseListNewClase.equals(materia)) {
-                        oldMateriaOfClaseListNewClase.getClaseList().remove(claseListNewClase);
-                        oldMateriaOfClaseListNewClase = em.merge(oldMateriaOfClaseListNewClase);
-                    }
-                }
-            }
             for (Docente docenteListNewDocente : docenteListNew) {
                 if (!docenteListOld.contains(docenteListNewDocente)) {
                     Materia oldMateriaOfDocenteListNewDocente = docenteListNewDocente.getMateria();
@@ -181,13 +134,6 @@ public class MateriaJpaController implements Serializable {
                 throw new NonexistentEntityException("The materia with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Clase> claseListOrphanCheck = materia.getClaseList();
-            for (Clase claseListOrphanCheckClase : claseListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Materia (" + materia + ") cannot be destroyed since the Clase " + claseListOrphanCheckClase + " in its claseList field has a non-nullable materia field.");
-            }
             List<Docente> docenteListOrphanCheck = materia.getDocenteList();
             for (Docente docenteListOrphanCheckDocente : docenteListOrphanCheck) {
                 if (illegalOrphanMessages == null) {

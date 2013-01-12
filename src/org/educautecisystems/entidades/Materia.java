@@ -30,8 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"),
     @NamedQuery(name = "Materia.findByIdMateria", query = "SELECT m FROM Materia m WHERE m.idMateria = :idMateria"),
-    @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre"),
-    @NamedQuery(name = "Materia.findByHorario", query = "SELECT m FROM Materia m WHERE m.horario = :horario")})
+    @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre")})
 public class Materia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,10 +41,6 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "Nombre")
     private String nombre;
-    @Column(name = "Horario")
-    private String horario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
-    private List<Clase> claseList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
     private List<Docente> docenteList;
 
@@ -75,23 +70,6 @@ public class Materia implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    @XmlTransient
-    public List<Clase> getClaseList() {
-        return claseList;
-    }
-
-    public void setClaseList(List<Clase> claseList) {
-        this.claseList = claseList;
     }
 
     @XmlTransient

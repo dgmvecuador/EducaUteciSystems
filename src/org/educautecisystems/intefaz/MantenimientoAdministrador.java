@@ -209,8 +209,14 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
         for (Administrador administrador:administradores) {
             AdministradorMantenimiento administradorMantenimiento = new AdministradorMantenimiento(administrador);
             cmbAdministradores.addItem(administradorMantenimiento);
+            
+        if ( cmbAdministradores.getItemCount() == 0 ) {
+             Sistema.mostrarMensajeError("Ya no existen más elementos.");
+            this.setVisible(false);
+            this.dispose();
         }
-         this.dispose();
+       }
+  
     }//GEN-LAST:event_jButElimiActionPerformed
 
     private void jBtuCancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtuCancActionPerformed

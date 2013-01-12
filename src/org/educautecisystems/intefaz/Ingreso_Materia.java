@@ -58,14 +58,6 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
         for ( Materia materia:materias ) {
             ComboIngTi.addItem(new ObjComboBoxMateria(materia));
         }
-                 
-        List<Materia> horarios = controladorMateria.findMateriaEntities();
-        for (Materia horario:horarios)
-        {
-            ObjComboBoxMateria objHorario = new ObjComboBoxMateria(horario);
-            cmbHorario.addItem(objHorario);
-            objHorarios.add(objHorario);
-        }
     }
     
      
@@ -91,10 +83,6 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
         TextIngreso = new javax.swing.JTextField();
         ButtonIngreso = new javax.swing.JButton();
         jButCancelar = new javax.swing.JButton();
-        cmbHorario = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComHorario = new javax.swing.JComboBox();
 
         setTitle("Ingreso de Nueva Materia");
 
@@ -123,14 +111,6 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("Horario");
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setText("Eliga el Horario");
-
-        jComHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diurno", "Nocturno" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,20 +124,11 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(22, 22, 22)
-                                    .addComponent(jLabel5))
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(22, 22, 22)
+                            .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cmbHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ComboIngTi, 0, 289, Short.MAX_VALUE)))
+                            .addComponent(ComboIngTi, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(36, 36, 36)
-                                .addComponent(jComHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(TextIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(ButtonIngreso)
@@ -174,23 +145,15 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(ComboIngTi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(33, 33, 33)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonIngreso)
                     .addComponent(jButCancelar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -209,9 +172,7 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
                     Materia nuevoMateria = new Materia();
         
                     nuevoMateria.setNombre(TextIngreso.getText());
-                    ObjComboBoxMateria maselect = (ObjComboBoxMateria) cmbHorario.getSelectedItem();
-//                    nuevoMateria.setHorario(cmbHorario.getSelectedItem());
-//        
+            
                     MateriaJpaController controlandorMateria =
                             new MateriaJpaController(Sistema.getEmf());
         
@@ -234,12 +195,8 @@ private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMa
     private javax.swing.JButton ButtonIngreso;
     private javax.swing.JComboBox ComboIngTi;
     private javax.swing.JTextField TextIngreso;
-    private javax.swing.JComboBox cmbHorario;
     private javax.swing.JButton jButCancelar;
-    private javax.swing.JComboBox jComHorario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
