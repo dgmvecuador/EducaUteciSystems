@@ -26,16 +26,43 @@ import java.io.File;
  * @author Shadow2012
  */
 public class Chat extends javax.swing.JInternalFrame {
-    private String contenidoReal = "";
+    private VentanaPrincipal ventanaPrincipal;
+    private StringBuffer logChat;
+    
     /**
      * Creates new form ChaPrueba
      */
-    public Chat() {
+    public Chat( VentanaPrincipal ventanaPrincipal ) {
         initComponents();
+        this.ventanaPrincipal = ventanaPrincipal;
+        logChat = new StringBuffer();
     }
     
     private String dameDiretorioActual() {
         return System.getProperty("user.dir");
+    }
+    
+    private void enviarMensaje() {
+        String texto = txtTexto.getText();
+        String directorioActual = dameDiretorioActual();
+        File imgs = new File(directorioActual, "img");
+        File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
+        if ( !emoticon.exists() ) {
+            System.err.println("No existe imagen.\n\t"+emoticon.getAbsolutePath());
+            return;
+        }
+        String regex_emoticon = emoticon.getAbsolutePath().
+                replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+        
+        txtTexto.setText("");
+        
+        String salida = texto.
+                replaceAll(":o", "<img src=\"file:///"+regex_emoticon+"\"/>").
+                replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
+                replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
+        logChat.append("<b><i>Nick:</i></b>&nbsp;").append(salida).append("<br>\n");
+        System.out.println(salida);
+        contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
     }
 
     /**
@@ -107,31 +134,12 @@ public class Chat extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        String texto = txtTexto.getText();
-        String directorioActual = dameDiretorioActual();
-        File imgs = new File(directorioActual, "img");
-        File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
-        if ( !emoticon.exists() ) {
-            System.err.println("No existe imagen.\n\t"+emoticon.getAbsolutePath());
-            return;
-        }
-        String regex_emoticon = emoticon.getAbsolutePath().
-                replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
-        
-        txtTexto.setText("");
-        
-        String salida = texto.
-                replaceAll(":o", "<img src=\"file:///"+regex_emoticon+"\"/>").
-                replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
-                replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
-        contenidoReal += "<b><i>NIck:</i></b>&nbsp;"+salida+"<br>\n";
-        System.out.println(salida);
-        contenidoChat.setText("<html><body>"+contenidoReal+"</body></html>");
+        enviarMensaje();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
         if ( evt.getKeyCode() == KeyEvent.VK_ENTER ) {
-            btnEnviarActionPerformed(null);
+            enviarMensaje();
         }
     }//GEN-LAST:event_txtTextoKeyPressed
 

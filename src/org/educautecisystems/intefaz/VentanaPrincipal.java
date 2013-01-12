@@ -224,7 +224,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemIngresoActionPerformed
 
     private void MenuItemEnInDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemEnInDoActionPerformed
-         Chat chat = new Chat();
+         Chat chat = new Chat(this);
         escritorioPrincipal.add(chat);
         chat.setVisible(true);
     }//GEN-LAST:event_MenuItemEnInDoActionPerformed
@@ -234,7 +234,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemSalirActionPerformed
 
     private void MenuItemChatEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatEstActionPerformed
-        Chat chat = new Chat();
+        Chat chat = new Chat(this);
         escritorioPrincipal.add(chat);
         chat.setVisible(true);
     }//GEN-LAST:event_MenuItemChatEstActionPerformed

@@ -177,7 +177,7 @@ public class ChatOptions extends javax.swing.JInternalFrame {
         /* Abrir el entorno de chat */
         this.setVisible(false);
         this.dispose();
-        Chat chat = new Chat();
+        Chat chat = new Chat(ventanaPrincipal);
         ventanaPrincipal.insertarNuevaVentana(chat);
         chat.setVisible(true);
     }//GEN-LAST:event_btnConectarActionPerformed
