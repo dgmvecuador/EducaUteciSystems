@@ -20,14 +20,16 @@ package org.educautecisystems.intefaz;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
 
 /**
  *
  * @author Shadow2012
  */
-public class Chat extends javax.swing.JInternalFrame {
+public final class Chat extends javax.swing.JInternalFrame {
     private VentanaPrincipal ventanaPrincipal;
-    private StringBuffer logChat;
+    private final StringBuffer logChat = new StringBuffer();
+    private ClienteServidorChat clienteServidorChat;
     
     /**
      * Creates new form ChaPrueba
@@ -35,7 +37,51 @@ public class Chat extends javax.swing.JInternalFrame {
     public Chat( VentanaPrincipal ventanaPrincipal ) {
         initComponents();
         this.ventanaPrincipal = ventanaPrincipal;
-        logChat = new StringBuffer();
+        clienteServidorChat = new ClienteServidorChat(this);
+        activarBotones(false);
+        clienteServidorChat.start();
+    }
+    
+    public void mostrarError( String txt ) {
+        synchronized( logChat ) {
+            String mensaje = "<font color=\"red\"><b>Error: </b>" + txt + "</font><br/>";
+            logChat.append(mensaje);
+            actualizarChat();
+        }
+    }
+    
+    public void mostrarInfo( String txt ) {
+        synchronized( logChat ) {
+            String mensaje = "<font color=\"blue\"><b>Info: </b>" + txt + "</font><br/>";
+            logChat.append(mensaje);
+            actualizarChat();
+        }
+    }
+    
+    public void activarBotones( boolean b ) {
+        txtTexto.setEnabled(b);
+        btnEnviar.setEnabled(b);
+    }
+    
+    public void recibirMensaje ( String name, String mensaje ) {
+        synchronized ( logChat ) {
+            String directorioActual = dameDiretorioActual();
+            File imgs = new File(directorioActual, "img");
+            File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
+            if (!emoticon.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticon.getAbsolutePath());
+                return;
+            }
+            String regex_emoticon = emoticon.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+
+            String salida = mensaje.
+                    replaceAll(":o", "<img src=\"file:///" + regex_emoticon + "\"/>").
+                    replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
+                    replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
+            logChat.append("<font color=\"black\"><b><i>").append(name).append(":</i></b>&nbsp;").append(salida).append("</font><br>\n");
+            actualizarChat();
+        }
     }
     
     private String dameDiretorioActual() {
@@ -43,26 +89,18 @@ public class Chat extends javax.swing.JInternalFrame {
     }
     
     private void enviarMensaje() {
-        String texto = txtTexto.getText();
-        String directorioActual = dameDiretorioActual();
-        File imgs = new File(directorioActual, "img");
-        File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
-        if ( !emoticon.exists() ) {
-            System.err.println("No existe imagen.\n\t"+emoticon.getAbsolutePath());
-            return;
+        synchronized ( logChat ) {
+            String texto = txtTexto.getText();
+            //recibirMensaje("Nick", texto);
+            clienteServidorChat.enviarMensaje(texto);
+            txtTexto.setText("");
         }
-        String regex_emoticon = emoticon.getAbsolutePath().
-                replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
-        
-        txtTexto.setText("");
-        
-        String salida = texto.
-                replaceAll(":o", "<img src=\"file:///"+regex_emoticon+"\"/>").
-                replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
-                replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
-        logChat.append("<b><i>Nick:</i></b>&nbsp;").append(salida).append("<br>\n");
-        System.out.println(salida);
-        contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
+    }
+    
+    private void actualizarChat() {
+        synchronized( logChat ) {
+            contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
+        }
     }
 
     /**

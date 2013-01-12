@@ -31,10 +31,18 @@ public class MessageHeaderParser {
 	private Map vars = new HashMap();
 	private String headerText;
 	private String command;
+    private boolean responseMode = false;
 
 	private MessageHeaderParser(String headerText) throws Exception {
 		this.headerText = headerText;
 		this.command = null;
+		parseMessageHeaderReal();
+	}
+    
+    private MessageHeaderParser(String headerText, boolean responseMode) throws Exception {
+		this.headerText = headerText;
+		this.command = null;
+        this.responseMode = responseMode;
 		parseMessageHeaderReal();
 	}
 	
@@ -50,7 +58,7 @@ public class MessageHeaderParser {
 		}
 
 		for (String line : lines) {
-			if (getCommand() == null) {
+			if (getCommand() == null && !responseMode) {
 				command = line;
 				continue;
 			}
@@ -66,6 +74,23 @@ public class MessageHeaderParser {
 			vars.put(info[0], var);
 		}
 	}
+    
+    public static MessageHeaderParser parseMessageHeader(InputStream entrada, boolean responseMode) throws Exception {
+        StringBuilder headerRAW = new StringBuilder();
+		int readByte = entrada.read();
+
+		while (readByte != -1) {
+			headerRAW.append((char) readByte);
+			
+			if (headerRAW.toString().endsWith("\r\n\r\n")  ) {
+				break;
+			}
+
+			readByte = entrada.read();
+		}
+
+		return new MessageHeaderParser(headerRAW.toString(), responseMode);
+    }
 
 	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws Exception {
 		StringBuilder headerRAW = new StringBuilder();
