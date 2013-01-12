@@ -42,6 +42,7 @@ public class Sistema {
 	public static final String g_port_defecto = "3306";
 	public static final String g_user_defecto = "root";
 	public static final String g_password_defecto = "admin";
+    public static final String g_esquema_defecto = "mydb";
     
     /* Constantes */
     public static final int VERSION_MAYOR = 1;
@@ -74,7 +75,8 @@ public class Sistema {
         seleccionadoLookAndFeel();
 		cargarCarpeta();
 		inicializarSistema( confBaseDeDatos.getUser(),confBaseDeDatos.getPassword(), 
-                        confBaseDeDatos.getHost(), confBaseDeDatos.getPort() );
+                        confBaseDeDatos.getHost(), confBaseDeDatos.getPort(),
+                        confBaseDeDatos.getEsquema());
         new VentanaPrincipal().setVisible(true);
     }
     
@@ -87,9 +89,9 @@ public class Sistema {
         return "jdbc:mysql://"+host+":"+port+"/"+esquema+"?zeroDateTimeBehavior=convertToNull";
     }
     
-    private static void inicializarSistema( String usuario, String password, String host, String port ) {
+    private static void inicializarSistema( String usuario, String password, String host, String port, String esquema ) {
         Map parametros = new HashMap();
-        parametros.put("javax.persistence.jdbc.url", generarJDBC_URL(host, port, "mydb"));
+        parametros.put("javax.persistence.jdbc.url", generarJDBC_URL(host, port, esquema));
         parametros.put("javax.persistence.jdbc.password", password);
         parametros.put("javax.persistence.jdbc.user", usuario);
         
@@ -196,6 +198,7 @@ public class Sistema {
 			confBaseDeDatos.setPort(g_port_defecto);
 			confBaseDeDatos.setUser(g_user_defecto);
 			confBaseDeDatos.setPassword(g_password_defecto);
+            confBaseDeDatos.setEsquema(g_esquema_defecto);
 			guardarConfPrincipal();
 		}
 	}
@@ -221,6 +224,7 @@ public class Sistema {
 		confBaseDeDatos.setPort(eBaseDeDatos.getChildText("port"));
 		confBaseDeDatos.setUser(eBaseDeDatos.getChildText("user"));
 		confBaseDeDatos.setPassword(eBaseDeDatos.getChildText("password"));
+                confBaseDeDatos.setEsquema(eBaseDeDatos.getChildText("esquema"));
 	}
 	
 	public static void guardarConfPrincipal () {
@@ -241,12 +245,15 @@ public class Sistema {
 		eBaseDeDatos.addContent(new Element("port").setText(confBaseDeDatos.getPort()));
 		eBaseDeDatos.addContent(new Element("user").setText(confBaseDeDatos.getUser()));
 		eBaseDeDatos.addContent(new Element("password").setText(confBaseDeDatos.getPassword()));
+        eBaseDeDatos.addContent(new Element("esquema").setText(confBaseDeDatos.getEsquema()));
 		root.addContent(eBaseDeDatos);
 		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		
 		try {
-			outputter.output(documento, new FileOutputStream(archivoConfPrincipal));
+            FileOutputStream fis = new FileOutputStream(archivoConfPrincipal);
+			outputter.output(documento, fis);
+            fis.close();
 		} catch ( IOException ioe ) {
 			System.err.println("No se pudo escribor configuración principal.");
 		}
