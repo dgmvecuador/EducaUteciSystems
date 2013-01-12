@@ -7,12 +7,14 @@ package org.educautecisystems.core;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.config.ChatServerConf;
 import org.educautecisystems.core.config.ChatSessionConf;
 import org.educautecisystems.intefaz.Ingreso;
@@ -58,6 +60,7 @@ public class Sistema {
 	
 	/* Configuración de Chat */
 	private static String pathChatConf = null;
+	private static String pathShareFolder = null;
 	private static ChatServerConf	chatServerConf;
 	private static ChatSessionConf	chatSessionConf;
 	
@@ -178,6 +181,7 @@ public class Sistema {
 		File archivoConfPrincipal = new File( carpetaConfiguracion, GENERAL_CONF_XML );
 		pathChatConf = archivoConfChatXML.getAbsolutePath();
 		pathGeneralConf = archivoConfPrincipal.getAbsolutePath();
+		pathShareFolder = carpetaConfArchivos.getAbsolutePath();
 		
 		if ( archivoConfChatXML.exists() && archivoConfChatXML.isFile() ) {
 			cargarChatConf(archivoConfChatXML);
@@ -362,5 +366,27 @@ public class Sistema {
 	 */
 	public static ChatSessionConf getChatSessionConf() {
 		return chatSessionConf;
+	}
+	
+	public static ArrayList<FileChat> getFileChatList() {
+		ArrayList<FileChat> files = new ArrayList<FileChat>();
+		File folderShare = new File(pathShareFolder);
+		File [] filesRAW = folderShare.listFiles();
+		
+		for ( File fileInFolder:filesRAW ) {
+			if ( fileInFolder.isFile() && fileInFolder.canRead() ) {
+				FileChat fileChat = new FileChat();
+				fileChat.setName(fileInFolder.getName());
+				fileChat.setSize(fileInFolder.length());
+				fileChat.setHidden(fileInFolder.isHidden());
+				files.add(fileChat);
+			}
+		}
+		
+		return files;
+	}
+	
+	public static File getShareFolder() {
+		return new File (pathShareFolder);
 	}
 }

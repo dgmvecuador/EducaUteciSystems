@@ -1,0 +1,5 @@
+CHAT-SERVER 1.0
+Command: getFile
+User-Token: {md5-token}
+FileName: {FileName}
+
