@@ -189,6 +189,7 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Sistema.mostrarMensajeError("Error al modificar el administrador");
         }
+        this.dispose();
     }//GEN-LAST:event_jBtModifiActionPerformed
 
     private void jButElimiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButElimiActionPerformed
@@ -209,7 +210,7 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
             AdministradorMantenimiento administradorMantenimiento = new AdministradorMantenimiento(administrador);
             cmbAdministradores.addItem(administradorMantenimiento);
         }
-
+         this.dispose();
     }//GEN-LAST:event_jButElimiActionPerformed
 
     private void jBtuCancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtuCancActionPerformed

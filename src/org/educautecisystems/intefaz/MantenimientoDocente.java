@@ -219,6 +219,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Sistema.mostrarMensajeError("Error al modificar el docente");
         }
+     this.dispose();  
     }//GEN-LAST:event_jBtModifiActionPerformed
 
     private void jBtuCancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtuCancActionPerformed
@@ -244,8 +245,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
             DocenteMantenimiento docenteMantenimiento = new DocenteMantenimiento(docente);
             cmbDocentes.addItem(docenteMantenimiento);
         }
-        
-      
+      this.dispose();        
     }//GEN-LAST:event_jButElimiActionPerformed
 
     private void cmbDocentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDocentesItemStateChanged

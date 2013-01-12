@@ -86,10 +86,10 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
         setTitle("Ingreso de Nueva Materia");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel1.setText("Ingreso de Nueva Facultad");
+        jLabel1.setText("Ingreso de Nueva Materia");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel5.setText("Facultades Existentes");
+        jLabel5.setText("Materias Existentes");
 
         ComboIngTi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
 
@@ -158,7 +158,7 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonIngreso)
                     .addComponent(jButCancelar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();

@@ -79,7 +79,7 @@
                   <Component id="ButtonIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,7 +90,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingreso de Nueva Facultad"/>
+        <Property name="text" type="java.lang.String" value="Ingreso de Nueva Materia"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -98,7 +98,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Facultades Existentes"/>
+        <Property name="text" type="java.lang.String" value="Materias Existentes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="ComboIngTi">
