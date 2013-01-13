@@ -289,19 +289,16 @@ public class AtenderClienteServidor extends Thread {
 			}
 			
 			StringBuilder message = new StringBuilder();
-            System.out.println( "Size: "+contentLength );
 			
 			while ( message.length() < contentLengthLong ) {
                 int byteRead = entrada.read();
 				if ( byteRead != -1 ) {
 					message.append((char) byteRead);
-                    System.out.println(message.toString());
 				} else {
 					sendResponseError("Not Enought bytes read.");
 					return;
 				}
 			}
-            System.out.println("M:"+message.toString());
 			
 			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
 			sendResponseOk();
