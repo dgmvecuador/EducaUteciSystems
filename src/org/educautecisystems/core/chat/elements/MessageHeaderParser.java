@@ -96,7 +96,7 @@ public class MessageHeaderParser {
 			readByte = entrada.read();
 		}
 
-		return new MessageHeaderParser(headerRAW.toString(), responseMode);
+		return new MessageHeaderParser(new String(headerRAW.toString().getBytes("UTF-8"), "UTF-8"), responseMode);
     }
 
 	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws Exception {
@@ -113,7 +113,7 @@ public class MessageHeaderParser {
 			readByte = entrada.read();
 		}
 
-		return new MessageHeaderParser(headerRAW.toString());
+		return new MessageHeaderParser(new String(headerRAW.toString().getBytes("latin1"), "UTF-8"));
 	}
 
 	/**

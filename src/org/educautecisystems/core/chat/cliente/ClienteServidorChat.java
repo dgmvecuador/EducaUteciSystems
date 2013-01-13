@@ -110,19 +110,10 @@ public class ClienteServidorChat extends Thread {
 				return;
 			}
             
-            StringBuilder message = new StringBuilder();
-			
-			while ( message.length() < contentLengthLong ) {
-                int byteRead = entrada.read();
-				if ( byteRead != -1 ) {
-					message.append((char) byteRead);
-				} else {
-					pantallaChat.mostrarError("Not Enought bytes read.");
-					return;
-				}
-			}
+			byte [] messageBytes = new byte[(int)contentLengthLong];
+			entrada.read(messageBytes);
             
-            pantallaChat.recibirMensaje(userId, message.toString());
+            pantallaChat.recibirMensaje(userId, new String(messageBytes, "UTF-8"));
         }
     }
     
@@ -215,7 +206,7 @@ public class ClienteServidorChat extends Thread {
                     mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND, ChatConstants.COMMAND_SEND_MESSAGE));
                     mensaje.append(generateHeaderValue(ChatConstants.LABEL_TO, "all"));
                     mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN, clienteToken));
-                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, "" + txt.length()));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, "" + txt.getBytes("UTF-8").length));
                     mensaje.append(ChatConstants.CHAT_END_HEADER);
                     mensaje.append(txt);
 

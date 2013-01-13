@@ -174,11 +174,11 @@ public class AtenderClienteServidor extends Thread {
 		}
 		
 		response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, 
-				""+chatMessage.getMessage().getBytes().length));
+				""+chatMessage.getMessage().getBytes("UTF-8").length));
 		response.append(ChatConstants.CHAT_END_HEADER);
 		response.append(chatMessage.getMessage());
         
-		salida.write(response.toString().getBytes());
+		salida.write(response.toString().getBytes("UTF-8"));
 		salida.flush();
 	}
 	
@@ -288,19 +288,10 @@ public class AtenderClienteServidor extends Thread {
 				return;
 			}
 			
-			StringBuilder message = new StringBuilder();
+			byte [] messageBytes = new byte[(int)contentLengthLong];
+			entrada.read(messageBytes);
 			
-			while ( message.length() < contentLengthLong ) {
-                int byteRead = entrada.read();
-				if ( byteRead != -1 ) {
-					message.append((char) byteRead);
-				} else {
-					sendResponseError("Not Enought bytes read.");
-					return;
-				}
-			}
-			
-			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
+			servidorChat.sendMessage(toVar, new String(messageBytes, "UTF-8"), idUserOrigin);
 			sendResponseOk();
 			return;
 		}
