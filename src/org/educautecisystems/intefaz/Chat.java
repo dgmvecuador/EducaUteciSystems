@@ -33,6 +33,7 @@ import org.educautecisystems.core.chat.elements.UserChat;
  */
 public final class Chat extends javax.swing.JInternalFrame {
     private VentanaPrincipal ventanaPrincipal;
+	private boolean esDocente;
     private final StringBuffer logChat = new StringBuffer();
     private ClienteServidorChat clienteServidorChat;
     private ArrayList <UserChat> usuarios;
@@ -42,9 +43,10 @@ public final class Chat extends javax.swing.JInternalFrame {
     /**
      * Creates new form ChaPrueba
      */
-    public Chat( VentanaPrincipal ventanaPrincipal ) {
+    public Chat( VentanaPrincipal ventanaPrincipal, boolean esDocente ) {
         initComponents();
         this.ventanaPrincipal = ventanaPrincipal;
+		this.esDocente = esDocente;
         clienteServidorChat = new ClienteServidorChat(this);
         activarBotones(false);
         clienteServidorChat.start();
@@ -150,8 +152,15 @@ public final class Chat extends javax.swing.JInternalFrame {
 		synchronized ( this ) {
 			StringBuilder listaUsuarios = new StringBuilder();
 			for ( UserChat usuarioChat:usuarios ) {
-				listaUsuarios.append("<font color=\"green\"><i><b>"+usuarioChat.getNickName()+"&nbsp;</b></i><font>"
-						+ "(<font color=\"blue\">"+usuarioChat.getRealName()+")</font><br/>");
+				listaUsuarios.append("<font color=\"green\"><i><b>"+usuarioChat.getNickName()+"&nbsp;</b></i><font>");
+				
+				/* Exconcer los nombres cuando no son docentes. */
+				if ( esDocente ) {
+					listaUsuarios.append("(<font color=\"blue\">"+usuarioChat.getRealName()+")</font><br/>");
+				} else {
+					listaUsuarios.append("<br/>");
+				}
+				
 			}
 			
 			/* No hacer nada hasta que se actualice el mensaje. */

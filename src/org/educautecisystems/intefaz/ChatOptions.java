@@ -12,13 +12,15 @@ import org.educautecisystems.core.Sistema;
  */
 public class ChatOptions extends javax.swing.JInternalFrame {
     private VentanaPrincipal ventanaPrincipal;
+	private boolean esDocente;
     
 	/**
 	 * Creates new form ChatOptions
 	 */
-	public ChatOptions( VentanaPrincipal ventanaPrincipal ) {
+	public ChatOptions( VentanaPrincipal ventanaPrincipal, boolean esDocente ) {
 		initComponents();
         this.ventanaPrincipal = ventanaPrincipal;
+		this.esDocente = esDocente;
 		
 		/* Cargar datos del chat */
 		txtIpSevidorChat.setText(Sistema.getChatServerConf().getIp());
@@ -177,7 +179,7 @@ public class ChatOptions extends javax.swing.JInternalFrame {
         /* Abrir el entorno de chat */
         this.setVisible(false);
         this.dispose();
-        Chat chat = new Chat(ventanaPrincipal);
+        Chat chat = new Chat(ventanaPrincipal, esDocente);
         ventanaPrincipal.insertarNuevaVentana(chat);
         chat.setVisible(true);
     }//GEN-LAST:event_btnConectarActionPerformed
