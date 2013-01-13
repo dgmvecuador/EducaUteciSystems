@@ -7,9 +7,11 @@ package org.educautecisystems.core.chat.cliente;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
+import org.educautecisystems.core.chat.elements.UserChat;
 import org.educautecisystems.intefaz.Chat;
 
 /**
@@ -57,7 +59,6 @@ public class ClienteServidorChat extends Thread {
                 return;
             }
             pantallaChat.mostrarError("MAIN - "+ex.getLocalizedMessage());
-            ex.printStackTrace();
             return;
         }
         
@@ -88,6 +89,8 @@ public class ClienteServidorChat extends Thread {
         clienteToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
         clienteUsuarioId = header.getVar(ChatConstants.LABEL_USER_ID);
         
+        actualizarUsuarios();
+        
         while ( continuar ) {
             MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
             if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
@@ -109,7 +112,6 @@ public class ClienteServidorChat extends Thread {
             
             StringBuilder message = new StringBuilder();
 			
-			
 			while ( message.length() < contentLengthLong ) {
                 int byteRead = entrada.read();
 				if ( byteRead != -1 ) {
@@ -122,6 +124,77 @@ public class ClienteServidorChat extends Thread {
             
             pantallaChat.recibirMensaje(userId, message.toString());
         }
+    }
+    
+    private void actualizarUsuarios() {
+        Thread hiloListaUsuarios = new Thread() {
+            @Override
+            public void run() {
+                while ( continuar ) {
+                    try {
+
+                        Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                                Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                        OutputStream salida = socket.getOutputStream();
+                        InputStream entrada = socket.getInputStream();
+
+                        StringBuilder mensaje = new StringBuilder();
+                        mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                        mensaje.append(ChatConstants.CHAT_END_HEADER);
+                        mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND,
+                                ChatConstants.COMMAND_GET_USERS));
+                        mensaje.append(generateHeaderValue(ChatConstants.LABEL_FORMAT,
+                                "XML"));
+                        mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN,
+                                clienteToken));
+                        mensaje.append(ChatConstants.CHAT_END_HEADER);
+
+                        salida.write(mensaje.toString().getBytes());
+                        salida.flush();
+
+                        MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
+                        if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
+                            pantallaChat.mostrarError("Error obtenido lista de usuarios.");
+                        }
+                        
+                        String contentLength = headerMessage.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+
+                        long contentLengthLong = -1;
+
+                        try {
+                            contentLengthLong = Long.parseLong(contentLength);
+                        } catch (NumberFormatException nfe) {
+                            pantallaChat.mostrarError("Error al recibir el mensaje.");
+                            return;
+                        }
+
+                        StringBuilder xmlUsuarios = new StringBuilder();
+
+                        while (xmlUsuarios.length() < contentLengthLong) {
+                            int byteRead = entrada.read();
+                            if (byteRead != -1) {
+                                xmlUsuarios.append((char) byteRead);
+                            } else {
+                                pantallaChat.mostrarError("Not Enought bytes read.");
+                                return;
+                            }
+                        }
+                        
+                        ArrayList <UserChat> usuarios = UserChat.generateListFromXML(xmlUsuarios.toString());
+                        pantallaChat.nuevaLista(usuarios);
+
+                        /* Cerrar la sessión. */
+                        salida.close();
+                        entrada.close();
+                        socket.close();
+                        Thread.sleep(500);
+                    } catch (Exception ex) {
+                        pantallaChat.mostrarError("Hilo XML - " + ex);
+                    }
+                }
+            }
+        };
+        hiloListaUsuarios.start();
     }
     
     public void enviarMensaje( final String txt ) {

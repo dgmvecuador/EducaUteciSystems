@@ -18,9 +18,14 @@
 
 package org.educautecisystems.intefaz;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
+import javax.swing.Timer;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
+import org.educautecisystems.core.chat.elements.UserChat;
 
 /**
  *
@@ -30,6 +35,8 @@ public final class Chat extends javax.swing.JInternalFrame {
     private VentanaPrincipal ventanaPrincipal;
     private final StringBuffer logChat = new StringBuffer();
     private ClienteServidorChat clienteServidorChat;
+    private ArrayList <UserChat> usuarios;
+    private long actualSize = 0;
     
     /**
      * Creates new form ChaPrueba
@@ -40,13 +47,20 @@ public final class Chat extends javax.swing.JInternalFrame {
         clienteServidorChat = new ClienteServidorChat(this);
         activarBotones(false);
         clienteServidorChat.start();
+        usuarios = null;
+        Timer actualizadorChat = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarChat();
+            }
+        });
+        actualizadorChat.start();
     }
     
     public void mostrarError( String txt ) {
         synchronized( logChat ) {
             String mensaje = "<font color=\"red\"><b>Error: </b>" + txt + "</font><br/>";
             logChat.append(mensaje);
-            actualizarChat();
         }
     }
     
@@ -54,7 +68,6 @@ public final class Chat extends javax.swing.JInternalFrame {
         synchronized( logChat ) {
             String mensaje = "<font color=\"blue\"><b>Info: </b>" + txt + "</font><br/>";
             logChat.append(mensaje);
-            actualizarChat();
         }
     }
     
@@ -63,7 +76,25 @@ public final class Chat extends javax.swing.JInternalFrame {
         btnEnviar.setEnabled(b);
     }
     
-    public void recibirMensaje ( String name, String mensaje ) {
+    public void recibirMensaje ( String userIdString, String mensaje ) {
+        String userName = null;
+        synchronized ( this ) {
+            int userId = 0;
+            try {
+                userId = Integer.parseInt(userIdString);
+            } catch( NumberFormatException nfe ) {
+                this.mostrarError("Id de usuario no encontrado.");
+                return;
+            }
+            
+            /* Buascar el nombre del usuario. */
+            for ( UserChat userChat:usuarios ) {
+                if ( userChat.getId() == userId ) {
+                    userName = userChat.getNickName();
+                }
+            }
+        }
+        
         synchronized ( logChat ) {
             String directorioActual = dameDiretorioActual();
             File imgs = new File(directorioActual, "img");
@@ -79,8 +110,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     replaceAll(":o", "<img src=\"file:///" + regex_emoticon + "\"/>").
                     replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
                     replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
-            logChat.append("<font color=\"black\"><b><i>").append(name).append(":</i></b>&nbsp;").append(salida).append("</font><br>\n");
-            actualizarChat();
+            logChat.append("<font color=\"black\"><b><i>").append(userName).append(":</i></b>&nbsp;").append(salida).append("</font><br>\n");
         }
     }
     
@@ -99,7 +129,17 @@ public final class Chat extends javax.swing.JInternalFrame {
     
     private void actualizarChat() {
         synchronized( logChat ) {
-            contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
+            if ( actualSize != logChat.length() ) {
+                contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
+                contenidoChat.setCaretPosition(contenidoChat.getDocument().getLength());
+                actualSize = logChat.length();
+            }
+        }
+    }
+    
+    public void nuevaLista( ArrayList <UserChat> usuarios ) {
+        synchronized( this ) {
+            this.usuarios = usuarios;
         }
     }
 

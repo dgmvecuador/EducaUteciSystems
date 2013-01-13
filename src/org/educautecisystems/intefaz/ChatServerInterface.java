@@ -18,7 +18,10 @@
 
 package org.educautecisystems.intefaz;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
+import javax.swing.Timer;
 import org.educautecisystems.core.chat.LogChatManager;
 import org.educautecisystems.core.chat.ServidorChat;
 
@@ -36,6 +39,13 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 	 */
 	public ChatServerInterface() {
 		initComponents();
+        Timer actualizarBitacora = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarBitacoraPrivado();
+            }
+        });
+        actualizarBitacora.start();
 	}
 	
 	public void limpiarEventos() {
@@ -48,7 +58,6 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"#D87F01\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
@@ -57,7 +66,6 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"red\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
@@ -66,12 +74,14 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"blue\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
 	private void actualizarBitacoraPrivado() {
-		txtBitacoraEventos.setText("<html>"+bitacora+"</html>");
+        synchronized( this ) {
+            txtBitacoraEventos.setText("<html>"+bitacora+"</html>");
+            txtBitacoraEventos.setCaretPosition(txtBitacoraEventos.getDocument().getLength());
+        }
 	}
 	
 	/**
