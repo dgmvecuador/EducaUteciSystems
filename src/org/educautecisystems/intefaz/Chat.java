@@ -117,7 +117,8 @@ public final class Chat extends javax.swing.JInternalFrame {
             String salida = mensaje.
                     replaceAll(":o", "<img src=\"file:///" + regex_emoticon + "\"/>").
                     replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
-                    replaceAll("\\bN[iI]ck\\b", "<b>$0</b>");
+                    replaceAll("\\bN[iI]ck\\b", "<b>$0</b>").
+					replace(" ", "&nbsp;");
             logChat.append("<font color=\"black\"><b><i>").append(userName).append(":</i></b>&nbsp;").append(salida).append("</font><br>\n");
         }
     }
