@@ -19,6 +19,7 @@
 package org.educautecisystems.intefaz;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -32,6 +33,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+    }
+    
+    public void insertarNuevaVentana( JInternalFrame jInternalFrame ) {
+        escritorioPrincipal.add(jInternalFrame);
     }
 
     /**
@@ -223,18 +228,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         usuarios.setVisible(true);
     }//GEN-LAST:event_MenuItemIngresoActionPerformed
 
+    private void MenuItemEnInDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemEnInDoActionPerformed
+         Chat chat = new Chat(this);
+        escritorioPrincipal.add(chat);
+        chat.setVisible(true);
+    }//GEN-LAST:event_MenuItemEnInDoActionPerformed
+
     private void MenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_MenuItemSalirActionPerformed
 
     private void MenuItemChatEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatEstActionPerformed
-        Chat chat = new Chat();
+        Chat chat = new Chat(this);
         escritorioPrincipal.add(chat);
         chat.setVisible(true);
     }//GEN-LAST:event_MenuItemChatEstActionPerformed
 
     private void MenuItemChatDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatDocActionPerformed
-        ChatOptions chatOptions = new ChatOptions();
+        ChatOptions chatOptions = new ChatOptions(this);
         escritorioPrincipal.add(chatOptions);
         chatOptions.setVisible(true);
     }//GEN-LAST:event_MenuItemChatDocActionPerformed

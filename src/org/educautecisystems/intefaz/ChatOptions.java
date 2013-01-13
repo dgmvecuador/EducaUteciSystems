@@ -11,12 +11,14 @@ import org.educautecisystems.core.Sistema;
  * @author dgmv
  */
 public class ChatOptions extends javax.swing.JInternalFrame {
-
+    private VentanaPrincipal ventanaPrincipal;
+    
 	/**
 	 * Creates new form ChatOptions
 	 */
-	public ChatOptions() {
+	public ChatOptions( VentanaPrincipal ventanaPrincipal ) {
 		initComponents();
+        this.ventanaPrincipal = ventanaPrincipal;
 		
 		/* Cargar datos del chat */
 		txtIpSevidorChat.setText(Sistema.getChatServerConf().getIp());
@@ -171,6 +173,13 @@ public class ChatOptions extends javax.swing.JInternalFrame {
 		
 		/* Guardando información. */
 		Sistema.guardarChatConf();
+        
+        /* Abrir el entorno de chat */
+        this.setVisible(false);
+        this.dispose();
+        Chat chat = new Chat(ventanaPrincipal);
+        ventanaPrincipal.insertarNuevaVentana(chat);
+        chat.setVisible(true);
     }//GEN-LAST:event_btnConectarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -31,26 +31,41 @@ public class MessageHeaderParser {
 	private Map vars = new HashMap();
 	private String headerText;
 	private String command;
+    private boolean responseMode = false;
 
 	private MessageHeaderParser(String headerText) throws Exception {
 		this.headerText = headerText;
 		this.command = null;
 		parseMessageHeaderReal();
 	}
+    
+    private MessageHeaderParser(String headerText, boolean responseMode) throws Exception {
+		this.headerText = headerText;
+		this.command = null;
+        this.responseMode = responseMode;
+		parseMessageHeaderReal();
+	}
 	
 	public String getVar( String varName ) {
-		return vars.get(varName).toString();
+        Object var = vars.get(varName);
+        
+        /* Don't allow nulls. */
+        if ( var == null ) {
+            return null;
+        }
+        
+		return var.toString();
 	}
 
 	private void parseMessageHeaderReal() throws Exception {
 		String[] lines = headerText.split("\r\n");
 		
-		if ( lines.length < 2 ) {
+		if ( lines.length < 1 ) {
 			throw new Exception("Formato incorrecto.");
 		}
 
 		for (String line : lines) {
-			if (getCommand() == null) {
+			if (getCommand() == null && !responseMode) {
 				command = line;
 				continue;
 			}
@@ -66,6 +81,23 @@ public class MessageHeaderParser {
 			vars.put(info[0], var);
 		}
 	}
+    
+    public static MessageHeaderParser parseMessageHeader(InputStream entrada, boolean responseMode) throws Exception {
+        StringBuilder headerRAW = new StringBuilder();
+		int readByte = entrada.read();
+
+		while (readByte != -1) {
+			headerRAW.append((char) readByte);
+			
+			if (headerRAW.toString().endsWith("\r\n\r\n")  ) {
+				break;
+			}
+
+			readByte = entrada.read();
+		}
+
+		return new MessageHeaderParser(headerRAW.toString(), responseMode);
+    }
 
 	public static MessageHeaderParser parseMessageHeader(InputStream entrada) throws Exception {
 		StringBuilder headerRAW = new StringBuilder();
@@ -90,4 +122,11 @@ public class MessageHeaderParser {
 	public String getCommand() {
 		return command;
 	}
+
+    /**
+     * @return the headerText
+     */
+    public String getHeaderText() {
+        return headerText;
+    }
 }
