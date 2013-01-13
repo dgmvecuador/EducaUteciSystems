@@ -171,7 +171,7 @@ public class ClienteServidorChat extends Thread {
                             }
                         }
                         
-                        ArrayList <UserChat> usuarios = UserChat.generateListFromXML(xmlUsuarios.toString());
+                        ArrayList <UserChat> usuarios = UserChat.generateListFromXML(new String(xmlUsuarios.toString().getBytes("latin1"), "UTF-8"));
                         pantallaChat.nuevaLista(usuarios);
 
                         /* Cerrar la sessión. */
