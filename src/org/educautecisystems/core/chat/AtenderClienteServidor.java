@@ -177,7 +177,7 @@ public class AtenderClienteServidor extends Thread {
 				""+chatMessage.getMessage().getBytes().length));
 		response.append(ChatConstants.CHAT_END_HEADER);
 		response.append(chatMessage.getMessage());
-		
+        
 		salida.write(response.toString().getBytes());
 		salida.flush();
 	}
@@ -289,17 +289,19 @@ public class AtenderClienteServidor extends Thread {
 			}
 			
 			StringBuilder message = new StringBuilder();
-			int byteRead = entrada.read();
+            System.out.println( "Size: "+contentLength );
 			
-			for ( long i=0; i<contentLengthLong; i++ ) {
+			while ( message.length() < contentLengthLong ) {
+                int byteRead = entrada.read();
 				if ( byteRead != -1 ) {
 					message.append((char) byteRead);
-					byteRead = entrada.read();
+                    System.out.println(message.toString());
 				} else {
 					sendResponseError("Not Enought bytes read.");
 					return;
 				}
 			}
+            System.out.println("M:"+message.toString());
 			
 			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
 			sendResponseOk();
@@ -436,6 +438,7 @@ public class AtenderClienteServidor extends Thread {
 		
 		salida.write(response.toString().getBytes());
 		salida.flush();
+        logChatManager.logInfo("Respondiendo afirmativamente.");
 		
 		detenerCliente();
 	}

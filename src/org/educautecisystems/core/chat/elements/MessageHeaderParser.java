@@ -47,13 +47,20 @@ public class MessageHeaderParser {
 	}
 	
 	public String getVar( String varName ) {
-		return vars.get(varName).toString();
+        Object var = vars.get(varName);
+        
+        /* Don't allow nulls. */
+        if ( var == null ) {
+            return null;
+        }
+        
+		return var.toString();
 	}
 
 	private void parseMessageHeaderReal() throws Exception {
 		String[] lines = headerText.split("\r\n");
 		
-		if ( lines.length < 2 ) {
+		if ( lines.length < 1 ) {
 			throw new Exception("Formato incorrecto.");
 		}
 
@@ -115,4 +122,11 @@ public class MessageHeaderParser {
 	public String getCommand() {
 		return command;
 	}
+
+    /**
+     * @return the headerText
+     */
+    public String getHeaderText() {
+        return headerText;
+    }
 }

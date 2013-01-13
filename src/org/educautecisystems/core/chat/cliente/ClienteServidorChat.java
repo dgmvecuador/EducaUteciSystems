@@ -57,6 +57,7 @@ public class ClienteServidorChat extends Thread {
                 return;
             }
             pantallaChat.mostrarError("MAIN - "+ex.getLocalizedMessage());
+            ex.printStackTrace();
             return;
         }
         
@@ -97,8 +98,8 @@ public class ClienteServidorChat extends Thread {
                 continue;
             }
             
-            String contentLength = header.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
-            String userId = header.getVar(ChatConstants.LABEL_USER_ID);
+            String contentLength = headerMessage.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+            String userId = headerMessage.getVar(ChatConstants.LABEL_USER_ID);
             
             long contentLengthLong = -1;
 			
@@ -110,12 +111,12 @@ public class ClienteServidorChat extends Thread {
 			}
             
             StringBuilder message = new StringBuilder();
-			int byteRead = entrada.read();
 			
-			for ( long i=0; i<contentLengthLong; i++ ) {
+			
+			while ( message.length() < contentLengthLong ) {
+                int byteRead = entrada.read();
 				if ( byteRead != -1 ) {
 					message.append((char) byteRead);
-					byteRead = entrada.read();
 				} else {
 					pantallaChat.mostrarError("Not Enought bytes read.");
 					return;
@@ -150,7 +151,6 @@ public class ClienteServidorChat extends Thread {
                     mensaje.append(ChatConstants.CHAT_END_HEADER);
                     mensaje.append(txt);
 
-                    System.out.println(mensaje.toString());
                     pantallaChat.mostrarInfo("Enviando mensaje...");
                     salida.write(mensaje.toString().getBytes());
                     salida.flush();
@@ -161,9 +161,14 @@ public class ClienteServidorChat extends Thread {
                         pantallaChat.mostrarError("El servidor no recibió el mensaje.");
                     }
                     pantallaChat.mostrarInfo("Servidor responde exitosamente.");
+                    
+                    /* Cerrar la sessiòn adecudamente. */
+                    salida.close();
+                    entrada.close();
                     socket.close();
                 } catch (Exception e) {
-                    pantallaChat.mostrarInfo("No se pudo enviar el mensaje: " + e.getLocalizedMessage());
+                    pantallaChat.mostrarError("No se pudo enviar el mensaje: " + e);
+                    e.printStackTrace();
                 }
             }
         };
