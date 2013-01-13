@@ -19,6 +19,7 @@
 package org.educautecisystems.intefaz;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -49,6 +50,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuEstu.setVisible(false);
         MenuItemIngreso.setEnabled(false);
     }
+    
+    public void insertarNuevaVentana( JInternalFrame jInternalFrame ) {
+        escritorioPrincipal.add(jInternalFrame);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -221,9 +227,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemSalirActionPerformed
 
     private void MenuItemChatEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatEstActionPerformed
-        Chat chat = new Chat();
-        escritorioPrincipal.add(chat);
-        chat.setVisible(true);
+        ChatOptions chatOptions = new ChatOptions(this, false);
+        escritorioPrincipal.add(chatOptions);
+        chatOptions.setVisible(true);
     }//GEN-LAST:event_MenuItemChatEstActionPerformed
 
     private void MenuItemNuePerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemNuePerActionPerformed
@@ -251,7 +257,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemIngFacActionPerformed
 
     private void MenuItemChatDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemChatDocActionPerformed
-        ChatOptions chatOptions = new ChatOptions();
+        ChatOptions chatOptions = new ChatOptions(this, true);
         escritorioPrincipal.add(chatOptions);
         chatOptions.setVisible(true);
     }//GEN-LAST:event_MenuItemChatDocActionPerformed

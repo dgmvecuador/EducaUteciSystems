@@ -196,6 +196,7 @@ private VentanaPrincipal principal;
             }
             Sistema.mostrarMensajeError("Contraseña incorrecta o usuario no existen.");
             return;
+            
         } else if (idTipoUsuario == TIPO_USUARIO_DOCENTE) {
             String user = txtUsuario.getText();
             String password = new String (txtClave.getPassword());
