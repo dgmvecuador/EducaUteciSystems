@@ -88,9 +88,6 @@ public class ClienteServidorChat extends Thread {
         clienteToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
         clienteUsuarioId = header.getVar(ChatConstants.LABEL_USER_ID);
         
-        pantallaChat.mostrarInfo("Token: "+clienteToken);
-        pantallaChat.mostrarInfo("User Id: "+clienteUsuarioId);
-        
         while ( continuar ) {
             MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
             if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
@@ -134,14 +131,12 @@ public class ClienteServidorChat extends Thread {
             @Override
             public void run() {
                 try {
-                    pantallaChat.mostrarInfo("Conectando...");
                     Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
                             Integer.parseInt(Sistema.getChatServerConf().getPort()));
                     OutputStream salida = socket.getOutputStream();
                     InputStream entrada = socket.getInputStream();
 
                     /* Generar salida. */
-                    pantallaChat.mostrarInfo("Contruyendo mensaje...");
                     mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
                     mensaje.append(ChatConstants.CHAT_END_HEADER);
                     mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND, ChatConstants.COMMAND_SEND_MESSAGE));
@@ -151,16 +146,13 @@ public class ClienteServidorChat extends Thread {
                     mensaje.append(ChatConstants.CHAT_END_HEADER);
                     mensaje.append(txt);
 
-                    pantallaChat.mostrarInfo("Enviando mensaje...");
                     salida.write(mensaje.toString().getBytes());
                     salida.flush();
-                    pantallaChat.mostrarInfo("Mensaje enviado.");
 
                     MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
                     if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
                         pantallaChat.mostrarError("El servidor no recibió el mensaje.");
                     }
-                    pantallaChat.mostrarInfo("Servidor responde exitosamente.");
                     
                     /* Cerrar la sessiòn adecudamente. */
                     salida.close();
@@ -168,7 +160,6 @@ public class ClienteServidorChat extends Thread {
                     socket.close();
                 } catch (Exception e) {
                     pantallaChat.mostrarError("No se pudo enviar el mensaje: " + e);
-                    e.printStackTrace();
                 }
             }
         };
