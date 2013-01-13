@@ -1,0 +1,4 @@
+Response: OK
+Content-Length: {size in bytes}
+
+{xml_files}

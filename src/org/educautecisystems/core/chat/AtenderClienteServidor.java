@@ -17,6 +17,8 @@
  */
 package org.educautecisystems.core.chat;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.ChatMessage;
+import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.UserChat;
 
@@ -171,11 +174,11 @@ public class AtenderClienteServidor extends Thread {
 		}
 		
 		response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, 
-				""+chatMessage.getMessage().getBytes().length));
+				""+chatMessage.getMessage().getBytes("UTF-8").length));
 		response.append(ChatConstants.CHAT_END_HEADER);
 		response.append(chatMessage.getMessage());
-		
-		salida.write(response.toString().getBytes());
+        
+		salida.write(response.toString().getBytes("UTF-8"));
 		salida.flush();
 	}
 	
@@ -220,7 +223,6 @@ public class AtenderClienteServidor extends Thread {
 			ArrayList<UserChat> users = ServidorChat.getUserList();
 			String xmlUsers = UserChat.generateXMLFromList(users);
 			long size = xmlUsers.getBytes().length;
-			System.out.println(xmlUsers);
 			
 			/* Genering response */
 			String headerResponse = "";
@@ -286,21 +288,108 @@ public class AtenderClienteServidor extends Thread {
 				return;
 			}
 			
-			StringBuilder message = new StringBuilder();
-			int byteRead = entrada.read();
+			byte [] messageBytes = new byte[(int)contentLengthLong];
+			entrada.read(messageBytes);
 			
-			for ( long i=0; i<contentLengthLong; i++ ) {
-				if ( byteRead != -1 ) {
-					message.append((char) byteRead);
-					byteRead = entrada.read();
-				} else {
-					sendResponseError("Not Enought bytes read.");
-					return;
-				}
+			servidorChat.sendMessage(toVar, new String(messageBytes, "UTF-8"), idUserOrigin);
+			sendResponseOk();
+			return;
+		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_FILES) ) {
+			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String format =		header.getVar(ChatConstants.LABEL_FORMAT);
+			
+			/* Must be a valid token */
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
 			}
 			
-			servidorChat.sendMessage(toVar, message.toString(), idUserOrigin);
-			sendResponseOk();
+			/* Only XML is valid */
+			if ( !format.equals("XML") ) {
+				logChatManager.logError("No se soporta el formato: " + format);
+				sendResponseError("Format not supported.");
+				return;
+			}
+			
+			ArrayList<FileChat> files = Sistema.getFileChatList();
+			String xmlFiles = FileChat.generateXMLFromList(files);
+			long size = xmlFiles.getBytes().length;
+			
+			/* Genering response */
+			String headerResponse = "";
+			headerResponse += 
+					generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND,
+					ChatConstants.RESPONSE_OK);
+			headerResponse +=
+					generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+size);
+			headerResponse += ChatConstants.CHAT_END_HEADER;
+			headerResponse += xmlFiles;
+			
+			salida.write(headerResponse.getBytes());
+			salida.flush();
+			
+			detenerCliente();
+			return;
+		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_FILE) ) {
+			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String fileName =	header.getVar(ChatConstants.LABEL_FILE_NAME);
+			
+			/* Must be a valid token */
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
+			}
+			
+			/* Don't allow other folder file */
+			fileName = fileName.replace("/", "_");
+			File folderShare = Sistema.getShareFolder();
+			
+			/* Don't allow "null" errors. */
+			if ( folderShare == null ) {
+				sendResponseError("Share folder not founnd.");
+				return;
+			}
+			
+			File fileResponse = new File(folderShare, fileName);
+			if ( !fileResponse.exists() ) {
+				sendResponseError("File not found.");
+				return;
+			}
+			
+			long fileSize = fileResponse.length();
+			
+			if ( fileSize <= 0 ) {
+				sendResponseError("File has a 0 size.");
+				return;
+			}
+			
+			StringBuilder response = new StringBuilder();
+			response.append(
+					generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND, 
+					ChatConstants.RESPONSE_OK));
+			response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+fileSize));
+			response.append(ChatConstants.CHAT_END_HEADER);
+			
+			FileInputStream fis = new FileInputStream(fileResponse);
+			int singleByte = fis.read();
+			
+			while ( singleByte != -1 ) {
+				response.append((char)singleByte);
+				singleByte = fis.read();
+			}
+			
+			fis.close();
+			
+			salida.write(response.toString().getBytes());
+			salida.flush();
+			
+			detenerCliente();
 			return;
 		}
 		
@@ -337,6 +426,7 @@ public class AtenderClienteServidor extends Thread {
 		
 		salida.write(response.toString().getBytes());
 		salida.flush();
+        logChatManager.logInfo("Respondiendo afirmativamente.");
 		
 		detenerCliente();
 	}

@@ -18,7 +18,10 @@
 
 package org.educautecisystems.intefaz;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
+import javax.swing.Timer;
 import org.educautecisystems.core.chat.LogChatManager;
 import org.educautecisystems.core.chat.ServidorChat;
 
@@ -36,6 +39,13 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 	 */
 	public ChatServerInterface() {
 		initComponents();
+        Timer actualizarBitacora = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarBitacoraPrivado();
+            }
+        });
+        actualizarBitacora.start();
 	}
 	
 	public void limpiarEventos() {
@@ -48,7 +58,6 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"#D87F01\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
@@ -57,7 +66,6 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"red\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
@@ -66,12 +74,18 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 		synchronized ( this ) {
 			String linea = "<font color=\"blue\"><b>[" + new Date() + "] Info:&nbsp;</b>" + txt + "</font><br>";
 			bitacora.append(linea);
-			actualizarBitacoraPrivado();
 		}
 	}
 	
 	private void actualizarBitacoraPrivado() {
-		txtBitacoraEventos.setText("<html>"+bitacora+"</html>");
+        synchronized( this ) {
+            if ( !cbActualizar.isSelected() ) {
+                return;
+            }
+            
+            txtBitacoraEventos.setText("<html>"+bitacora+"</html>");
+            txtBitacoraEventos.setCaretPosition(txtBitacoraEventos.getDocument().getLength());
+        }
 	}
 	
 	/**
@@ -91,6 +105,7 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
         jScrollPane1 = new javax.swing.JScrollPane();
         txtBitacoraEventos = new javax.swing.JEditorPane();
         btnCerrarVentana = new javax.swing.JButton();
+        cbActualizar = new javax.swing.JCheckBox();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -128,6 +143,8 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
             }
         });
 
+        cbActualizar.setText("Auto-actualizar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,8 +165,10 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDetenerServidor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCerrarVentana)))
-                        .addGap(0, 497, Short.MAX_VALUE)))
+                                .addComponent(btnCerrarVentana)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbActualizar)))
+                        .addGap(0, 360, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,11 +182,12 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnArrancarServidor)
                     .addComponent(btnDetenerServidor)
-                    .addComponent(btnCerrarVentana))
+                    .addComponent(btnCerrarVentana)
+                    .addComponent(cbActualizar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -222,6 +242,7 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
     private javax.swing.JButton btnArrancarServidor;
     private javax.swing.JButton btnCerrarVentana;
     private javax.swing.JButton btnDetenerServidor;
+    private javax.swing.JCheckBox cbActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

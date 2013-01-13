@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chat:files xmlns:chat="http://free.chat.com/">
+    <chat:file>
+        <name>example.doc</name>
+        <size>156789</size>
+        <hidden>false</hidden>
+    </chat:file>
+    <chat:file>
+        <name>example.avi</name>
+        <size>78562367</size>
+        <hidden>false</hidden>
+    </chat:file>
+</chat:files>
