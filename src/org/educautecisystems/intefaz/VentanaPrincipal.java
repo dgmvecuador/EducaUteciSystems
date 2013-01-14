@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import org.educautecisystems.core.Sistema;
 
 /**
  *
@@ -293,7 +294,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         try {
             Process pr = rt.exec("explorer \"DiagramaCasosDeUso.pdf\"");
         } catch (IOException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            Sistema.mostrarMensajeError("No existe el Archivo");
         }
     }//GEN-LAST:event_mnItemAyudaActionPerformed
 
