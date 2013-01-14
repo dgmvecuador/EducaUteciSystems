@@ -187,6 +187,46 @@ public class ClienteServidorChat extends Thread {
         };
         hiloListaUsuarios.start();
     }
+	
+	public void cerrarSesion() {
+		Thread hiloCerrarSesion = new Thread() {
+			@Override
+			public void run() {
+				try {
+					Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                            Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                    OutputStream salida = socket.getOutputStream();
+                    InputStream entrada = socket.getInputStream();
+					
+					/* Generar salida. */
+					StringBuilder mensaje = new StringBuilder();
+                    mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
+					mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND, 
+							ChatConstants.COMMAND_LOGOUT));
+					mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN, 
+							""+clienteToken));
+					mensaje.append(ChatConstants.CHAT_END_HEADER);
+					
+					salida.write(mensaje.toString().getBytes());
+					salida.flush();
+					
+					MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
+                    if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
+                        pantallaChat.mostrarError("El servidor no recibió el mensaje.");
+                    }
+                    
+                    /* Cerrar la sessiòn adecudamente. */
+                    salida.close();
+                    entrada.close();
+                    socket.close();
+				} catch ( Exception ex ) {
+					pantallaChat.mostrarError("No se pudo enviar el mensaje: " + ex);
+				}
+			}
+		};
+		hiloCerrarSesion.start();
+	}
     
     public void enviarMensaje( final String txt ) {
         final StringBuilder mensaje = new StringBuilder();
