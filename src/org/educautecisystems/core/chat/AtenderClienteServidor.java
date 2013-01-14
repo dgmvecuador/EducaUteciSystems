@@ -376,19 +376,18 @@ public class AtenderClienteServidor extends Thread {
 			response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+fileSize));
 			response.append(ChatConstants.CHAT_END_HEADER);
 			
+			salida.write(response.toString().getBytes());
+			salida.flush();
+			
 			FileInputStream fis = new FileInputStream(fileResponse);
 			int singleByte = fis.read();
 			
 			while ( singleByte != -1 ) {
-				response.append((char)singleByte);
+				salida.write(singleByte);
 				singleByte = fis.read();
 			}
 			
 			fis.close();
-			
-			salida.write(response.toString().getBytes());
-			salida.flush();
-			
 			detenerCliente();
 			return;
 		}

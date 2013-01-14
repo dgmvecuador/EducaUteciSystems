@@ -105,6 +105,10 @@ public class FileChat {
 		
 		return files;
 	}
+	
+	public String toString () {
+		return name + " ("+size+")";
+	}
 
 	/**
 	 * @return the name
