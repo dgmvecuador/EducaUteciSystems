@@ -4,12 +4,15 @@
  */
 package org.educautecisystems.core.chat.cliente;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
+import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.UserChat;
 import org.educautecisystems.intefaz.Chat;
@@ -89,7 +92,9 @@ public class ClienteServidorChat extends Thread {
         clienteToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
         clienteUsuarioId = header.getVar(ChatConstants.LABEL_USER_ID);
         
+		/* Actualizar las listas de los usuarios. */
         actualizarUsuarios();
+		actualizarArchivos();
         
         while ( continuar ) {
             MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
@@ -116,6 +121,76 @@ public class ClienteServidorChat extends Thread {
             pantallaChat.recibirMensaje(userId, new String(messageBytes, "UTF-8"));
         }
     }
+	
+	private void actualizarArchivos () {
+		Thread hiloListaArchivos = new Thread() {
+			@Override
+			public void run() {
+				while ( continuar ) {
+					try {
+						Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                                Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                        OutputStream salida = socket.getOutputStream();
+                        InputStream entrada = socket.getInputStream();
+
+                        StringBuilder mensaje = new StringBuilder();
+                        mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                        mensaje.append(ChatConstants.CHAT_END_HEADER);
+						mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND,
+                                ChatConstants.COMMAND_GET_FILES));
+						mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN,
+                                ""+clienteToken));
+						mensaje.append(generateHeaderValue(ChatConstants.LABEL_FORMAT,
+                                "XML"));
+						mensaje.append(ChatConstants.CHAT_END_HEADER);
+						
+						salida.write(mensaje.toString().getBytes());
+                        salida.flush();
+						
+						MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
+                        if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
+                            pantallaChat.mostrarError("Error obtenido lista de usuarios.");
+                        }
+                        
+                        String contentLength = headerMessage.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+
+                        long contentLengthLong = -1;
+
+                        try {
+                            contentLengthLong = Long.parseLong(contentLength);
+                        } catch (NumberFormatException nfe) {
+                            pantallaChat.mostrarError("Error al recibir el mensaje.");
+                            return;
+                        }
+
+                        StringBuilder xmlArchivos = new StringBuilder();
+
+                        while (xmlArchivos.length() < contentLengthLong) {
+                            int byteRead = entrada.read();
+                            if (byteRead != -1) {
+                                xmlArchivos.append((char) byteRead);
+                            } else {
+                                pantallaChat.mostrarError("Not Enought bytes read.");
+                                return;
+                            }
+                        }
+						
+						ArrayList <FileChat> archivos = FileChat.generateListFromXML(new String(xmlArchivos.toString().getBytes("latin1"), "UTF-8"));
+						pantallaChat.nuevaListaArchivos(archivos);
+						
+						/* Cerrar la sessión. */
+                        salida.close();
+                        entrada.close();
+                        socket.close();
+                        Thread.sleep(500);
+					} catch ( Exception e ) {
+						 pantallaChat.mostrarError("Hilo XML - " + e);
+					}
+				}
+			}
+		};
+		hiloListaArchivos.start();
+	}
     
     private void actualizarUsuarios() {
         Thread hiloListaUsuarios = new Thread() {
@@ -188,7 +263,84 @@ public class ClienteServidorChat extends Thread {
         hiloListaUsuarios.start();
     }
 	
+	public void descargarArchivo ( final FileChat fileChat, final File destino ) {
+		Thread hiloDescargarArchivo = new Thread() {
+			@Override
+			public void run() {
+				try {
+					Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                            Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                    OutputStream salida = socket.getOutputStream();
+                    InputStream entrada = socket.getInputStream();
+					
+					/* Generar salida. */
+					StringBuilder mensaje = new StringBuilder();
+                    mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
+					mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND, 
+							ChatConstants.COMMAND_GET_FILE));
+					mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN, 
+							""+clienteToken));
+					mensaje.append(generateHeaderValue(ChatConstants.LABEL_FILE_NAME, 
+							fileChat.getName()));
+					mensaje.append(ChatConstants.CHAT_END_HEADER);
+					
+					salida.write(mensaje.toString().getBytes());
+					salida.flush();
+					
+					MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
+					if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
+						pantallaChat.mostrarError("Error obtenido lista de usuarios.");
+					}
+					
+					String contentLength = headerMessage.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+
+					long contentLengthLong = -1;
+
+					try {
+						contentLengthLong = Long.parseLong(contentLength);
+					} catch (NumberFormatException nfe) {
+						pantallaChat.mostrarError("Error al recibir el mensaje.");
+						return;
+					}
+
+					/* Borra el archivo */
+					if (destino.exists() && !destino.delete()) {
+						pantallaChat.mostrarError("No se pudo escribir el archivo:."+destino.getName());
+						return;
+					}
+					
+					FileOutputStream fos = new FileOutputStream(destino);
+					pantallaChat.mostrarInfo("Descargando archivo: "+fileChat.getName());
+					
+					for ( long i=0; i<contentLengthLong; i++ ) {
+						int byteRead = entrada.read();
+						if ( byteRead == -1 ) {
+							destino.delete();
+							pantallaChat.mostrarError("Se ha cortado la conexión,\n"
+									+ "por favor intente de nuevo más tarde.");
+							return;
+						}
+						fos.write(byteRead);
+					}
+					
+					fos.close();
+					pantallaChat.mostrarInfo("Se ha terminado de descargar archivo: "+fileChat.getName());
+					/* Cerrar la sessión. */
+					salida.close();
+					entrada.close();
+					socket.close();
+					Thread.sleep(500);
+				} catch ( Exception e ) {
+					pantallaChat.mostrarError("No se pudo enviar el mensaje: " + e);
+				}
+			}
+		};
+		hiloDescargarArchivo.start();
+	}
+	
 	public void cerrarSesion() {
+		continuar = false;
 		Thread hiloCerrarSesion = new Thread() {
 			@Override
 			public void run() {

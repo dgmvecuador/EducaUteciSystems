@@ -23,8 +23,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.Timer;
+import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
+import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.UserChat;
 
 /**
@@ -37,8 +41,11 @@ public final class Chat extends javax.swing.JInternalFrame {
     private final StringBuffer logChat = new StringBuffer();
     private ClienteServidorChat clienteServidorChat;
     private ArrayList <UserChat> usuarios;
+	private ArrayList <FileChat> archivos;
+	DefaultListModel listaArchivosModelo = new DefaultListModel();
     private long actualSize = 0;
 	private long actualSizeListaUsuarios = 0;
+	private long actualSizeListaArchivos = 0;
     
     /**
      * Creates new form ChaPrueba
@@ -65,6 +72,13 @@ public final class Chat extends javax.swing.JInternalFrame {
 			}
 		});
 		actualizarListaUsuariosTimer.start();
+		Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actualizarListaArchivos();
+			}
+		});
+		actualizarListaArchivosTimer.start();
     }
     
     public void mostrarError( String txt ) {
@@ -172,12 +186,41 @@ public final class Chat extends javax.swing.JInternalFrame {
 			actualSizeListaUsuarios = listaUsuarios.toString().length();
 		}
 	}
+	
+	private void actualizarListaArchivos () {
+		synchronized(this) {
+			StringBuilder comprobador = new StringBuilder();
+			
+			for ( FileChat fileChat:archivos ) {
+				comprobador.append(fileChat.toString());
+			}
+			
+			/* No actualizar la lista si no es necesario. */
+			if ( actualSizeListaArchivos == comprobador.toString().length() ) {
+				return;
+			}
+			
+			listaArchivosModelo.clear();
+			
+			
+			for ( FileChat fileChat:archivos ) {
+				listaArchivosModelo.addElement(fileChat);
+			}
+			actualSizeListaArchivos = comprobador.toString().length();
+		}
+	}
     
     public void nuevaLista( ArrayList <UserChat> usuarios ) {
         synchronized( this ) {
             this.usuarios = usuarios;
         }
     }
+	
+	public void nuevaListaArchivos ( ArrayList <FileChat> archivos ) {
+		synchronized ( this ) {
+			this.archivos = archivos;
+		}
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,6 +240,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtListaUsuarios = new javax.swing.JEditorPane();
         btnCerrarSesion = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaArchivos = new javax.swing.JList();
+        btnDescargar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -234,6 +281,19 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setText("Lista de archivos:");
+
+        listaArchivos.setModel(listaArchivosModelo);
+        listaArchivos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(listaArchivos);
+
+        btnDescargar.setText("Descargar");
+        btnDescargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -250,10 +310,14 @@ public final class Chat extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 225, Short.MAX_VALUE))
-                            .addComponent(jScrollPane3)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(btnDescargar))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -266,17 +330,21 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnviar)
-                            .addComponent(btnCerrarSesion)))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDescargar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnviar)
+                    .addComponent(btnCerrarSesion)))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -299,14 +367,38 @@ public final class Chat extends javax.swing.JInternalFrame {
 		this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
+    private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
+		FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+		
+		/* Revisar si existe algún elemento seleccionado. */
+		if ( fileChat == null ) {
+			Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
+			return;
+		}
+		
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Seleccione donde guardar el archivo.");
+		fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
+		int respuesta = fc.showSaveDialog(this);
+		
+		if( respuesta == JFileChooser.APPROVE_OPTION ) {
+			File archivo = fc.getSelectedFile();
+			clienteServidorChat.descargarArchivo(fileChat, archivo);
+		}
+    }//GEN-LAST:event_btnDescargarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnDescargar;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JEditorPane contenidoChat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList listaArchivos;
     private javax.swing.JEditorPane txtListaUsuarios;
     private javax.swing.JTextField txtTexto;
     // End of variables declaration//GEN-END:variables
