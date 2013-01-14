@@ -18,6 +18,9 @@
 
 package org.educautecisystems.intefaz;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
@@ -83,6 +86,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemIngFac = new javax.swing.JMenuItem();
         MenuItemIngMat = new javax.swing.JMenuItem();
         MenuAyuda = new javax.swing.JMenu();
+        mnItemAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EducaUteciSystems");
@@ -196,6 +200,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(MenuAdmi);
 
         MenuAyuda.setText("Ayuda");
+
+        mnItemAyuda.setText("Manual de Usuario");
+        mnItemAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnItemAyudaActionPerformed(evt);
+            }
+        });
+        MenuAyuda.add(mnItemAyuda);
+
         jMenuBar1.add(MenuAyuda);
 
         setJMenuBar(jMenuBar1);
@@ -275,6 +288,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         dea.setVisible(true);
     }//GEN-LAST:event_MenManteAdminActionPerformed
 
+    private void mnItemAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemAyudaActionPerformed
+        Runtime rt = Runtime.getRuntime();
+        try {
+            Process pr = rt.exec("explorer \"DiagramaCasosDeUso.pdf\"");
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_mnItemAyudaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenManteAdmin;
@@ -296,5 +318,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorioPrincipal;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnItemAyuda;
     // End of variables declaration//GEN-END:variables
 }
