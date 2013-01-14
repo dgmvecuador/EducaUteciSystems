@@ -293,7 +293,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        Codigo para abrir un documento
         Runtime rt = Runtime.getRuntime();
         try {
-            Process pr = rt.exec("explorer \"DiagramaCasosDeUso.pdf\"");
+            Process pr = rt.exec("explorer \"Ayuda del Sistema.pdf\"");
         } catch (IOException ex) {
             Sistema.mostrarMensajeError("No existe el Archivo");
         }
