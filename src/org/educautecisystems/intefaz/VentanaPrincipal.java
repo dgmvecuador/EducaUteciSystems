@@ -290,6 +290,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenManteAdminActionPerformed
 
     private void mnItemAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemAyudaActionPerformed
+//        Codigo para abrir un documento
         Runtime rt = Runtime.getRuntime();
         try {
             Process pr = rt.exec("explorer \"DiagramaCasosDeUso.pdf\"");

@@ -213,8 +213,11 @@ private VentanaPrincipal principal;
                     return;
                 }
             }
+           Sistema.mostrarMensajeError("Contraseña incorrecta o usuario no existen.");
+           return;
         } else {
             Sistema.mostrarMensajeError("Tipo de usuario no soportado.");
+         
         }
     }//GEN-LAST:event_ButtonIngresoActionPerformed
 
