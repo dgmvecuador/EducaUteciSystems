@@ -199,6 +199,9 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
         try {
             controladorAdministrador.destroy(actual.getAdministrador().getIdAdministrador());
             Sistema.mostrarMensajeInformativo("Se ha borrado safisfactoriamente el Administrador");
+            this.setVisible(false);
+            this.dispose();
+          
         } catch (NonexistentEntityException ex) {
             Sistema.mostrarMensajeError("No se puede borrar el Administrador");
             return;
@@ -210,12 +213,9 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
             AdministradorMantenimiento administradorMantenimiento = new AdministradorMantenimiento(administrador);
             cmbAdministradores.addItem(administradorMantenimiento);
             
-        if ( cmbAdministradores.getItemCount() == 0 ) {
-             Sistema.mostrarMensajeError("Ya no existen más elementos.");
-            this.setVisible(false);
-            this.dispose();
-        }
-       }
+       
+        
+     }
   
     }//GEN-LAST:event_jButElimiActionPerformed
 

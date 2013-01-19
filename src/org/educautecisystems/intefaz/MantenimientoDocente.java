@@ -234,6 +234,9 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         try {
             controladorDocente.destroy(actual.getDocente().getDocentePK());
             Sistema.mostrarMensajeInformativo("Se ha borrado safisfactoriamente el docente");
+            this.setVisible(false);
+            this.dispose();
+            
         } catch (NonexistentEntityException ex) {
             Sistema.mostrarMensajeError("No se puede borrar el Docente");
             return;
