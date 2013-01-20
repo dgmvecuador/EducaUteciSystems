@@ -24,7 +24,13 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
@@ -67,6 +73,8 @@ public final class Chat extends javax.swing.JInternalFrame {
 			/* Generar pantalla. */
 			ventanaPrincipal.insertarNuevaVentana(pantallaProfesor);
 			pantallaProfesor.setVisible(true);
+			btnGenerarReporteAsistencia.setVisible(false);
+			
 			try {
 				pantallaProfesor.setMaximum(true);
 			} catch (PropertyVetoException ex) {
@@ -287,6 +295,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaArchivos = new javax.swing.JList();
         btnDescargar = new javax.swing.JButton();
+        btnGenerarReporteAsistencia = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -338,6 +347,13 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGenerarReporteAsistencia.setText("Generar Reporte");
+        btnGenerarReporteAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteAsistenciaActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Escriba aqui el mesaje");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -360,7 +376,10 @@ public final class Chat extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
-                                    .addComponent(btnDescargar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnDescargar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnGenerarReporteAsistencia)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -387,18 +406,20 @@ public final class Chat extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDescargar)
+                            .addComponent(btnGenerarReporteAsistencia)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(btnDescargar))
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviar)
                     .addComponent(btnCerrarSesion))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -417,6 +438,13 @@ public final class Chat extends javax.swing.JInternalFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         clienteServidorChat.cerrarSesion();
+		
+		/* Cerrar pantalla, si tiene. */
+		if ( !esDocente ) {
+			pantallaProfesor.setVisible(false);
+			pantallaProfesor.dispose();
+		}
+		
 		this.setVisible(false);
 		this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
@@ -441,10 +469,67 @@ public final class Chat extends javax.swing.JInternalFrame {
 		}
     }//GEN-LAST:event_btnDescargarActionPerformed
 
+    private void btnGenerarReporteAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteAsistenciaActionPerformed
+        String defaultReport = "Asistencia.html";
+		
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Seleccione donde guardar el archivo.");
+		fc.setSelectedFile(new File(fc.getCurrentDirectory(), defaultReport));
+		int respuesta = fc.showSaveDialog(this);
+		
+		if( respuesta == JFileChooser.APPROVE_OPTION ) {
+			File archivo = fc.getSelectedFile();
+			StringBuilder htmlAsistencia = new StringBuilder();
+			Date fechaActual = new Date();
+			
+			htmlAsistencia.append("<html>");
+			htmlAsistencia.append("<head><meta name=\"tipo_contenido\" content=\"text/html;\" http-equiv=\"content-type\" charset=\"utf-8\"><title>Reporte Asistencia - "+fechaActual+"</title></head>");
+			htmlAsistencia.append("<body>");
+			htmlAsistencia.append("<div align=\"center\">");
+			htmlAsistencia.append("<h1>Reporte de asistencia sistema EducaUteciSystems</h1></br></br>");
+			htmlAsistencia.append("<b>Creado en: </b>"+fechaActual+"</br></br>");
+			htmlAsistencia.append("<table border=\"1\" width=\"500px\">");
+			htmlAsistencia.append("<tr><td><b>Nombre Real</b></td><td><b>Apodo en Chat</b></td></tr>");
+			synchronized( this ) {
+				for ( UserChat usuario:usuarios ) {
+					htmlAsistencia.append("<tr><td>"+usuario.getRealName()+"</td><td>"+usuario.getNickName()+"</td></tr>");
+				}
+			}
+			htmlAsistencia.append("</table>");
+			htmlAsistencia.append("</div>");
+			htmlAsistencia.append("</body>");
+			htmlAsistencia.append("</html>");
+			
+			/* Borrar si se tiene ptoblemas. */
+			if ( archivo.exists() ) {
+				if ( !archivo.delete() ) {
+					mostrarError("No se pudo guardar resporte de asistencia.");
+					return;
+				}
+			}
+			
+			/* Guardar archivo. */
+			try {
+				FileOutputStream fos = new FileOutputStream(archivo);
+				fos.write(htmlAsistencia.toString().getBytes());
+				fos.flush();
+				fos.close();
+			} catch (FileNotFoundException ex) {
+				mostrarError("No se ha encontrado la ruta para guardar.");
+				return;
+			} catch ( IOException ioe ) {
+				mostrarError("Error de estrada/salida al escribir archivo.");
+				return;
+			}
+			Sistema.mostrarMensajeInformativo("Se ha guardado información con éxito.");
+		}
+    }//GEN-LAST:event_btnGenerarReporteAsistenciaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnDescargar;
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnGenerarReporteAsistencia;
     private javax.swing.JEditorPane contenidoChat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
