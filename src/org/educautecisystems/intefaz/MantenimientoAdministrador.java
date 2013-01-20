@@ -221,11 +221,7 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
         for (Administrador administrador:administradores) {
             AdministradorMantenimiento administradorMantenimiento = new AdministradorMantenimiento(administrador);
             cmbAdministradores.addItem(administradorMantenimiento);
-            
-       
-        
-     }
-  
+     } 
     }//GEN-LAST:event_jButElimiActionPerformed
 
     private void jBtuCancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtuCancActionPerformed

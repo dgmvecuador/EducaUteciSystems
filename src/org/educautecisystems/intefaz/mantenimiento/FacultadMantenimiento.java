@@ -1,5 +1,5 @@
 /*
- *  AdministradorMatenimiento.java
+ *  FacultadMantenimiento.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,42 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.educautecisystems.intefaz.mantenimiento;
 
-import org.educautecisystems.entidades.Administrador;
+import org.educautecisystems.entidades.Facultad;
 
 /**
  *
  * @author Shadow2012
  */
-public class AdministradorMantenimiento {
-     private Administrador administrador;
+public class FacultadMantenimiento {
+    private Facultad facultad;
     
-    public AdministradorMantenimiento() {
-        this.administrador = null;
+    public FacultadMantenimiento() {
+        this.facultad = null;
     }
     
-    public AdministradorMantenimiento(Administrador administrador) {
-        this.administrador = administrador;
+    public FacultadMantenimiento(Facultad facultad) {
+        this.facultad = facultad;
     }
     
     @Override
     public String toString () {
-        return this.getAdministrador().getUsuario();
+        return this.getFacultad().getNombre();
     }
 
     /**
-     * @return the administrador
+     * @return the facultad
      */
-    public Administrador getAdministrador() {
-        return administrador;
+    public Facultad getFacultad() {
+        return facultad;
     }
 
     /**
-     * @param administrador the administrador to set
+     * @param facultad the facultad to set
      */
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
+    public void setFacultad(Facultad facultad) {
+        this.facultad = facultad;
     }
 }

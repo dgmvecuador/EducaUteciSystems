@@ -19,8 +19,10 @@
 package org.educautecisystems.intefaz;
 import java.util.List;
 import org.educautecisystems.controladores.FacultadJpaController;
+import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.entidades.Facultad;
+import org.educautecisystems.intefaz.mantenimiento.FacultadMantenimiento;
 import org.educautecisystems.intefaz.objects.ObjComboBoxFacultad;
 
 /**
@@ -87,6 +89,10 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         ButtonIngreso = new javax.swing.JButton();
         ComboIngTi = new javax.swing.JComboBox();
+        jbModif = new javax.swing.JButton();
+        jbElim = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTexModi = new javax.swing.JTextField();
 
         setTitle("Ingreso de Nueva Facultad");
 
@@ -114,6 +120,28 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
         });
 
         ComboIngTi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
+        ComboIngTi.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboIngTiItemStateChanged(evt);
+            }
+        });
+
+        jbModif.setText("Modificar");
+        jbModif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModifActionPerformed(evt);
+            }
+        });
+
+        jbElim.setText("Eliminar");
+        jbElim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbElimActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setText("Modificar un registro");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,28 +150,39 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(33, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(ButtonIngreso)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButCancelar)
-                                .addGap(8, 8, 8))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(jLabel4)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ComboIngTi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
-                                        .addComponent(jLabel4))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ComboIngTi, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(TextIngreso)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(0, 0, Short.MAX_VALUE))))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jTexModi))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 231, Short.MAX_VALUE)
+                        .addComponent(ButtonIngreso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbModif)
+                        .addGap(3, 3, 3)
+                        .addComponent(jbElim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButCancelar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -159,11 +198,17 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTexModi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonIngreso)
-                    .addComponent(jButCancelar))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jButCancelar)
+                    .addComponent(jbModif)
+                    .addComponent(jbElim))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,13 +247,68 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
        this.dispose();
     }//GEN-LAST:event_jButCancelarActionPerformed
 
+    private void jbModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModifActionPerformed
+        // TODO add your handling code here:
+        //        Es para que obligue al usuario ingresar todo en los campos
+        if (jTexModi.getText().isEmpty()) {
+            Sistema.mostrarMensajeError("Por favor llene el campo de modificación.");
+            return;
+        }
+        FacultadJpaController controladorFacultad = new FacultadJpaController(Sistema.getEmf());
+        FacultadMantenimiento facultadMantenimiento = (FacultadMantenimiento) ComboIngTi.getSelectedItem();
+        Facultad modificador = facultadMantenimiento.getFacultad();
+        modificador.setNombre(jTexModi.getText());
+        try {
+            controladorFacultad.edit(modificador);
+              Sistema.mostrarMensajeInformativo("Se a modificado la facultad con exito");      
+        } catch (NonexistentEntityException ex) {
+            Sistema.mostrarMensajeError("No existe la facultad actual");
+        } catch (Exception ex) {
+            Sistema.mostrarMensajeError("Error al modificar la facultad");
+        }
+        this.dispose();
+    }//GEN-LAST:event_jbModifActionPerformed
+
+    private void jbElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbElimActionPerformed
+        // TODO add your handling code here:
+        FacultadJpaController controladorFacultad = new FacultadJpaController(Sistema.getEmf());
+        FacultadMantenimiento actual = (FacultadMantenimiento)ComboIngTi.getSelectedItem();
+        try {
+            controladorFacultad.destroy(actual.getFacultad().getIdFacultad());
+            Sistema.mostrarMensajeInformativo("Se ha borrado safisfactoriamente la facultad");
+            this.setVisible(false);
+            this.dispose();
+          
+        } catch (NonexistentEntityException ex) {
+            Sistema.mostrarMensajeError("No se puede borrar la facultad");
+            return;
+        }
+        ComboIngTi.removeAllItems();
+        List <Facultad> facultades  = controladorFacultad.findFacultadEntities();
+
+        for (Facultad facultad:facultades) {
+            FacultadMantenimiento facultadMantenimiento = new FacultadMantenimiento(facultad);
+            ComboIngTi.addItem(facultadMantenimiento);
+     }
+    }//GEN-LAST:event_jbElimActionPerformed
+
+    private void ComboIngTiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboIngTiItemStateChanged
+        // TODO add your handling code here:
+        FacultadMantenimiento facultadMantenimiento = (FacultadMantenimiento) ComboIngTi.getSelectedItem();
+        jTexModi.setText(facultadMantenimiento.getFacultad().getNombre());        
+    }//GEN-LAST:event_ComboIngTiItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonIngreso;
     private javax.swing.JComboBox ComboIngTi;
     private javax.swing.JTextField TextIngreso;
     private javax.swing.JButton jButCancelar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField jTexModi;
+    private javax.swing.JButton jbElim;
+    private javax.swing.JButton jbModif;
     // End of variables declaration//GEN-END:variables
 }

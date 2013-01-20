@@ -1,5 +1,5 @@
 /*
- *  AdministradorMatenimiento.java
+ *  MateriaMantenimiento.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,42 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.educautecisystems.intefaz.mantenimiento;
 
-import org.educautecisystems.entidades.Administrador;
+import org.educautecisystems.entidades.Materia;
 
 /**
  *
  * @author Shadow2012
  */
-public class AdministradorMantenimiento {
-     private Administrador administrador;
+public class MateriaMantenimiento {
+    private Materia materia;
     
-    public AdministradorMantenimiento() {
-        this.administrador = null;
+    public MateriaMantenimiento() {
+        this.materia = null;
     }
     
-    public AdministradorMantenimiento(Administrador administrador) {
-        this.administrador = administrador;
+    public MateriaMantenimiento(Materia materia) {
+        this.materia = materia;
     }
     
     @Override
     public String toString () {
-        return this.getAdministrador().getUsuario();
+        return this.getMateria().getNombre();
     }
 
     /**
-     * @return the administrador
+     * @return the materia
      */
-    public Administrador getAdministrador() {
-        return administrador;
+    public Materia getMateria() {
+        return materia;
     }
 
     /**
-     * @param administrador the administrador to set
+     * @param materia the materia to set
      */
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 }
