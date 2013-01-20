@@ -254,7 +254,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             nuevoDocente.setUsuario(txtNombre.getText());
             nuevoDocente.setContrasena(new String(txtClave.getPassword()));
             ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
-            nuevoDocente.setMateria(materiaActual.getMateria());          
+            nuevoDocente.setIdMateria(materiaActual.getMateria());          
             DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
             
             try {

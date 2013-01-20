@@ -198,7 +198,12 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
 
     private void jBtModifiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtModifiActionPerformed
         // TODO add your handling code here:
-          /*  cambio de un ekementio */
+//        Es para que obligue al usuario ingresar todo en los campos
+        if (jtextUsuario.getText().isEmpty() || new String(jPasClave.getPassword()).isEmpty() || new String(jConfClave.getPassword()).isEmpty()) {
+            Sistema.mostrarMensajeError("Por favor llene todos los campos.");
+            return;
+        }
+          /*  cambio de un elemento */
        if (!new String (jPasClave.getPassword()).equals(new String(jConfClave.getPassword()))) {
             Sistema.mostrarMensajeError("Las contraseña no conciden");
             return;
@@ -210,7 +215,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         modificador.setUsuario(jtextUsuario.getText());
         modificador.setContrasena(new String(jPasClave.getPassword()));
         ObjComboBoxMateria maselect = (ObjComboBoxMateria) cmbMateria.getSelectedItem();
-        modificador.setMateria(maselect.getMateria());
+        modificador.setIdMateria(maselect.getMateria());
         try {
             controladorDocente.edit(modificador);
               Sistema.mostrarMensajeInformativo("Se a modificado el docente con exito");      
@@ -232,7 +237,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
       DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
       DocenteMantenimiento actual = (DocenteMantenimiento)cmbDocentes.getSelectedItem();
         try {
-            controladorDocente.destroy(actual.getDocente().getDocentePK());
+            controladorDocente.destroy(actual.getDocente().getIdDocente());
             Sistema.mostrarMensajeInformativo("Se ha borrado safisfactoriamente el docente");
             this.setVisible(false);
             this.dispose();
@@ -259,7 +264,7 @@ public class MantenimientoDocente extends javax.swing.JInternalFrame {
         
         /* Encontrar la materia que corresponde. */
         for ( ObjComboBoxMateria ocmm:objMaterias ) {
-            if ( ocmm.getMateria().getIdMateria() == docenteMantenimiento.getDocente().getMateria().getIdMateria() ) {
+            if ( ocmm.getMateria().getIdMateria() == docenteMantenimiento.getDocente().getIdMateria().getIdMateria() ) {
                 objMateria = ocmm;
             }
         }

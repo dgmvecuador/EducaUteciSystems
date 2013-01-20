@@ -169,18 +169,27 @@ public class MantenimientoAdministrador extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtModifiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtModifiActionPerformed
-        /*  cambio de un ekementio */
+//        Es para que obligue al usuario ingresar todo en los campos
+        if (jtextUsuario.getText().isEmpty() || new String(jPasClave.getPassword()).isEmpty() || new String(jConfClave.getPassword()).isEmpty()) {
+            Sistema.mostrarMensajeError("Por favor llene todos los campos.");
+            return;
+        }
+        /*  cambio de un elementio */
         if (!new String (jPasClave.getPassword()).equals(new String(jConfClave.getPassword()))) {
             Sistema.mostrarMensajeError("Las contraseña no conciden");
             return;
         }
         AdministradorJpaController controladorAdministrador = new AdministradorJpaController(Sistema.getEmf());
         AdministradorMantenimiento administradorMantenimiento = (AdministradorMantenimiento) cmbAdministradores.getSelectedItem();
-        
+//      if(jtextUsuario. != " " )
+//      {
         Administrador modificador = administradorMantenimiento.getAdministrador();
         modificador.setUsuario(jtextUsuario.getText());
+//      if( jPasClave. != " ")
+//      {
         modificador.setContrasena(new String(jPasClave.getPassword()));
-        
+//      }    
+//      }
         try {
             controladorAdministrador.edit(modificador);
               Sistema.mostrarMensajeInformativo("Se a modificado el administrador con exito");      

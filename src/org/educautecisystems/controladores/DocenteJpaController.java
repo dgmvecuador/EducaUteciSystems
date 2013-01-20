@@ -16,9 +16,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
-import org.educautecisystems.controladores.exceptions.PreexistingEntityException;
 import org.educautecisystems.entidades.Docente;
-import org.educautecisystems.entidades.DocentePK;
 
 /**
  *
@@ -35,22 +33,18 @@ public class DocenteJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Docente docente) throws PreexistingEntityException, Exception {
-        if (docente.getDocentePK() == null) {
-            docente.setDocentePK(new DocentePK());
-        }
+    public void create(Docente docente) {
         if (docente.getFacultadList() == null) {
             docente.setFacultadList(new ArrayList<Facultad>());
         }
-        docente.getDocentePK().setIdMateria(docente.getMateria().getIdMateria());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Materia materia = docente.getMateria();
-            if (materia != null) {
-                materia = em.getReference(materia.getClass(), materia.getIdMateria());
-                docente.setMateria(materia);
+            Materia idMateria = docente.getIdMateria();
+            if (idMateria != null) {
+                idMateria = em.getReference(idMateria.getClass(), idMateria.getIdMateria());
+                docente.setIdMateria(idMateria);
             }
             List<Facultad> attachedFacultadList = new ArrayList<Facultad>();
             for (Facultad facultadListFacultadToAttach : docente.getFacultadList()) {
@@ -59,20 +53,15 @@ public class DocenteJpaController implements Serializable {
             }
             docente.setFacultadList(attachedFacultadList);
             em.persist(docente);
-            if (materia != null) {
-                materia.getDocenteList().add(docente);
-                materia = em.merge(materia);
+            if (idMateria != null) {
+                idMateria.getDocenteList().add(docente);
+                idMateria = em.merge(idMateria);
             }
             for (Facultad facultadListFacultad : docente.getFacultadList()) {
                 facultadListFacultad.getDocenteList().add(docente);
                 facultadListFacultad = em.merge(facultadListFacultad);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findDocente(docente.getDocentePK()) != null) {
-                throw new PreexistingEntityException("Docente " + docente + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -81,19 +70,18 @@ public class DocenteJpaController implements Serializable {
     }
 
     public void edit(Docente docente) throws NonexistentEntityException, Exception {
-        docente.getDocentePK().setIdMateria(docente.getMateria().getIdMateria());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Docente persistentDocente = em.find(Docente.class, docente.getDocentePK());
-            Materia materiaOld = persistentDocente.getMateria();
-            Materia materiaNew = docente.getMateria();
+            Docente persistentDocente = em.find(Docente.class, docente.getIdDocente());
+            Materia idMateriaOld = persistentDocente.getIdMateria();
+            Materia idMateriaNew = docente.getIdMateria();
             List<Facultad> facultadListOld = persistentDocente.getFacultadList();
             List<Facultad> facultadListNew = docente.getFacultadList();
-            if (materiaNew != null) {
-                materiaNew = em.getReference(materiaNew.getClass(), materiaNew.getIdMateria());
-                docente.setMateria(materiaNew);
+            if (idMateriaNew != null) {
+                idMateriaNew = em.getReference(idMateriaNew.getClass(), idMateriaNew.getIdMateria());
+                docente.setIdMateria(idMateriaNew);
             }
             List<Facultad> attachedFacultadListNew = new ArrayList<Facultad>();
             for (Facultad facultadListNewFacultadToAttach : facultadListNew) {
@@ -103,13 +91,13 @@ public class DocenteJpaController implements Serializable {
             facultadListNew = attachedFacultadListNew;
             docente.setFacultadList(facultadListNew);
             docente = em.merge(docente);
-            if (materiaOld != null && !materiaOld.equals(materiaNew)) {
-                materiaOld.getDocenteList().remove(docente);
-                materiaOld = em.merge(materiaOld);
+            if (idMateriaOld != null && !idMateriaOld.equals(idMateriaNew)) {
+                idMateriaOld.getDocenteList().remove(docente);
+                idMateriaOld = em.merge(idMateriaOld);
             }
-            if (materiaNew != null && !materiaNew.equals(materiaOld)) {
-                materiaNew.getDocenteList().add(docente);
-                materiaNew = em.merge(materiaNew);
+            if (idMateriaNew != null && !idMateriaNew.equals(idMateriaOld)) {
+                idMateriaNew.getDocenteList().add(docente);
+                idMateriaNew = em.merge(idMateriaNew);
             }
             for (Facultad facultadListOldFacultad : facultadListOld) {
                 if (!facultadListNew.contains(facultadListOldFacultad)) {
@@ -127,7 +115,7 @@ public class DocenteJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                DocentePK id = docente.getDocentePK();
+                Integer id = docente.getIdDocente();
                 if (findDocente(id) == null) {
                     throw new NonexistentEntityException("The docente with id " + id + " no longer exists.");
                 }
@@ -140,7 +128,7 @@ public class DocenteJpaController implements Serializable {
         }
     }
 
-    public void destroy(DocentePK id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -148,14 +136,14 @@ public class DocenteJpaController implements Serializable {
             Docente docente;
             try {
                 docente = em.getReference(Docente.class, id);
-                docente.getDocentePK();
+                docente.getIdDocente();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The docente with id " + id + " no longer exists.", enfe);
             }
-            Materia materia = docente.getMateria();
-            if (materia != null) {
-                materia.getDocenteList().remove(docente);
-                materia = em.merge(materia);
+            Materia idMateria = docente.getIdMateria();
+            if (idMateria != null) {
+                idMateria.getDocenteList().remove(docente);
+                idMateria = em.merge(idMateria);
             }
             List<Facultad> facultadList = docente.getFacultadList();
             for (Facultad facultadListFacultad : facultadList) {
@@ -195,7 +183,7 @@ public class DocenteJpaController implements Serializable {
         }
     }
 
-    public Docente findDocente(DocentePK id) {
+    public Docente findDocente(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Docente.class, id);

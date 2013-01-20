@@ -42,7 +42,7 @@ public class FacultadJpaController implements Serializable {
             em.getTransaction().begin();
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : facultad.getDocenteList()) {
-                docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getDocentePK());
+                docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getIdDocente());
                 attachedDocenteList.add(docenteListDocenteToAttach);
             }
             facultad.setDocenteList(attachedDocenteList);
@@ -69,7 +69,7 @@ public class FacultadJpaController implements Serializable {
             List<Docente> docenteListNew = facultad.getDocenteList();
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
-                docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getDocentePK());
+                docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getIdDocente());
                 attachedDocenteListNew.add(docenteListNewDocenteToAttach);
             }
             docenteListNew = attachedDocenteListNew;

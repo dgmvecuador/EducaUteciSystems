@@ -41,7 +41,7 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "Nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMateria")
     private List<Docente> docenteList;
 
     public Materia() {
