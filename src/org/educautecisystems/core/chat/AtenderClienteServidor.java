@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -430,6 +431,7 @@ public class AtenderClienteServidor extends Thread {
 			response.append(ChatConstants.CHAT_END_HEADER);
 			
 			salida.write(response.toString().getBytes());
+			salida.flush();
 			salida.write(imgBytes.toByteArray());
 			salida.flush();
 			
