@@ -41,12 +41,13 @@ public class ChatConstants {
 	public static final String LABEL_FILE_NAME =		"FileName";
 	
 	/* Commands */
-	public static final String COMMAND_LOGIN =			"login";
-	public static final String COMMAND_GET_USERS =		"getListUsers";
-	public static final String COMMAND_GET_FILES =		"getListFiles";
-	public static final String COMMAND_GET_FILE =		"getFile";
-	public static final String COMMAND_LOGOUT =			"logout";
-	public static final String COMMAND_SEND_MESSAGE =	"sendMessage";
+	public static final String COMMAND_LOGIN =				"login";
+	public static final String COMMAND_GET_USERS =			"getListUsers";
+	public static final String COMMAND_GET_FILES =			"getListFiles";
+	public static final String COMMAND_GET_FILE =			"getFile";
+	public static final String COMMAND_LOGOUT =				"logout";
+	public static final String COMMAND_SEND_MESSAGE =		"sendMessage";
+	public static final String COMMAND_GET_SCREEN_SHOT =	"getScreenShot";
 	
 	
 	/* Responses */

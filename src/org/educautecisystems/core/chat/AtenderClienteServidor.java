@@ -17,12 +17,18 @@
  */
 package org.educautecisystems.core.chat;
 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.ChatMessage;
@@ -388,6 +394,45 @@ public class AtenderClienteServidor extends Thread {
 			}
 			
 			fis.close();
+			detenerCliente();
+			return;
+		}
+		
+		if ( header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_SCREEN_SHOT) ) {
+			String userToken =	header.getVar(ChatConstants.LABEL_USER_TOKEN);
+			String format =		header.getVar(ChatConstants.LABEL_FORMAT);
+			
+			/* Must be a valid token */
+			if ( !ServidorChat.testToken(userToken) ) {
+				logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+				sendResponseError("User not found.");
+				return;
+			}
+			
+			/* Only XML is valid */
+			if ( !format.equals("PNG") ) {
+				logChatManager.logError("No se soporta el formato: " + format);
+				sendResponseError("Format not supported.");
+				return;
+			}
+			
+			/* Take ScreenShot */
+			BufferedImage image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+			ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
+			ImageIO.write(image, "png", imgBytes);
+			
+			/* Genering response. */
+			StringBuilder response = new StringBuilder();
+			response.append(
+					generateHeaderValue(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND, 
+					ChatConstants.RESPONSE_OK));
+			response.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT, ""+imgBytes.size()));
+			response.append(ChatConstants.CHAT_END_HEADER);
+			
+			salida.write(response.toString().getBytes());
+			salida.write(imgBytes.toByteArray());
+			salida.flush();
+			
 			detenerCliente();
 			return;
 		}
