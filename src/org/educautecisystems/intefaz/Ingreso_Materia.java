@@ -60,7 +60,9 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
         }
         
         for ( Materia materia:materias ) {
-            ComboIngTi.addItem(new ObjComboBoxMateria(materia));
+            MateriaMantenimiento materiaMantenimiento = new MateriaMantenimiento(materia);
+            ComboIngTi.addItem(materiaMantenimiento);
+//            ComboIngTi.addItem(new ObjComboBoxMateria(materia));
         }
     }
     
@@ -158,14 +160,13 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(ComboIngTi, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TextIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(101, 101, 101)
                                 .addComponent(ButtonIngreso)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbModi)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbElim)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButCancelar))
@@ -173,7 +174,9 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jTextMod)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(TextIngreso)
+                    .addComponent(jTextMod))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -268,7 +271,9 @@ public class Ingreso_Materia extends javax.swing.JInternalFrame {
                 Sistema.mostrarMensajeInformativo("Se ha borrado safisfactoriamente la materia");
                 this.setVisible(false);
                 this.dispose();
-            } catch (NonexistentEntityException ex) {
+            } catch (IllegalOrphanException ex) {
+            Sistema.mostrarMensajeError("No se puede eliminar la materia");
+        } catch (NonexistentEntityException ex) {
             Sistema.mostrarMensajeError("No se puede borrar la materia");
             return;
         }

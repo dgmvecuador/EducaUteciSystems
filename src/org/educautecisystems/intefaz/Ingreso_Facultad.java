@@ -58,7 +58,9 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
         
         for ( Facultad facultad:facultades ) 
         {
-          ComboIngTi.addItem(new ObjComboBoxFacultad(facultad));
+         FacultadMantenimiento administradorMantenimiento = new FacultadMantenimiento(facultad);
+          ComboIngTi.addItem(administradorMantenimiento);            
+//          ComboIngTi.addItem(new ObjComboBoxFacultad(facultad));
         }
       }
      
