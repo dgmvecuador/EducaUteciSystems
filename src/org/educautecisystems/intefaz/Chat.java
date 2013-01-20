@@ -427,6 +427,13 @@ public final class Chat extends javax.swing.JInternalFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         clienteServidorChat.cerrarSesion();
+		
+		/* Cerrar pantalla, si tiene. */
+		if ( !esDocente ) {
+			pantallaProfesor.setVisible(false);
+			pantallaProfesor.dispose();
+		}
+		
 		this.setVisible(false);
 		this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
