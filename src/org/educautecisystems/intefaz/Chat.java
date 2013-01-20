@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -47,7 +48,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     private long actualSize = 0;
 	private long actualSizeListaUsuarios = 0;
 	private long actualSizeListaArchivos = 0;
-	private final PantallaProfesor pantallaProfesor = new PantallaProfesor();
+	private final PantallaProfesor pantallaProfesor = new PantallaProfesor(this);
 	private BufferedImage pantallaActual = null;
     
     /**
@@ -66,6 +67,11 @@ public final class Chat extends javax.swing.JInternalFrame {
 			/* Generar pantalla. */
 			ventanaPrincipal.insertarNuevaVentana(pantallaProfesor);
 			pantallaProfesor.setVisible(true);
+			try {
+				pantallaProfesor.setMaximum(true);
+			} catch (PropertyVetoException ex) {
+				
+			}
 			
 			Timer actualizarPantallaProfesor = new Timer(1000, new ActionListener() {
 				@Override
@@ -98,6 +104,10 @@ public final class Chat extends javax.swing.JInternalFrame {
 		});
 		actualizarListaArchivosTimer.start();
     }
+	
+	public boolean esChatDocente () {
+		return esDocente;
+	}
 	
 	private void actualizarPantallaProfessor() {
 		synchronized ( pantallaProfesor ) {

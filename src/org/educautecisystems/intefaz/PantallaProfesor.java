@@ -18,6 +18,7 @@
 package org.educautecisystems.intefaz;
 
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import javax.swing.ImageIcon;
 
 /**
@@ -25,12 +26,13 @@ import javax.swing.ImageIcon;
  * @author dgmv
  */
 public class PantallaProfesor extends javax.swing.JInternalFrame {
-
+	private Chat pantallaChat;
 	/**
 	 * Creates new form PantallaProfessor
 	 */
-	public PantallaProfesor() {
+	public PantallaProfesor( Chat pantallaChat ) {
 		initComponents();
+		this.pantallaChat = pantallaChat;
 	}
 	
 	public void actualizarPantallaProfesor( BufferedImage screnshot ) {
@@ -46,34 +48,40 @@ public class PantallaProfesor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnVerChat = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         pantallaProfesorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMaximizable(true);
+        setResizable(true);
+
+        btnVerChat.setText("Mostrar Chat");
+        btnVerChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerChatActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVerChat, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane1.setViewportView(pantallaProfesorLabel);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-591)/2, (screenSize.height-451)/2, 591, 451);
+        setBounds((screenSize.width-874)/2, (screenSize.height-533)/2, 874, 533);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVerChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerChatActionPerformed
+		try {
+			pantallaChat.setSelected(true);
+		} catch (PropertyVetoException ex) {
+			
+		}
+    }//GEN-LAST:event_btnVerChatActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerChat;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel pantallaProfesorLabel;
     // End of variables declaration//GEN-END:variables

@@ -15,7 +15,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import org.educautecisystems.core.Sistema;
-import org.educautecisystems.core.chat.AtenderClienteServidor;
 import org.educautecisystems.core.chat.elements.ChatConstants;
 import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
@@ -97,10 +96,14 @@ public class ClienteServidorChat extends Thread {
         clienteToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
         clienteUsuarioId = header.getVar(ChatConstants.LABEL_USER_ID);
         
-		/* Actualizar las listas de los usuarios. */
+		/* Actualizar las listas. */
         actualizarUsuarios();
 		actualizarArchivos();
-		actualizarPantallaProfesor();
+		
+		/* Solo crear hilo cuando se actualiza la pantalla. */
+		if ( !pantallaChat.esChatDocente() ) {
+			actualizarPantallaProfesor();
+		}
         
         while ( continuar ) {
             MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
