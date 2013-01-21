@@ -209,7 +209,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Escriba aqui el mesaje"/>
+        <Property name="text" type="java.lang.String" value="Escriba aqui el mensaje"/>
       </Properties>
     </Component>
   </SubComponents>

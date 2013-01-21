@@ -173,16 +173,111 @@ public final class Chat extends javax.swing.JInternalFrame {
         synchronized ( logChat ) {
             String directorioActual = dameDiretorioActual();
             File imgs = new File(directorioActual, "img");
-            File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
-            if (!emoticon.exists()) {
-                System.err.println("No existe imagen.\n\t" + emoticon.getAbsolutePath());
+            
+            /* Direccciones de los emoticones base. */
+            File emoticonSorpresa = new File(imgs, "sorpresa.png");
+            File emoticonTriste = new File(imgs, "triste.png");
+            File emoticonAburrido = new File(imgs, "aburrido.png");
+            File emoticonDormir = new File(imgs, "dormir.png");
+            File emoticonEnojado = new File(imgs, "enojado.png");
+            File emoticonEntimidado = new File(imgs, "entimidado.png");
+            File emoticonJajajaja = new File(imgs, "jajaja.png");
+            File emoticonMuybien = new File(imgs, "muybien.png");
+            File emoticonQuee = new File(imgs, "quee.png");
+            File emoticonQuemal = new File(imgs, "quemal.png");
+            File emoticonSonrisa = new File(imgs, "sonrisa.png");
+            File emoticonSonrisacondientes = new File(imgs, "sonrisacondientes.png");
+            
+            
+            /* Comprobar si existen. */
+            if (!emoticonSorpresa.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonSorpresa.getAbsolutePath());
                 return;
             }
-            String regex_emoticon = emoticon.getAbsolutePath().
+            if (!emoticonTriste.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonTriste.getAbsolutePath());
+                return;
+            }
+            if (!emoticonAburrido.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonAburrido.getAbsolutePath());
+                return;
+            }
+            if (!emoticonDormir.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonDormir.getAbsolutePath());
+                return;
+            }
+            if (!emoticonEnojado.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEnojado.getAbsolutePath());
+                return;
+            }
+            if (!emoticonEntimidado.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEntimidado.getAbsolutePath());
+                return;
+            }
+            if (!emoticonJajajaja.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonJajajaja.getAbsolutePath());
+                return;
+            }
+            if (!emoticonMuybien.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonMuybien.getAbsolutePath());
+                return;
+            }
+            if (!emoticonQuee.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonQuee.getAbsolutePath());
+                return;
+            }
+            if (!emoticonQuemal.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonQuemal.getAbsolutePath());
+                return;
+            }
+            if (!emoticonSonrisa.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonSonrisa.getAbsolutePath());
+                return;
+            }
+            if (!emoticonSonrisacondientes.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEnojado.getAbsolutePath());
+                return;
+            }
+            
+            /* Dirección real para el chat. */
+            String direccionEmoticonSorpresa = emoticonSorpresa.getAbsolutePath().
                     replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
-
+            String direccionEmoticonTriste = emoticonTriste.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonAburrido = emoticonAburrido.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonDormir = emoticonDormir.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonEnojado = emoticonEnojado.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonEntimidado = emoticonEntimidado.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonJajajaja = emoticonJajajaja.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonMuybien = emoticonMuybien.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonQuee = emoticonQuee.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonQuemal = emoticonQuemal.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonSonrisa = emoticonSonrisa.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonSonrisacondientes = emoticonSonrisacondientes.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            
             String salida = mensaje.
-                    replaceAll(":o", "<img src=\"file:///" + regex_emoticon + "\"/>").
+                    replaceAll(":o", "<img src=\"file:///" + direccionEmoticonSorpresa + "\"/>").
+                    replaceAll(":\\(", "<img src=\"file:///" + direccionEmoticonTriste + "\"/>").
+                    replaceAll(":~", "<img src=\"file:///" + direccionEmoticonAburrido + "\"/>").
+                    replaceAll(":zzzzz", "<img src=\"file:///" + direccionEmoticonDormir + "\"/>").
+                    replaceAll(">\\(", "<img src=\"file:///" + direccionEmoticonEnojado + "\"/>").
+                    replaceAll("oO\\(", "<img src=\"file:///" + direccionEmoticonEntimidado + "\"/>").
+                    replaceAll(":\\)jajajajaja", "<img src=\"file:///" + direccionEmoticonJajajaja + "\"/>").
+                    replaceAll(":\\)ok", "<img src=\"file:///" + direccionEmoticonMuybien + "\"/>").
+                    replaceAll(":queeee", "<img src=\"file:///" + direccionEmoticonQuee + "\"/>").
+                    replaceAll(":malmalmal", "<img src=\"file:///" + direccionEmoticonQuemal + "\"/>").
+                    replaceAll(":\\)", "<img src=\"file:///" + direccionEmoticonSonrisa + "\"/>").
+                    replaceAll(":D", "<img src=\"file:///" + direccionEmoticonSonrisacondientes + "\"/>").
                     replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
                     replaceAll("\\bN[iI]ck\\b", "<b>$0</b>").
 					replace(" ", "&nbsp;");
@@ -354,7 +449,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Escriba aqui el mesaje");
+        jLabel4.setText("Escriba aqui el mensaje");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
