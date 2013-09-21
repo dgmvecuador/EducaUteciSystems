@@ -1,7 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *  CrearNuevoUsuario.java
+ *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.educautecisystems.intefaz;
 
 import java.util.List;
@@ -68,7 +82,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
         List <Docente> docentes = controladorDocente.findDocenteEntities();
         
         for ( Docente docente:docentes ) {
-            if ( docente.getUsuario().equals(txtNombre.getText()) ) {
+            if ( docente.getUsuario().equals(txtNombre.getText())) {
                 return false;
             }
         }
@@ -231,7 +245,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             this.setVisible(false);
             this.dispose();
         } else if ( idTipoUsuario == TIPO_USUARIO_DOCENTE ) {
-            if ( !comprobarUsuarioDocente() ) {
+           if ( !comprobarUsuarioDocente() ) {
                 Sistema.mostrarMensajeError("Docente ya existe.");
                 return;
             }
@@ -240,7 +254,7 @@ public class CrearNuevoUsuario extends javax.swing.JInternalFrame {
             nuevoDocente.setUsuario(txtNombre.getText());
             nuevoDocente.setContrasena(new String(txtClave.getPassword()));
             ObjComboBoxMateria materiaActual = (ObjComboBoxMateria) jComboBoxMateria.getSelectedItem();
-            nuevoDocente.setMateria(materiaActual.getMateria());          
+            nuevoDocente.setIdMateria(materiaActual.getMateria());          
             DocenteJpaController controladorDocente = new DocenteJpaController(Sistema.getEmf());
             
             try {

@@ -1,5 +1,5 @@
 /*
- *  ObjComboBoxMateria.java
+ *  FacultadMantenimiento.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,42 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.educautecisystems.intefaz.mantenimiento;
 
-package org.educautecisystems.intefaz.objects;
-
-import org.educautecisystems.entidades.Materia;
+import org.educautecisystems.entidades.Facultad;
 
 /**
  *
  * @author Shadow2012
  */
-public class ObjComboBoxMateria {
-    private Materia materia;
+public class FacultadMantenimiento {
+    private Facultad facultad;
     
-    public ObjComboBoxMateria() {
-        materia = null;
+    public FacultadMantenimiento() {
+        this.facultad = null;
     }
     
-    public ObjComboBoxMateria(Materia materia) {
-        this.materia = materia;
+    public FacultadMantenimiento(Facultad facultad) {
+        this.facultad = facultad;
     }
     
     @Override
-    public String toString() {
-        return materia.getNombre();
+    public String toString () {
+        return this.getFacultad().getNombre();
     }
 
     /**
-     * @return the materia
+     * @return the facultad
      */
-    public Materia getMateria() {
-        return materia;
+    public Facultad getFacultad() {
+        return facultad;
     }
 
     /**
-     * @param materia the materia to set
+     * @param facultad the facultad to set
      */
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setFacultad(Facultad facultad) {
+        this.facultad = facultad;
     }
 }

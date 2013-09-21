@@ -38,11 +38,11 @@ public class Sistema {
 	private static String pathGeneralConf = null;
 	
 	/* Valores por defecto de la configuración principal */
-	public static final String g_host_defecto = "locahost";
+	public static final String g_host_defecto = "localhost";
 	public static final String g_port_defecto = "3306";
 	public static final String g_user_defecto = "root";
 	public static final String g_password_defecto = "admin";
-    public static final String g_esquema_defecto = "mydb";
+        public static final String g_esquema_defecto = "mydb";
     
     /* Constantes */
     public static final int VERSION_MAYOR = 1;

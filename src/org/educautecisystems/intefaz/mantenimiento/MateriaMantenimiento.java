@@ -1,5 +1,5 @@
 /*
- *  ObjComboBoxMateria.java
+ *  MateriaMantenimiento.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package org.educautecisystems.intefaz.objects;
+package org.educautecisystems.intefaz.mantenimiento;
 
 import org.educautecisystems.entidades.Materia;
 
@@ -24,20 +23,20 @@ import org.educautecisystems.entidades.Materia;
  *
  * @author Shadow2012
  */
-public class ObjComboBoxMateria {
+public class MateriaMantenimiento {
     private Materia materia;
     
-    public ObjComboBoxMateria() {
-        materia = null;
+    public MateriaMantenimiento() {
+        this.materia = null;
     }
     
-    public ObjComboBoxMateria(Materia materia) {
+    public MateriaMantenimiento(Materia materia) {
         this.materia = materia;
     }
     
     @Override
-    public String toString() {
-        return materia.getNombre();
+    public String toString () {
+        return this.getMateria().getNombre();
     }
 
     /**

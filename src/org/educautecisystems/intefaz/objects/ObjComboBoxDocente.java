@@ -1,5 +1,5 @@
 /*
- *  ObjComboBoxMateria.java
+ *  ObjComboBoxDocente.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
 
 package org.educautecisystems.intefaz.objects;
 
-import org.educautecisystems.entidades.Materia;
+import org.educautecisystems.entidades.Docente;
 
 /**
  *
  * @author Shadow2012
  */
-public class ObjComboBoxMateria {
-    private Materia materia;
+public class ObjComboBoxDocente {
+     private Docente docente;
     
-    public ObjComboBoxMateria() {
-        materia = null;
+    public ObjComboBoxDocente() {
+        docente = null;
     }
     
-    public ObjComboBoxMateria(Materia materia) {
-        this.materia = materia;
+    public ObjComboBoxDocente(Docente docente) {
+        this.docente = docente;
     }
     
     @Override
     public String toString() {
-        return materia.getNombre();
+        return docente.getUsuario();
     }
 
     /**
-     * @return the materia
+     * @return the docente
      */
-    public Materia getMateria() {
-        return materia;
+    public Docente getAdministrador() {
+        return docente;
     }
 
     /**
-     * @param materia the materia to set
+     * @param docente the docente to set
      */
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setAdministrador(Docente docente) {
+        this.docente = docente;
     }
 }

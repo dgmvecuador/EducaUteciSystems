@@ -1,5 +1,5 @@
 /*
- *  ObjComboBoxMateria.java
+ *  AdministradorMatenimiento.java
  *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,41 +16,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.educautecisystems.intefaz.objects;
+package org.educautecisystems.intefaz.mantenimiento;
 
-import org.educautecisystems.entidades.Materia;
+import org.educautecisystems.entidades.Administrador;
 
 /**
  *
  * @author Shadow2012
  */
-public class ObjComboBoxMateria {
-    private Materia materia;
+public class AdministradorMantenimiento {
+     private Administrador administrador;
     
-    public ObjComboBoxMateria() {
-        materia = null;
+    public AdministradorMantenimiento() {
+        this.administrador = null;
     }
     
-    public ObjComboBoxMateria(Materia materia) {
-        this.materia = materia;
+    public AdministradorMantenimiento(Administrador administrador) {
+        this.administrador = administrador;
     }
     
     @Override
-    public String toString() {
-        return materia.getNombre();
+    public String toString () {
+        return this.getAdministrador().getUsuario();
     }
 
     /**
-     * @return the materia
+     * @return the administrador
      */
-    public Materia getMateria() {
-        return materia;
+    public Administrador getAdministrador() {
+        return administrador;
     }
 
     /**
-     * @param materia the materia to set
+     * @param administrador the administrador to set
      */
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 }

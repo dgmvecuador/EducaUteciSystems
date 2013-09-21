@@ -173,16 +173,111 @@ public final class Chat extends javax.swing.JInternalFrame {
         synchronized ( logChat ) {
             String directorioActual = dameDiretorioActual();
             File imgs = new File(directorioActual, "img");
-            File emoticon = new File(imgs, "Emoticon_sorpresa.jpg");
-            if (!emoticon.exists()) {
-                System.err.println("No existe imagen.\n\t" + emoticon.getAbsolutePath());
+            
+            /* Direccciones de los emoticones base. */
+            File emoticonSorpresa = new File(imgs, "sorpresa.png");
+            File emoticonTriste = new File(imgs, "triste.png");
+            File emoticonAburrido = new File(imgs, "aburrido.png");
+            File emoticonDormir = new File(imgs, "dormir.png");
+            File emoticonEnojado = new File(imgs, "enojado.png");
+            File emoticonEntimidado = new File(imgs, "entimidado.png");
+            File emoticonJajajaja = new File(imgs, "jajaja.png");
+            File emoticonMuybien = new File(imgs, "muybien.png");
+            File emoticonQuee = new File(imgs, "quee.png");
+            File emoticonQuemal = new File(imgs, "quemal.png");
+            File emoticonSonrisa = new File(imgs, "sonrisa.png");
+            File emoticonSonrisacondientes = new File(imgs, "sonrisacondientes.png");
+            
+            
+            /* Comprobar si existen. */
+            if (!emoticonSorpresa.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonSorpresa.getAbsolutePath());
                 return;
             }
-            String regex_emoticon = emoticon.getAbsolutePath().
+            if (!emoticonTriste.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonTriste.getAbsolutePath());
+                return;
+            }
+            if (!emoticonAburrido.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonAburrido.getAbsolutePath());
+                return;
+            }
+            if (!emoticonDormir.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonDormir.getAbsolutePath());
+                return;
+            }
+            if (!emoticonEnojado.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEnojado.getAbsolutePath());
+                return;
+            }
+            if (!emoticonEntimidado.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEntimidado.getAbsolutePath());
+                return;
+            }
+            if (!emoticonJajajaja.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonJajajaja.getAbsolutePath());
+                return;
+            }
+            if (!emoticonMuybien.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonMuybien.getAbsolutePath());
+                return;
+            }
+            if (!emoticonQuee.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonQuee.getAbsolutePath());
+                return;
+            }
+            if (!emoticonQuemal.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonQuemal.getAbsolutePath());
+                return;
+            }
+            if (!emoticonSonrisa.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonSonrisa.getAbsolutePath());
+                return;
+            }
+            if (!emoticonSonrisacondientes.exists()) {
+                System.err.println("No existe imagen.\n\t" + emoticonEnojado.getAbsolutePath());
+                return;
+            }
+            
+            /* Dirección real para el chat. */
+            String direccionEmoticonSorpresa = emoticonSorpresa.getAbsolutePath().
                     replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
-
+            String direccionEmoticonTriste = emoticonTriste.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonAburrido = emoticonAburrido.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonDormir = emoticonDormir.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonEnojado = emoticonEnojado.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonEntimidado = emoticonEntimidado.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonJajajaja = emoticonJajajaja.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonMuybien = emoticonMuybien.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonQuee = emoticonQuee.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonQuemal = emoticonQuemal.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonSonrisa = emoticonSonrisa.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            String direccionEmoticonSonrisacondientes = emoticonSonrisacondientes.getAbsolutePath().
+                    replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
+            
             String salida = mensaje.
-                    replaceAll(":o", "<img src=\"file:///" + regex_emoticon + "\"/>").
+                    replaceAll(":o", "<img src=\"file:///" + direccionEmoticonSorpresa + "\"/>").
+                    replaceAll(":\\(", "<img src=\"file:///" + direccionEmoticonTriste + "\"/>").
+                    replaceAll(":~", "<img src=\"file:///" + direccionEmoticonAburrido + "\"/>").
+                    replaceAll(":zzzzz", "<img src=\"file:///" + direccionEmoticonDormir + "\"/>").
+                    replaceAll(">\\(", "<img src=\"file:///" + direccionEmoticonEnojado + "\"/>").
+                    replaceAll("oO\\(", "<img src=\"file:///" + direccionEmoticonEntimidado + "\"/>").
+                    replaceAll(":\\)jajajajaja", "<img src=\"file:///" + direccionEmoticonJajajaja + "\"/>").
+                    replaceAll(":\\)ok", "<img src=\"file:///" + direccionEmoticonMuybien + "\"/>").
+                    replaceAll(":queeee", "<img src=\"file:///" + direccionEmoticonQuee + "\"/>").
+                    replaceAll(":malmalmal", "<img src=\"file:///" + direccionEmoticonQuemal + "\"/>").
+                    replaceAll(":\\)", "<img src=\"file:///" + direccionEmoticonSonrisa + "\"/>").
+                    replaceAll(":D", "<img src=\"file:///" + direccionEmoticonSonrisacondientes + "\"/>").
                     replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
                     replaceAll("\\bN[iI]ck\\b", "<b>$0</b>").
 					replace(" ", "&nbsp;");
@@ -296,6 +391,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivos = new javax.swing.JList();
         btnDescargar = new javax.swing.JButton();
         btnGenerarReporteAsistencia = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -353,6 +449,8 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setText("Escriba aqui el mensaje");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -360,17 +458,15 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtTexto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEnviar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCerrarSesion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -382,7 +478,14 @@ public final class Chat extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtTexto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEnviar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCerrarSesion)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -391,28 +494,31 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnDescargar)
                             .addComponent(btnGenerarReporteAsistencia)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviar)
-                    .addComponent(btnCerrarSesion)))
+                    .addComponent(btnCerrarSesion))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-736)/2, (screenSize.height-482)/2, 736, 482);
+        setBounds((screenSize.width-743)/2, (screenSize.height-550)/2, 743, 550);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
@@ -523,6 +629,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -5,17 +5,16 @@
 package org.educautecisystems.controladores;
 
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.educautecisystems.entidades.Docente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
-import org.educautecisystems.entidades.Docente;
 import org.educautecisystems.entidades.Facultad;
 
 /**
@@ -27,7 +26,7 @@ public class FacultadJpaController implements Serializable {
     public FacultadJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EducaUteciSystemsPU");
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -43,7 +42,7 @@ public class FacultadJpaController implements Serializable {
             em.getTransaction().begin();
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : facultad.getDocenteList()) {
-                docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getDocentePK());
+                docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getIdDocente());
                 attachedDocenteList.add(docenteListDocenteToAttach);
             }
             facultad.setDocenteList(attachedDocenteList);
@@ -70,7 +69,7 @@ public class FacultadJpaController implements Serializable {
             List<Docente> docenteListNew = facultad.getDocenteList();
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
-                docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getDocentePK());
+                docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getIdDocente());
                 attachedDocenteListNew.add(docenteListNewDocenteToAttach);
             }
             docenteListNew = attachedDocenteListNew;
