@@ -4,13 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>org.educautecisystems.entidades.Facultad</class>
     <class>org.educautecisystems.entidades.Docente</class>
-    <class>org.educautecisystems.entidades.Estudiante</class>
-    <class>org.educautecisystems.entidades.Clase</class>
-    <class>org.educautecisystems.entidades.Nivel</class>
     <class>org.educautecisystems.entidades.Materia</class>
-    <class>org.educautecisystems.entidades.ClaseHasEstudiante</class>
     <class>org.educautecisystems.entidades.Administrador</class>
-    <class>org.educautecisystems.entidades.Modalidad</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
     </properties>
