@@ -20,8 +20,6 @@ package org.educautecisystems.intefaz;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import org.educautecisystems.core.Sistema;
@@ -284,7 +282,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemInSerChaActionPerformed
 
     private void MenManteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenManteAdminActionPerformed
-        // TODO add your handling code here:
         MantenimientoAdministrador dea = new MantenimientoAdministrador();
         escritorioPrincipal.add(dea);
         dea.setVisible(true);
