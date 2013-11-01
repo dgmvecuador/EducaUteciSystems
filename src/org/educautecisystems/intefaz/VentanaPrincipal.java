@@ -18,6 +18,7 @@
 
 package org.educautecisystems.intefaz;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -293,7 +294,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        Codigo para abrir un documento
         Runtime rt = Runtime.getRuntime();
         try {
-            Process pr = rt.exec("explorer \"Ayuda del Sistema.pdf\"");
+            String OS = System.getProperty("os.name").toLowerCase();
+            String nombrePrograma = null;
+            
+            if ( OS.indexOf("win") >= 0 ) {
+                nombrePrograma = "explorer";
+            } else if ( OS.indexOf("nux") >= 0 ) {
+                nombrePrograma = "gnome-open";
+            } else {
+                Sistema.mostrarMensajeError("Sistema no soportado.");
+                return;
+            }
+            
+            File pdfFile = new File("Ayuda del Sistema.pdf");
+            String [] command = {nombrePrograma, pdfFile.getAbsolutePath()};
+            rt.exec(command);
         } catch (IOException ex) {
             Sistema.mostrarMensajeError("No existe el Archivo");
         }
