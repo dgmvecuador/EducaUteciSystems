@@ -1,6 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *  Sistema.java
+ *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@hotmail.com>
+ *  Copyright (C) 2013  Diego Estévez <dgmvecuador@gmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.educautecisystems.core;
 
@@ -163,6 +177,16 @@ public class Sistema {
 
     public static void mostrarMensajeError(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Error - " + dameVersionCompleta(), JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public static boolean confirmarSiNoPregunta( String pregunta ) {
+        int respuesta = JOptionPane.showConfirmDialog(null, pregunta, "", JOptionPane.YES_NO_OPTION);
+        
+        if ( respuesta == JOptionPane.YES_OPTION ) {
+            return true;
+        }
+        
+        return false;
     }
 
     private static void cargarCarpeta() {

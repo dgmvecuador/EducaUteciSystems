@@ -151,6 +151,11 @@ public final class Chat extends javax.swing.JInternalFrame {
         btnEnviar.setEnabled(b);
     }
     
+    public void recibirPregunta ( String preguntaId, String pregunta ) {
+        boolean respuestaPregunta = Sistema.confirmarSiNoPregunta(pregunta);
+        clienteServidorChat.enviarRespuestaPregunta(respuestaPregunta, preguntaId);
+    }
+    
     public void recibirMensaje ( String userIdString, String mensaje ) {
         String userName = null;
         synchronized ( this ) {

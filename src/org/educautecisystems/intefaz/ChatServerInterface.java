@@ -106,6 +106,7 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
         txtBitacoraEventos = new javax.swing.JEditorPane();
         btnCerrarVentana = new javax.swing.JButton();
         cbActualizar = new javax.swing.JCheckBox();
+        btnPreguntaTodos = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -145,6 +146,14 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 
         cbActualizar.setText("Auto-actualizar");
 
+        btnPreguntaTodos.setText("Preguntar a todos");
+        btnPreguntaTodos.setEnabled(false);
+        btnPreguntaTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreguntaTodosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,8 +176,10 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCerrarVentana)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbActualizar)))
-                        .addGap(0, 360, Short.MAX_VALUE)))
+                                .addComponent(cbActualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPreguntaTodos)))
+                        .addGap(0, 147, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -183,7 +194,8 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
                     .addComponent(btnArrancarServidor)
                     .addComponent(btnDetenerServidor)
                     .addComponent(btnCerrarVentana)
-                    .addComponent(cbActualizar))
+                    .addComponent(cbActualizar)
+                    .addComponent(btnPreguntaTodos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,8 +203,7 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
                 .addContainerGap())
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-848)/2, (screenSize.height-435)/2, 848, 435);
+        setBounds(0, 0, 848, 435);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCerrarVentanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarVentanaActionPerformed
@@ -214,6 +225,7 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 				/* Cambiar el estado de los botones cuando sea necesario. */
 				btnDetenerServidor.setEnabled(true);
 				btnArrancarServidor.setEnabled(false);
+                                btnPreguntaTodos.setEnabled(true);
 				
 				/* Arrancar el servidor */
 				servidorChat = new ServidorChat(this);
@@ -233,15 +245,23 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
 				/* Cambiar el estado de los botones. */
 				btnDetenerServidor.setEnabled(false);
 				btnArrancarServidor.setEnabled(true);
+                                btnPreguntaTodos.setEnabled(false);
 				serverChatFuncionando = false;
 			}
 		}
     }//GEN-LAST:event_btnDetenerServidorActionPerformed
 
+    private void btnPreguntaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreguntaTodosActionPerformed
+        PreguntaTodos ventanaNueva = new PreguntaTodos(servidorChat);
+        this.getParent().add(ventanaNueva);
+        ventanaNueva.setVisible(true);
+    }//GEN-LAST:event_btnPreguntaTodosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArrancarServidor;
     private javax.swing.JButton btnCerrarVentana;
     private javax.swing.JButton btnDetenerServidor;
+    private javax.swing.JButton btnPreguntaTodos;
     private javax.swing.JCheckBox cbActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
