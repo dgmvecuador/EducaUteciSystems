@@ -15,7 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.educautecisystems.intefaz;
 
 import java.awt.event.ActionEvent;
@@ -29,8 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
@@ -44,52 +41,53 @@ import org.educautecisystems.core.chat.elements.UserChat;
  * @author Shadow2012
  */
 public final class Chat extends javax.swing.JInternalFrame {
+
     private VentanaPrincipal ventanaPrincipal;
-	private boolean esDocente;
+    private boolean esDocente;
     private final StringBuffer logChat = new StringBuffer();
     private ClienteServidorChat clienteServidorChat;
-    private ArrayList <UserChat> usuarios;
-	private ArrayList <FileChat> archivos;
-	DefaultListModel listaArchivosModelo = new DefaultListModel();
+    private ArrayList<UserChat> usuarios;
+    private ArrayList<FileChat> archivos;
+    DefaultListModel listaArchivosModelo = new DefaultListModel();
     private long actualSize = 0;
-	private long actualSizeListaUsuarios = 0;
-	private long actualSizeListaArchivos = 0;
-	private final PantallaProfesor pantallaProfesor = new PantallaProfesor(this);
-	private BufferedImage pantallaActual = null;
-    
+    private long actualSizeListaUsuarios = 0;
+    private long actualSizeListaArchivos = 0;
+    private final PantallaProfesor pantallaProfesor = new PantallaProfesor(this);
+    private BufferedImage pantallaActual = null;
+
     /**
      * Creates new form ChaPrueba
      */
-    public Chat( VentanaPrincipal ventanaPrincipal, boolean esDocente ) {
+    public Chat(VentanaPrincipal ventanaPrincipal, boolean esDocente) {
         initComponents();
         this.ventanaPrincipal = ventanaPrincipal;
-		this.esDocente = esDocente;
+        this.esDocente = esDocente;
         clienteServidorChat = new ClienteServidorChat(this);
         activarBotones(false);
         clienteServidorChat.start();
         usuarios = null;
-		
-		if ( !esDocente ) {
-			/* Generar pantalla. */
-			ventanaPrincipal.insertarNuevaVentana(pantallaProfesor);
-			pantallaProfesor.setVisible(true);
-			btnGenerarReporteAsistencia.setVisible(false);
-			
-			try {
-				pantallaProfesor.setMaximum(true);
-			} catch (PropertyVetoException ex) {
-				
-			}
-			
-			Timer actualizarPantallaProfesor = new Timer(1000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					actualizarPantallaProfessor();
-				}
-			});
-			actualizarPantallaProfesor.start();
-		}
-		
+
+        if (!esDocente) {
+            /* Generar pantalla. */
+            ventanaPrincipal.insertarNuevaVentana(pantallaProfesor);
+            pantallaProfesor.setVisible(true);
+            btnGenerarReporteAsistencia.setVisible(false);
+
+            try {
+                pantallaProfesor.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+
+            }
+
+            Timer actualizarPantallaProfesor = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    actualizarPantallaProfessor();
+                }
+            });
+            actualizarPantallaProfesor.start();
+        }
+
         Timer actualizadorChat = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,88 +95,91 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
         actualizadorChat.start();
-		Timer actualizarListaUsuariosTimer = new Timer(2000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				actualizarListaUsuarios();
-			}
-		});
-		actualizarListaUsuariosTimer.start();
-		Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				actualizarListaArchivos();
-			}
-		});
-		actualizarListaArchivosTimer.start();
+        Timer actualizarListaUsuariosTimer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarListaUsuarios();
+            }
+        });
+        actualizarListaUsuariosTimer.start();
+        Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarListaArchivos();
+            }
+        });
+        actualizarListaArchivosTimer.start();
     }
-	
-	public boolean esChatDocente () {
-		return esDocente;
-	}
-	
-	private void actualizarPantallaProfessor() {
-		synchronized ( pantallaProfesor ) {
-			if ( pantallaActual == null ) {
-				return;
-			}
-			pantallaProfesor.actualizarPantallaProfesor(pantallaActual);
-		}
-	}
-    
-	public void nuevaPantallaProfesor ( BufferedImage nuevaPantalla ) {
-		synchronized( pantallaProfesor ) {
-			this.pantallaActual = nuevaPantalla;
-		}
-	}
-	
-    public void mostrarError( String txt ) {
-        synchronized( logChat ) {
+
+    public boolean esChatDocente() {
+        return esDocente;
+    }
+
+    private void actualizarPantallaProfessor() {
+        synchronized (pantallaProfesor) {
+            if (pantallaActual == null) {
+                return;
+            }
+            pantallaProfesor.actualizarPantallaProfesor(pantallaActual);
+        }
+    }
+
+    public void nuevaPantallaProfesor(BufferedImage nuevaPantalla) {
+        synchronized (pantallaProfesor) {
+            this.pantallaActual = nuevaPantalla;
+        }
+    }
+
+    public void mostrarError(String txt) {
+        synchronized (logChat) {
             String mensaje = "<font color=\"red\"><b>Error: </b>" + txt + "</font><br/>";
             logChat.append(mensaje);
         }
     }
-    
-    public void mostrarInfo( String txt ) {
-        synchronized( logChat ) {
+
+    public void mostrarInfo(String txt) {
+        synchronized (logChat) {
             String mensaje = "<font color=\"blue\"><b>Info: </b>" + txt + "</font><br/>";
             logChat.append(mensaje);
         }
     }
-    
-    public void activarBotones( boolean b ) {
+
+    public void activarBotones(boolean b) {
         txtTexto.setEnabled(b);
         btnEnviar.setEnabled(b);
     }
-    
-    public void recibirPregunta ( String preguntaId, String pregunta ) {
+
+    public void recibirPregunta(String preguntaId, String pregunta) {
+        if (esDocente) {
+            return;
+        }
         boolean respuestaPregunta = Sistema.confirmarSiNoPregunta(pregunta);
         clienteServidorChat.enviarRespuestaPregunta(respuestaPregunta, preguntaId);
     }
-    
-    public void recibirMensaje ( String userIdString, String mensaje ) {
+
+    public void recibirMensaje(String userIdString, String mensaje) {
         String userName = null;
-        synchronized ( this ) {
+        synchronized (this) {
             int userId = 0;
             try {
                 userId = Integer.parseInt(userIdString);
-            } catch( NumberFormatException nfe ) {
+            } catch (NumberFormatException nfe) {
                 this.mostrarError("Id de usuario no encontrado.");
                 return;
             }
-            
+
             /* Buascar el nombre del usuario. */
-            for ( UserChat userChat:usuarios ) {
-                if ( userChat.getId() == userId ) {
+            for (UserChat userChat : usuarios) {
+                if (userChat.getId() == userId) {
                     userName = userChat.getNickName();
                 }
             }
         }
-        
-        synchronized ( logChat ) {
+
+        synchronized (logChat) {
             String directorioActual = dameDiretorioActual();
             File imgs = new File(directorioActual, "img");
-            
+
             /* Direccciones de los emoticones base. */
             File emoticonSorpresa = new File(imgs, "sorpresa.png");
             File emoticonTriste = new File(imgs, "triste.png");
@@ -192,8 +193,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             File emoticonQuemal = new File(imgs, "quemal.png");
             File emoticonSonrisa = new File(imgs, "sonrisa.png");
             File emoticonSonrisacondientes = new File(imgs, "sonrisacondientes.png");
-            
-            
+
             /* Comprobar si existen. */
             if (!emoticonSorpresa.exists()) {
                 System.err.println("No existe imagen.\n\t" + emoticonSorpresa.getAbsolutePath());
@@ -243,7 +243,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 System.err.println("No existe imagen.\n\t" + emoticonEnojado.getAbsolutePath());
                 return;
             }
-            
+
             /* Dirección real para el chat. */
             String direccionEmoticonSorpresa = emoticonSorpresa.getAbsolutePath().
                     replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
@@ -269,7 +269,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
             String direccionEmoticonSonrisacondientes = emoticonSonrisacondientes.getAbsolutePath().
                     replaceAll("\\\\", "\\\\\\\\").replaceAll(":", "|");
-            
+
             String salida = mensaje.
                     replaceAll(":o", "<img src=\"file:///" + direccionEmoticonSorpresa + "\"/>").
                     replaceAll(":\\(", "<img src=\"file:///" + direccionEmoticonTriste + "\"/>").
@@ -285,93 +285,92 @@ public final class Chat extends javax.swing.JInternalFrame {
                     replaceAll(":D", "<img src=\"file:///" + direccionEmoticonSonrisacondientes + "\"/>").
                     replaceAll("\\b(www\\.[^ ]+\\.com)\\b", "<a href=\"http://$1\">$1</a>").
                     replaceAll("\\bN[iI]ck\\b", "<b>$0</b>").
-					replace(" ", "&nbsp;");
+                    replace(" ", "&nbsp;");
             logChat.append("<font color=\"black\"><b><i>").append(userName).append(":</i></b>&nbsp;").append(salida).append("</font><br>\n");
         }
     }
-    
+
     private String dameDiretorioActual() {
         return System.getProperty("user.dir");
     }
-    
+
     private void enviarMensaje() {
-        synchronized ( logChat ) {
+        synchronized (logChat) {
             String texto = txtTexto.getText();
             //recibirMensaje("Nick", texto);
             clienteServidorChat.enviarMensaje(texto);
             txtTexto.setText("");
         }
     }
-    
+
     private void actualizarChat() {
-        synchronized( logChat ) {
-            if ( actualSize != logChat.length() ) {
-                contenidoChat.setText("<html><body>"+logChat.toString()+"</body></html>");
+        synchronized (logChat) {
+            if (actualSize != logChat.length()) {
+                contenidoChat.setText("<html><body>" + logChat.toString() + "</body></html>");
                 contenidoChat.setCaretPosition(contenidoChat.getDocument().getLength());
                 actualSize = logChat.length();
             }
         }
     }
-	
-	private void actualizarListaUsuarios() {
-		synchronized ( this ) {
-			StringBuilder listaUsuarios = new StringBuilder();
-			for ( UserChat usuarioChat:usuarios ) {
-				listaUsuarios.append("<font color=\"green\"><i><b>"+usuarioChat.getNickName()+"&nbsp;</b></i><font>");
-				
-				/* Exconcer los nombres cuando no son docentes. */
-				if ( esDocente ) {
-					listaUsuarios.append("(<font color=\"blue\">"+usuarioChat.getRealName()+")</font><br/>");
-				} else {
-					listaUsuarios.append("<br/>");
-				}
-				
-			}
-			
-			/* No hacer nada hasta que se actualice el mensaje. */
-			if ( actualSizeListaUsuarios == listaUsuarios.toString().length() ) {
-				return;
-			}
-			
-			txtListaUsuarios.setText(listaUsuarios.toString());
-			actualSizeListaUsuarios = listaUsuarios.toString().length();
-		}
-	}
-	
-	private void actualizarListaArchivos () {
-		synchronized(this) {
-			StringBuilder comprobador = new StringBuilder();
-			
-			for ( FileChat fileChat:archivos ) {
-				comprobador.append(fileChat.toString());
-			}
-			
-			/* No actualizar la lista si no es necesario. */
-			if ( actualSizeListaArchivos == comprobador.toString().length() ) {
-				return;
-			}
-			
-			listaArchivosModelo.clear();
-			
-			
-			for ( FileChat fileChat:archivos ) {
-				listaArchivosModelo.addElement(fileChat);
-			}
-			actualSizeListaArchivos = comprobador.toString().length();
-		}
-	}
-    
-    public void nuevaLista( ArrayList <UserChat> usuarios ) {
-        synchronized( this ) {
+
+    private void actualizarListaUsuarios() {
+        synchronized (this) {
+            StringBuilder listaUsuarios = new StringBuilder();
+            for (UserChat usuarioChat : usuarios) {
+                listaUsuarios.append("<font color=\"green\"><i><b>" + usuarioChat.getNickName() + "&nbsp;</b></i><font>");
+
+                /* Exconcer los nombres cuando no son docentes. */
+                if (esDocente) {
+                    listaUsuarios.append("(<font color=\"blue\">" + usuarioChat.getRealName() + ")</font><br/>");
+                } else {
+                    listaUsuarios.append("<br/>");
+                }
+
+            }
+
+            /* No hacer nada hasta que se actualice el mensaje. */
+            if (actualSizeListaUsuarios == listaUsuarios.toString().length()) {
+                return;
+            }
+
+            txtListaUsuarios.setText(listaUsuarios.toString());
+            actualSizeListaUsuarios = listaUsuarios.toString().length();
+        }
+    }
+
+    private void actualizarListaArchivos() {
+        synchronized (this) {
+            StringBuilder comprobador = new StringBuilder();
+
+            for (FileChat fileChat : archivos) {
+                comprobador.append(fileChat.toString());
+            }
+
+            /* No actualizar la lista si no es necesario. */
+            if (actualSizeListaArchivos == comprobador.toString().length()) {
+                return;
+            }
+
+            listaArchivosModelo.clear();
+
+            for (FileChat fileChat : archivos) {
+                listaArchivosModelo.addElement(fileChat);
+            }
+            actualSizeListaArchivos = comprobador.toString().length();
+        }
+    }
+
+    public void nuevaLista(ArrayList<UserChat> usuarios) {
+        synchronized (this) {
             this.usuarios = usuarios;
         }
     }
-	
-	public void nuevaListaArchivos ( ArrayList <FileChat> archivos ) {
-		synchronized ( this ) {
-			this.archivos = archivos;
-		}
-	}
+
+    public void nuevaListaArchivos(ArrayList<FileChat> archivos) {
+        synchronized (this) {
+            this.archivos = archivos;
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -531,98 +530,98 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
-        if ( evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             enviarMensaje();
         }
     }//GEN-LAST:event_txtTextoKeyPressed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         clienteServidorChat.cerrarSesion();
-		
-		/* Cerrar pantalla, si tiene. */
-		if ( !esDocente ) {
-			pantallaProfesor.setVisible(false);
-			pantallaProfesor.dispose();
-		}
-		
-		this.setVisible(false);
-		this.dispose();
+
+        /* Cerrar pantalla, si tiene. */
+        if (!esDocente) {
+            pantallaProfesor.setVisible(false);
+            pantallaProfesor.dispose();
+        }
+
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
-		FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
-		
-		/* Revisar si existe algún elemento seleccionado. */
-		if ( fileChat == null ) {
-			Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-			return;
-		}
-		
-		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Seleccione donde guardar el archivo.");
-		fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-		int respuesta = fc.showSaveDialog(this);
-		
-		if( respuesta == JFileChooser.APPROVE_OPTION ) {
-			File archivo = fc.getSelectedFile();
-			clienteServidorChat.descargarArchivo(fileChat, archivo);
-		}
+        FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+
+        /* Revisar si existe algún elemento seleccionado. */
+        if (fileChat == null) {
+            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
+            return;
+        }
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Seleccione donde guardar el archivo.");
+        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
+        int respuesta = fc.showSaveDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivo = fc.getSelectedFile();
+            clienteServidorChat.descargarArchivo(fileChat, archivo);
+        }
     }//GEN-LAST:event_btnDescargarActionPerformed
 
     private void btnGenerarReporteAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteAsistenciaActionPerformed
         String defaultReport = "Asistencia.html";
-		
-		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Seleccione donde guardar el archivo.");
-		fc.setSelectedFile(new File(fc.getCurrentDirectory(), defaultReport));
-		int respuesta = fc.showSaveDialog(this);
-		
-		if( respuesta == JFileChooser.APPROVE_OPTION ) {
-			File archivo = fc.getSelectedFile();
-			StringBuilder htmlAsistencia = new StringBuilder();
-			Date fechaActual = new Date();
-			
-			htmlAsistencia.append("<html>");
-			htmlAsistencia.append("<head><meta name=\"tipo_contenido\" content=\"text/html;\" http-equiv=\"content-type\" charset=\"utf-8\"><title>Reporte Asistencia - "+fechaActual+"</title></head>");
-			htmlAsistencia.append("<body>");
-			htmlAsistencia.append("<div align=\"center\">");
-			htmlAsistencia.append("<h1>Reporte de asistencia sistema EducaUteciSystems</h1></br></br>");
-			htmlAsistencia.append("<b>Creado en: </b>"+fechaActual+"</br></br>");
-			htmlAsistencia.append("<table border=\"1\" width=\"500px\">");
-			htmlAsistencia.append("<tr><td><b>Nombre Real</b></td><td><b>Apodo en Chat</b></td></tr>");
-			synchronized( this ) {
-				for ( UserChat usuario:usuarios ) {
-					htmlAsistencia.append("<tr><td>"+usuario.getRealName()+"</td><td>"+usuario.getNickName()+"</td></tr>");
-				}
-			}
-			htmlAsistencia.append("</table>");
-			htmlAsistencia.append("</div>");
-			htmlAsistencia.append("</body>");
-			htmlAsistencia.append("</html>");
-			
-			/* Borrar si se tiene ptoblemas. */
-			if ( archivo.exists() ) {
-				if ( !archivo.delete() ) {
-					mostrarError("No se pudo guardar resporte de asistencia.");
-					return;
-				}
-			}
-			
-			/* Guardar archivo. */
-			try {
-				FileOutputStream fos = new FileOutputStream(archivo);
-				fos.write(htmlAsistencia.toString().getBytes());
-				fos.flush();
-				fos.close();
-			} catch (FileNotFoundException ex) {
-				mostrarError("No se ha encontrado la ruta para guardar.");
-				return;
-			} catch ( IOException ioe ) {
-				mostrarError("Error de estrada/salida al escribir archivo.");
-				return;
-			}
-			Sistema.mostrarMensajeInformativo("Se ha guardado información con éxito.");
-		}
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Seleccione donde guardar el archivo.");
+        fc.setSelectedFile(new File(fc.getCurrentDirectory(), defaultReport));
+        int respuesta = fc.showSaveDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivo = fc.getSelectedFile();
+            StringBuilder htmlAsistencia = new StringBuilder();
+            Date fechaActual = new Date();
+
+            htmlAsistencia.append("<html>");
+            htmlAsistencia.append("<head><meta name=\"tipo_contenido\" content=\"text/html;\" http-equiv=\"content-type\" charset=\"utf-8\"><title>Reporte Asistencia - " + fechaActual + "</title></head>");
+            htmlAsistencia.append("<body>");
+            htmlAsistencia.append("<div align=\"center\">");
+            htmlAsistencia.append("<h1>Reporte de asistencia sistema EducaUteciSystems</h1></br></br>");
+            htmlAsistencia.append("<b>Creado en: </b>" + fechaActual + "</br></br>");
+            htmlAsistencia.append("<table border=\"1\" width=\"500px\">");
+            htmlAsistencia.append("<tr><td><b>Nombre Real</b></td><td><b>Apodo en Chat</b></td></tr>");
+            synchronized (this) {
+                for (UserChat usuario : usuarios) {
+                    htmlAsistencia.append("<tr><td>" + usuario.getRealName() + "</td><td>" + usuario.getNickName() + "</td></tr>");
+                }
+            }
+            htmlAsistencia.append("</table>");
+            htmlAsistencia.append("</div>");
+            htmlAsistencia.append("</body>");
+            htmlAsistencia.append("</html>");
+
+            /* Borrar si se tiene ptoblemas. */
+            if (archivo.exists()) {
+                if (!archivo.delete()) {
+                    mostrarError("No se pudo guardar resporte de asistencia.");
+                    return;
+                }
+            }
+
+            /* Guardar archivo. */
+            try {
+                FileOutputStream fos = new FileOutputStream(archivo);
+                fos.write(htmlAsistencia.toString().getBytes());
+                fos.flush();
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                mostrarError("No se ha encontrado la ruta para guardar.");
+                return;
+            } catch (IOException ioe) {
+                mostrarError("Error de estrada/salida al escribir archivo.");
+                return;
+            }
+            Sistema.mostrarMensajeInformativo("Se ha guardado información con éxito.");
+        }
     }//GEN-LAST:event_btnGenerarReporteAsistenciaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

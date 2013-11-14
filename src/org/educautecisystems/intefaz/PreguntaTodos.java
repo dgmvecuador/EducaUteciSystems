@@ -42,6 +42,7 @@ public class PreguntaTodos extends javax.swing.JInternalFrame implements Recepto
         initComponents();
         final PreguntaTodos ventanaPadre = this;
         this.servidorChat = servidorChat;
+        btnExportarResultados.setVisible(false);
         
         Thread hilo = new Thread(new Runnable() {
             @Override
