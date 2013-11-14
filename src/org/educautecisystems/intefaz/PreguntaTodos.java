@@ -214,6 +214,10 @@ public class PreguntaTodos extends javax.swing.JInternalFrame implements Recepto
         preguntaMessage = new PreguntaMessage(idPregunta, pregunta, this);
         
         servidorChat.enviarPregunta(preguntaMessage);
+        
+        /* No permitir que pregunte de nuevo */
+        txtPregunta.setEnabled(false);
+        btnIngresarPregunta.setEnabled(false);
     }//GEN-LAST:event_btnIngresarPreguntaActionPerformed
 
 
