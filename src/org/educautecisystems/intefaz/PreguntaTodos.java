@@ -56,6 +56,10 @@ public class PreguntaTodos extends javax.swing.JInternalFrame implements Recepto
                             
                             progressBarSi.setValue(respuestaSi);
                             progressBarNo.setValue(respuestaNo);
+                            
+                            /* Seleccionar las cadenas */
+                            progressBarSi.setString(""+respuestaSi);
+                            progressBarNo.setString(""+respuestaNo);
                         }
                     }
                     
@@ -121,6 +125,12 @@ public class PreguntaTodos extends javax.swing.JInternalFrame implements Recepto
 
         jLabel4.setText("No:");
 
+        progressBarSi.setString("0");
+        progressBarSi.setStringPainted(true);
+
+        progressBarNo.setString("0");
+        progressBarNo.setStringPainted(true);
+
         btnExportarResultados.setText("Exportar resultados");
         btnExportarResultados.setEnabled(false);
 
@@ -155,7 +165,7 @@ public class PreguntaTodos extends javax.swing.JInternalFrame implements Recepto
                     .addComponent(progressBarNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExportarResultados)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

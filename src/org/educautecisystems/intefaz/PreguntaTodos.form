@@ -144,7 +144,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnExportarResultados" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -161,8 +161,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="progressBarSi">
+          <Properties>
+            <Property name="string" type="java.lang.String" value="0"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="progressBarNo">
+          <Properties>
+            <Property name="string" type="java.lang.String" value="0"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnExportarResultados">
           <Properties>
