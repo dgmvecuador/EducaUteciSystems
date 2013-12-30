@@ -320,11 +320,11 @@ public final class Chat extends javax.swing.JInternalFrame {
                 listaUsuarios.append("<font color=\"green\"><i><b>" + usuarioChat.getNickName() + "&nbsp;</b></i><font>");
 
                 /* Exconcer los nombres cuando no son docentes. */
-                if (esDocente) {
-                    listaUsuarios.append("(<font color=\"blue\">" + usuarioChat.getRealName() + ")</font><br/>");
-                } else {
+//                if (esDocente) {
+//                    listaUsuarios.append("(<font color=\"blue\">" + usuarioChat.getRealName() + ")</font><br/>");
+//                } else {
                     listaUsuarios.append("<br/>");
-                }
+//                }
 
             }
 
