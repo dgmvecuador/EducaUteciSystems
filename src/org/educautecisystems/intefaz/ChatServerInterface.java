@@ -1,6 +1,6 @@
 /*
  *  ChatServerInterface.java
- *  Copyright (C) 2012  Diego Estévez <dgmvecuador@gmail.com>
+ *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@hotmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

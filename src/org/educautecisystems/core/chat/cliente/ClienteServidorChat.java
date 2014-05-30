@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -456,7 +457,84 @@ public class ClienteServidorChat extends Thread {
         };
         hiloDescargarArchivo.start();
     }
+    
+    public void subirArchivo(final FileChat fileChat, final File destino) {
+        Thread hiloDescargarArchivo = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                            Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                    OutputStream salida = socket.getOutputStream();
+                    InputStream entrada = socket.getInputStream();
+ 
+                    /* Generar salida. */
+                    StringBuilder mensaje = new StringBuilder();
+                    mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND,
+                            ChatConstants.COMMAND_GET_FILE));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN,
+                            "" + clienteToken));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_FILE_NAME,
+                            fileChat.getName()));
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
 
+                    salida.write(mensaje.toString().getBytes());
+                    salida.flush();
+
+                    MessageHeaderParser headerMessage = MessageHeaderParser.parseMessageHeader(entrada, true);
+                    if (!headerMessage.getVar(ChatConstants.CHAT_HEADER_RESPONSE_COMMAND).equals(ChatConstants.RESPONSE_OK)) {
+                        pantallaChat.mostrarError("Error obtenido lista de usuarios.");
+                    }
+
+                    String contentLength = headerMessage.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+
+                    long contentLengthLong = -1;
+
+                    
+                    try {
+                        contentLengthLong = Long.parseLong(contentLength);
+                    } catch (NumberFormatException nfe) {
+                        pantallaChat.mostrarError("Error al recibir el mensaje.");
+                        return;
+                    }
+
+                    /* Borra el archivo */
+                    if (destino.exists() && !destino.delete()) {
+                        pantallaChat.mostrarError("No se pudo escribir el archivo:." + destino.getName());
+                        return;
+                    }
+
+                    FileInputStream fos = new FileInputStream(destino);
+                    pantallaChat.mostrarInfo("Subiendo archivo: " + fileChat.getName());
+
+                    for (long i = 0; i < contentLengthLong; i++) {
+                        int byteRead = entrada.read();
+                        if (byteRead == -1) {
+                            destino.delete();
+                            pantallaChat.mostrarError("Se ha cortado la conexión,\n"
+                                    + "por favor intente de nuevo más tarde.");
+                            return;
+                        }
+                        fos.read();
+                    }
+
+                    fos.close();
+                    pantallaChat.mostrarInfo("Se ha terminado de descargar archivo: " + fileChat.getName());
+                    /* Cerrar la sessión. */
+                    salida.close();
+                    entrada.close();
+                    socket.close();
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    pantallaChat.mostrarError("No se pudo enviar el mensaje: " + e);
+                }
+            }
+        };
+        hiloDescargarArchivo.start();
+    }
+        
     public void cerrarSesion() {
         continuar = false;
         Thread hiloCerrarSesion = new Thread() {

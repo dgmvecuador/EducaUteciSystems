@@ -77,6 +77,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuDoce = new javax.swing.JMenu();
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
+        MenuItemMateApo = new javax.swing.JMenuItem();
         MenuAdmi = new javax.swing.JMenu();
         MenuItemNuePer = new javax.swing.JMenuItem();
         MenManteni = new javax.swing.JMenu();
@@ -144,6 +145,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         MenuDoce.add(MenuItemChatDoc);
+
+        MenuItemMateApo.setText("Subir Material Apoyo");
+        MenuItemMateApo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemMateApoActionPerformed(evt);
+            }
+        });
+        MenuDoce.add(MenuItemMateApo);
 
         jMenuBar1.add(MenuDoce);
 
@@ -311,6 +320,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnItemAyudaActionPerformed
 
+    private void MenuItemMateApoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemMateApoActionPerformed
+          Material_Apoyo je = new Material_Apoyo();
+          escritorioPrincipal.add(je);
+          je.setVisible(true);
+    }//GEN-LAST:event_MenuItemMateApoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenManteAdmin;
@@ -327,6 +342,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemIngFac;
     private javax.swing.JMenuItem MenuItemIngMat;
     private javax.swing.JMenuItem MenuItemIngreso;
+    private javax.swing.JMenuItem MenuItemMateApo;
     private javax.swing.JMenuItem MenuItemNuePer;
     private javax.swing.JMenuItem MenuItemSalir;
     private javax.swing.JDesktopPane escritorioPrincipal;
