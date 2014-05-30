@@ -13,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.educautecisystems.controladores.exceptions.NonexistentEntityException;
+import org.educautecisystems.core.Sistema;
 import org.educautecisystems.entidades.Administrador;
 
 /**
@@ -27,7 +28,17 @@ public class AdministradorJpaController implements Serializable {
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        EntityManager tmpEMF = null;
+        
+        try {
+            tmpEMF = emf.createEntityManager();
+        } catch ( Exception e ) {
+            Sistema.mostrarMensajeError("No se pudo conectar a la base de datos.");
+            e.printStackTrace();
+            return null;
+        }
+        
+        return tmpEMF;
     }
 
     public void create(Administrador administrador) {

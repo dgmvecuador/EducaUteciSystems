@@ -18,9 +18,8 @@
 
 package org.educautecisystems.intefaz;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import org.educautecisystems.core.Sistema;
@@ -78,6 +77,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuDoce = new javax.swing.JMenu();
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
+        MenuItemMateApo = new javax.swing.JMenuItem();
+        jCheckBoxMeActpandoc = new javax.swing.JCheckBoxMenuItem();
         MenuAdmi = new javax.swing.JMenu();
         MenuItemNuePer = new javax.swing.JMenuItem();
         MenManteni = new javax.swing.JMenu();
@@ -145,6 +146,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         MenuDoce.add(MenuItemChatDoc);
+
+        MenuItemMateApo.setText("Subir Material Apoyo");
+        MenuItemMateApo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemMateApoActionPerformed(evt);
+            }
+        });
+        MenuDoce.add(MenuItemMateApo);
+
+        jCheckBoxMeActpandoc.setText("Activar pantalla docente");
+        MenuDoce.add(jCheckBoxMeActpandoc);
 
         jMenuBar1.add(MenuDoce);
 
@@ -283,7 +295,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemInSerChaActionPerformed
 
     private void MenManteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenManteAdminActionPerformed
-        // TODO add your handling code here:
         MantenimientoAdministrador dea = new MantenimientoAdministrador();
         escritorioPrincipal.add(dea);
         dea.setVisible(true);
@@ -293,11 +304,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        Codigo para abrir un documento
         Runtime rt = Runtime.getRuntime();
         try {
-            Process pr = rt.exec("explorer \"Ayuda del Sistema.pdf\"");
+            String OS = System.getProperty("os.name").toLowerCase();
+            String nombrePrograma = null;
+            
+            if ( OS.indexOf("win") >= 0 ) {
+                nombrePrograma = "explorer";
+            } else if ( OS.indexOf("nux") >= 0 ) {
+                nombrePrograma = "gnome-open";
+            } else {
+                Sistema.mostrarMensajeError("Sistema no soportado.");
+                return;
+            }
+            
+            File pdfFile = new File("Ayuda del Sistema.pdf");
+            String [] command = {nombrePrograma, pdfFile.getAbsolutePath()};
+            rt.exec(command);
         } catch (IOException ex) {
             Sistema.mostrarMensajeError("No existe el Archivo");
         }
     }//GEN-LAST:event_mnItemAyudaActionPerformed
+
+    private void MenuItemMateApoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemMateApoActionPerformed
+          Material_Apoyo je = new Material_Apoyo();
+          escritorioPrincipal.add(je);
+          je.setVisible(true);
+    }//GEN-LAST:event_MenuItemMateApoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -315,9 +346,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemIngFac;
     private javax.swing.JMenuItem MenuItemIngMat;
     private javax.swing.JMenuItem MenuItemIngreso;
+    private javax.swing.JMenuItem MenuItemMateApo;
     private javax.swing.JMenuItem MenuItemNuePer;
     private javax.swing.JMenuItem MenuItemSalir;
     private javax.swing.JDesktopPane escritorioPrincipal;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMeActpandoc;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnItemAyuda;

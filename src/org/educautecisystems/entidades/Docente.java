@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Shadow2012
  */
 @Entity
-@Table(name = "docente")
+@Table(name = "Docente")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"),
@@ -47,7 +47,7 @@ public class Docente implements Serializable {
     @Basic(optional = false)
     @Column(name = "Contrasena")
     private String contrasena;
-    @JoinTable(name = "docente_has_facultad", joinColumns = {
+    @JoinTable(name = "Docente_has_Facultad", joinColumns = {
         @JoinColumn(name = "Docente_Id_Docente", referencedColumnName = "Id_Docente")}, inverseJoinColumns = {
         @JoinColumn(name = "Facultad_Id_Facultad", referencedColumnName = "Id_Facultad")})
     @ManyToMany
