@@ -78,7 +78,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
         MenuItemMateApo = new javax.swing.JMenuItem();
-        jCheckBoxMeActpandoc = new javax.swing.JCheckBoxMenuItem();
         MenuAdmi = new javax.swing.JMenu();
         MenuItemNuePer = new javax.swing.JMenuItem();
         MenManteni = new javax.swing.JMenu();
@@ -154,9 +153,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         MenuDoce.add(MenuItemMateApo);
-
-        jCheckBoxMeActpandoc.setText("Activar pantalla docente");
-        MenuDoce.add(jCheckBoxMeActpandoc);
 
         jMenuBar1.add(MenuDoce);
 
@@ -350,7 +346,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemNuePer;
     private javax.swing.JMenuItem MenuItemSalir;
     private javax.swing.JDesktopPane escritorioPrincipal;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMeActpandoc;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnItemAyuda;
