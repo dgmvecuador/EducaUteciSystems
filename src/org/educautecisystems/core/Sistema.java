@@ -217,20 +217,20 @@ public class Sistema {
         }
         if (!carpetaConfArchivos.exists()) {
             carpetaConfArchivos.mkdirs();
-            
-            /* Añadir las nuevas carpetas, si existen */
-            if ( !carpetaConfArchivosDocumentosTeoria.exists() ) {
-                carpetaConfArchivosDocumentosTeoria.mkdirs();
-            }
-            if ( !carpetaConfArchivosPracticaLaboratorio.exists() ) {
-                carpetaConfArchivosPracticaLaboratorio.mkdirs();
-            }
-            if ( !carpetaConfArchivosEjercicioResueltos.exists() ) {
-                carpetaConfArchivosEjercicioResueltos.mkdirs();
-            }
-            if ( !carpetaConfArchivosTarea.exists() ) {
-                carpetaConfArchivosTarea.mkdirs();
-            }
+        }
+        
+        /* Añadir las nuevas carpetas, si existen */
+        if (!carpetaConfArchivosDocumentosTeoria.exists()) {
+            carpetaConfArchivosDocumentosTeoria.mkdirs();
+        }
+        if (!carpetaConfArchivosPracticaLaboratorio.exists()) {
+            carpetaConfArchivosPracticaLaboratorio.mkdirs();
+        }
+        if (!carpetaConfArchivosEjercicioResueltos.exists()) {
+            carpetaConfArchivosEjercicioResueltos.mkdirs();
+        }
+        if (!carpetaConfArchivosTarea.exists()) {
+            carpetaConfArchivosTarea.mkdirs();
         }
 
         /* Archivos de configuración */
