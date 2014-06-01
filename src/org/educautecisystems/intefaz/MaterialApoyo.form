@@ -28,10 +28,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Component id="jMaterApoytabpanel" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jMaterApoytabpanel" max="32767" attributes="0"/>
+                  <Component id="barraProgresoSubidaArchivo" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -42,9 +46,11 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jMaterApoytabpanel" min="-2" pref="192" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <Component id="barraProgresoSubidaArchivo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,20 +73,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jlabAvis" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnSubirDocumentoTeoria" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlabAvis" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jButSubir" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="jButEliminar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarDocumentoTeoria" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" pref="349" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="458" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -90,14 +93,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="142" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="151" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Component id="jlabAvis" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButSubir" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSubirDocumentoTeoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEliminarDocumentoTeoria" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -110,15 +112,15 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jlabAvis">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Porfavor suba solo la teoria"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButSubir">
+            <Component class="javax.swing.JButton" name="btnSubirDocumentoTeoria">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Subir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButSubirActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirDocumentoTeoriaActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -128,7 +130,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jListDoc">
+                <Component class="javax.swing.JList" name="listaDocumentos">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
@@ -137,12 +139,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButEliminar">
+            <Component class="javax.swing.JButton" name="btnEliminarDocumentoTeoria">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButEliminarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDocumentoTeoriaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -159,37 +161,38 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jlabAvis1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Component id="jButSubir1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jButEliminar1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSubirPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnEliminarPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="322" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="458" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" pref="142" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jlabAvis1" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButSubir1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButEliminar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnEliminarPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSubirPracticaLaboratorio" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane2" pref="151" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -200,15 +203,15 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jlabAvis1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Porfavor suba solo la Practica de Laboratorio"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButSubir1">
+            <Component class="javax.swing.JButton" name="btnSubirPracticaLaboratorio">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Subir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButSubir1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirPracticaLaboratorioActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -228,7 +231,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButEliminar1">
+            <Component class="javax.swing.JButton" name="btnEliminarPracticaLaboratorio">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
@@ -248,20 +251,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jlabAvis2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlabAvis2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Component id="jButSubir2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButEliminar2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="322" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" pref="458" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -271,10 +271,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="142" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="151" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jlabAvis2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButSubir2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButEliminar2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -290,7 +290,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jlabAvis2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Porfavor suba solo los Ejercicios Resueltos"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButSubir2">
@@ -337,20 +337,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jlabAvis3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlabAvis3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jButSubir3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButEliminar3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="347" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" pref="458" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -360,10 +357,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" alignment="0" pref="142" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="151" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jlabAvis3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButSubir3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButEliminar3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -379,7 +376,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jlabAvis3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Porfavor suba solo la tarea"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButSubir3">
@@ -417,8 +414,10 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cuadro para subir los documentos de clase"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Por favor, escoja el tipo de material que desea subir:&lt;/b&gt;&lt;/html&gt;"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JProgressBar" name="barraProgresoSubidaArchivo">
     </Component>
   </SubComponents>
 </Form>

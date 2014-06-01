@@ -1,6 +1,7 @@
 /*
  *  ChatServerInterface.java
- *  Copyright (C) 2012  Guillermo Pazos <shadowguiller@gmail.com>
+ *  Copyright (C) 2014  Guillermo Pazos <shadowguiller@gmail.com>
+ *  Copyright (C) 2014  Diego Estévez <dgmvecuador@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,26 +18,17 @@
  */
 package org.educautecisystems.intefaz;
 
-import java.io.File;
-import javax.swing.JFileChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyVetoException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
 import org.educautecisystems.core.chat.elements.FileChat;
-import org.educautecisystems.core.chat.elements.UserChat;
 
 /**
  *
@@ -47,13 +39,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     //private VentanaPrincipal ventanaPrincipal;
     private ClienteServidorChat clienteServidorChat;  
     private ArrayList<FileChat> archivos;
-    DefaultListModel listaArchivosModelo = new DefaultListModel();
-    private long actualSize = 0;
-    private long actualSizeListaUsuarios = 0;
-    private long actualSizeListaArchivos = 0;
-    private BufferedImage pantallaActual = null;
-    
-    
+    DefaultListModel listaArchivosModelo = new DefaultListModel(); 
 
     /**
      * Creates new form MaterialApoyo
@@ -68,12 +54,11 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
         actualizarListaArchivosTimer.start();
+        
+        /* Borra la barra de progreso */
+        barraProgresoSubidaArchivo.setToolTipText("");
     }
 
-/*    Material_Apoyo(VentanaPrincipal aThis, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,16 +71,16 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jMaterApoytabpanel = new javax.swing.JTabbedPane();
         jPanelTeo = new javax.swing.JPanel();
         jlabAvis = new javax.swing.JLabel();
-        jButSubir = new javax.swing.JButton();
+        btnSubirDocumentoTeoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListDoc = new javax.swing.JList();
-        jButEliminar = new javax.swing.JButton();
+        listaDocumentos = new javax.swing.JList();
+        btnEliminarDocumentoTeoria = new javax.swing.JButton();
         jPanelPractLab = new javax.swing.JPanel();
         jlabAvis1 = new javax.swing.JLabel();
-        jButSubir1 = new javax.swing.JButton();
+        btnSubirPracticaLaboratorio = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListDoc1 = new javax.swing.JList();
-        jButEliminar1 = new javax.swing.JButton();
+        btnEliminarPracticaLaboratorio = new javax.swing.JButton();
         jPanelEjerResu = new javax.swing.JPanel();
         jlabAvis2 = new javax.swing.JLabel();
         jButSubir2 = new javax.swing.JButton();
@@ -109,26 +94,27 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jListDoc3 = new javax.swing.JList();
         jButEliminar3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        barraProgresoSubidaArchivo = new javax.swing.JProgressBar();
 
         setClosable(true);
         setTitle("Material de Apoyo");
         setName("MaterialApoyo"); // NOI18N
 
-        jlabAvis.setText("Porfavor suba solo la teoria");
+        jlabAvis.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
-        jButSubir.setText("Subir");
-        jButSubir.addActionListener(new java.awt.event.ActionListener() {
+        btnSubirDocumentoTeoria.setText("Subir");
+        btnSubirDocumentoTeoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButSubirActionPerformed(evt);
+                btnSubirDocumentoTeoriaActionPerformed(evt);
             }
         });
 
-        jScrollPane1.setViewportView(jListDoc);
+        jScrollPane1.setViewportView(listaDocumentos);
 
-        jButEliminar.setText("Eliminar");
-        jButEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarDocumentoTeoria.setText("Eliminar");
+        btnEliminarDocumentoTeoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButEliminarActionPerformed(evt);
+                btnEliminarDocumentoTeoriaActionPerformed(evt);
             }
         });
 
@@ -137,17 +123,15 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jPanelTeoLayout.setHorizontalGroup(
             jPanelTeoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTeoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelTeoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlabAvis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelTeoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlabAvis))
-                    .addGroup(jPanelTeoLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButSubir)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                        .addComponent(btnSubirDocumentoTeoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarDocumentoTeoria)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelTeoLayout.setVerticalGroup(
@@ -155,26 +139,25 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             .addGroup(jPanelTeoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTeoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                     .addGroup(jPanelTeoLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jlabAvis)
-                        .addGap(45, 45, 45)
+                        .addComponent(jlabAvis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelTeoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButSubir)
-                            .addComponent(jButEliminar))
+                            .addComponent(btnSubirDocumentoTeoria)
+                            .addComponent(btnEliminarDocumentoTeoria))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         jMaterApoytabpanel.addTab("Documento Teoria", jPanelTeo);
 
-        jlabAvis1.setText("Porfavor suba solo la Practica de Laboratorio");
+        jlabAvis1.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
-        jButSubir1.setText("Subir");
-        jButSubir1.addActionListener(new java.awt.event.ActionListener() {
+        btnSubirPracticaLaboratorio.setText("Subir");
+        btnSubirPracticaLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButSubir1ActionPerformed(evt);
+                btnSubirPracticaLaboratorioActionPerformed(evt);
             }
         });
 
@@ -182,7 +165,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jListDoc1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jListDoc1);
 
-        jButEliminar1.setText("Eliminar");
+        btnEliminarPracticaLaboratorio.setText("Eliminar");
 
         javax.swing.GroupLayout jPanelPractLabLayout = new javax.swing.GroupLayout(jPanelPractLab);
         jPanelPractLab.setLayout(jPanelPractLabLayout);
@@ -191,35 +174,35 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             .addGroup(jPanelPractLabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlabAvis1)
+                    .addComponent(jlabAvis1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelPractLabLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jButSubir1)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButEliminar1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                        .addComponent(btnSubirPracticaLaboratorio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarPracticaLaboratorio)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelPractLabLayout.setVerticalGroup(
             jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPractLabLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                     .addGroup(jPanelPractLabLayout.createSequentialGroup()
                         .addComponent(jlabAvis1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButSubir1)
-                            .addComponent(jButEliminar1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEliminarPracticaLaboratorio)
+                            .addComponent(btnSubirPracticaLaboratorio))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPractLabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         jMaterApoytabpanel.addTab("Practica de Laboratorio", jPanelPractLab);
 
-        jlabAvis2.setText("Porfavor suba solo los Ejercicios Resueltos");
+        jlabAvis2.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
         jButSubir2.setText("Subir");
         jButSubir2.addActionListener(new java.awt.event.ActionListener() {
@@ -237,17 +220,15 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jPanelEjerResuLayout.setHorizontalGroup(
             jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEjerResuLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlabAvis2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelEjerResuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlabAvis2))
-                    .addGroup(jPanelEjerResuLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addComponent(jButSubir2)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButEliminar2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelEjerResuLayout.setVerticalGroup(
@@ -255,10 +236,10 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             .addGroup(jPanelEjerResuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                     .addGroup(jPanelEjerResuLayout.createSequentialGroup()
-                        .addComponent(jlabAvis2)
-                        .addGap(52, 52, 52)
+                        .addComponent(jlabAvis2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButSubir2)
                             .addComponent(jButEliminar2))
@@ -268,7 +249,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
         jMaterApoytabpanel.addTab("Ejercicios Resueltos", jPanelEjerResu);
 
-        jlabAvis3.setText("Porfavor suba solo la tarea");
+        jlabAvis3.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
         jButSubir3.setText("Subir");
         jButSubir3.addActionListener(new java.awt.event.ActionListener() {
@@ -286,17 +267,15 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jPanelTareaLayout.setHorizontalGroup(
             jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTareaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlabAvis3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelTareaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlabAvis3))
-                    .addGroup(jPanelTareaLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addComponent(jButSubir3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButEliminar3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelTareaLayout.setVerticalGroup(
@@ -304,10 +283,10 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             .addGroup(jPanelTareaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                     .addGroup(jPanelTareaLayout.createSequentialGroup()
-                        .addComponent(jlabAvis3)
-                        .addGap(59, 59, 59)
+                        .addComponent(jlabAvis3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButSubir3)
                             .addComponent(jButEliminar3))
@@ -317,7 +296,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
         jMaterApoytabpanel.addTab("Tarea", jPanelTarea);
 
-        jLabel1.setText("Cuadro para subir los documentos de clase");
+        jLabel1.setText("<html><b>Por favor, escoja el tipo de material que desea subir:</b></html>");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,52 +306,41 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGap(6, 6, 6)
+                        .addComponent(jMaterApoytabpanel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jMaterApoytabpanel))
+                    .addComponent(barraProgresoSubidaArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jMaterApoytabpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(barraProgresoSubidaArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEliminarActionPerformed
+    private void btnEliminarDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDocumentoTeoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButEliminarActionPerformed
+    }//GEN-LAST:event_btnEliminarDocumentoTeoriaActionPerformed
 
     private void actualizarListaArchivos() {
         synchronized (this) {
-            StringBuilder comprobador = new StringBuilder();
-
-            for (FileChat fileChat : archivos) {
-                comprobador.append(fileChat.toString());
-            }
-
-            /* No actualizar la lista si no es necesario. */
-            if (actualSizeListaArchivos == comprobador.toString().length()) {
-                return;
-            }
-
-            listaArchivosModelo.clear();
-
-            for (FileChat fileChat : archivos) {
-                listaArchivosModelo.addElement(fileChat);
-            }
-            actualSizeListaArchivos = comprobador.toString().length();
+            /* TODO: Cargar la lista de los archivos en todas las cajas. */
         }
     }
     
-    private void jButSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubirActionPerformed
-        FileChat fileChat = (FileChat) jListDoc.getSelectedValue();
+    private void btnSubirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirDocumentoTeoriaActionPerformed
+        FileChat fileChat = (FileChat) listaDocumentos.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -389,9 +357,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             File archivo = fc.getSelectedFile();
             clienteServidorChat.descargarArchivo(fileChat, archivo);
         }
-    }//GEN-LAST:event_jButSubirActionPerformed
+    }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
-    private void jButSubir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir1ActionPerformed
+    private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
         FileChat fileChat = (FileChat) jListDoc1.getSelectedValue();
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Seleccione archivo a subir");
@@ -401,7 +369,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         File archivo = fc.getSelectedFile();
         clienteServidorChat.subirArchivo(fileChat,archivo);
         }
-    }//GEN-LAST:event_jButSubir1ActionPerformed
+    }//GEN-LAST:event_btnSubirPracticaLaboratorioActionPerformed
 
     private void jButSubir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir2ActionPerformed
         FileChat fileChat = (FileChat) jListDoc2.getSelectedValue();
@@ -429,16 +397,16 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButEliminar;
-    private javax.swing.JButton jButEliminar1;
+    private javax.swing.JProgressBar barraProgresoSubidaArchivo;
+    private javax.swing.JButton btnEliminarDocumentoTeoria;
+    private javax.swing.JButton btnEliminarPracticaLaboratorio;
+    private javax.swing.JButton btnSubirDocumentoTeoria;
+    private javax.swing.JButton btnSubirPracticaLaboratorio;
     private javax.swing.JButton jButEliminar2;
     private javax.swing.JButton jButEliminar3;
-    private javax.swing.JButton jButSubir;
-    private javax.swing.JButton jButSubir1;
     private javax.swing.JButton jButSubir2;
     private javax.swing.JButton jButSubir3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jListDoc;
     private javax.swing.JList jListDoc1;
     private javax.swing.JList jListDoc2;
     private javax.swing.JList jListDoc3;
@@ -455,5 +423,6 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlabAvis1;
     private javax.swing.JLabel jlabAvis2;
     private javax.swing.JLabel jlabAvis3;
+    private javax.swing.JList listaDocumentos;
     // End of variables declaration//GEN-END:variables
 }

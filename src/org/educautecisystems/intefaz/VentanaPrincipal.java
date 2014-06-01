@@ -303,9 +303,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             String OS = System.getProperty("os.name").toLowerCase();
             String nombrePrograma = null;
             
-            if ( OS.indexOf("win") >= 0 ) {
+            if ( OS.contains("win") ) {
                 nombrePrograma = "explorer";
-            } else if ( OS.indexOf("nux") >= 0 ) {
+            } else if ( OS.contains("nux") ) {
                 nombrePrograma = "gnome-open";
             } else {
                 Sistema.mostrarMensajeError("Sistema no soportado.");
