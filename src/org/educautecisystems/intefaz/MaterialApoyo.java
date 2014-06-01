@@ -21,24 +21,50 @@ package org.educautecisystems.intefaz;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
-import org.educautecisystems.core.chat.elements.FileChat;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONFIGURACION;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_DOCUMENTOS_TEORIA;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA;
 
 /**
  *
  * @author Guillermo
  */
 public class MaterialApoyo extends javax.swing.JInternalFrame {
-    DefaultListModel listaArchivosModelo = new DefaultListModel(); 
+    private VentanaPrincipal ventanaPrincipal;
+    private final JFileChooser fc;
+    DefaultListModel listaArchivosModelo = new DefaultListModel();
+    
+    /* Direcciones de carpatas */
+    private final String RUTA_DOCUMENTO_TEORIA;
+    private final String RUTA_PRACTICA_LABORATORIO;
+    private final String RUTA_EJERCICIOS_RESUELTOS;
+    private final String RUTA_TAREA;
+    
+    /* Constantes */
+    public static final String MENSAJE_SUBIENDO_ARCHIVO = "Subiendo archivo";
 
     /**
      * Creates new form MaterialApoyo
      */
-    public MaterialApoyo() {
+    public MaterialApoyo( VentanaPrincipal ventanaPrincipal ) {
         initComponents();
+        
+        /* Iniciar el diálogo */
+        fc = new JFileChooser();
+        fc.setDialogTitle("Seleccione donde guardar el archivo.");
+        fc.setSelectedFile(new File(fc.getCurrentDirectory(), "*.*"));
         
         Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
             @Override
@@ -50,6 +76,46 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         
         /* Borra la barra de progreso */
         barraProgresoSubidaArchivo.setToolTipText("");
+        barraProgresoSubidaArchivo.setString(MENSAJE_SUBIENDO_ARCHIVO);
+        barraProgresoSubidaArchivo.setStringPainted(false);
+        
+        /* Obtener los directorios */
+        Properties propiedadesSistema = System.getProperties();
+        String carpetaUsuario = propiedadesSistema.getProperty("user.home");
+        
+        /* Carpetas de configuraciones */
+        File carpetaConfiguracion = new File(carpetaUsuario, NOMBRE_CARPETA_CONFIGURACION);
+        File carpetaConfArchivos = new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS);
+        
+        /* Materiales de apoyo */
+        File carpetaConfArchivosDocumentosTeoria = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_DOCUMENTOS_TEORIA);
+        File carpetaConfArchivosPracticaLaboratorio = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO);
+        File carpetaConfArchivosEjercicioResueltos = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS);
+        File carpetaConfArchivosTarea = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA);
+        
+        /* Guardar los resuiltados. */
+        RUTA_DOCUMENTO_TEORIA = carpetaConfArchivosDocumentosTeoria.getAbsolutePath();
+        RUTA_PRACTICA_LABORATORIO = carpetaConfArchivosPracticaLaboratorio.getAbsolutePath();
+        RUTA_EJERCICIOS_RESUELTOS = carpetaConfArchivosEjercicioResueltos.getAbsolutePath();
+        RUTA_TAREA = carpetaConfArchivosTarea.getAbsolutePath();
+        
+        this.ventanaPrincipal = ventanaPrincipal;
+    }
+    
+    private static void copiarArchivos( File origen, File destino ) throws Exception {
+        InputStream in = new FileInputStream(origen);
+        OutputStream out = new FileOutputStream(destino);
+        
+        byte[] buf = new byte[1024];
+        int len;
+
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        
+        out.flush();
+        in.close();
+        out.close();
     }
 
     /**
@@ -333,21 +399,36 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }
     
     private void btnSubirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirDocumentoTeoriaActionPerformed
-        FileChat fileChat = (FileChat) listaDocumentos.getSelectedValue();
-
-        /* Revisar si existe algún elemento seleccionado. */
-        if (fileChat == null) {
-            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-            return;
-        }
-
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
+        /* Leer un archivo, respetar el resto. */
         int respuesta = fc.showSaveDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivo = fc.getSelectedFile();
+            final File origen = fc.getSelectedFile();
+            final File destino = new File(RUTA_DOCUMENTO_TEORIA, origen.getName());
+            
+            if ( destino.exists() ) {
+                Sistema.mostrarMensajeError("El archivo ya existe.");
+                return;
+            }
+            barraProgresoSubidaArchivo.setIndeterminate(true);
+            ventanaPrincipal.setEnabled(false);
+            barraProgresoSubidaArchivo.setStringPainted(true);
+            
+            Thread hiloCopia = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        MaterialApoyo.copiarArchivos(origen, destino);
+                    } catch ( Exception e ) {
+                        Sistema.mostrarMensajeError("No se pudo subir archivo.");
+                    }
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setToolTipText("");
+                    MaterialApoyo.this.ventanaPrincipal.setEnabled(true);
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setIndeterminate(false);
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setStringPainted(false);
+                }
+            });
+            hiloCopia.start();
         }
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 

@@ -321,7 +321,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnItemAyudaActionPerformed
 
     private void MenuItemMateApoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemMateApoActionPerformed
-          MaterialApoyo je = new MaterialApoyo();
+          MaterialApoyo je = new MaterialApoyo(this);
           escritorioPrincipal.add(je);
           je.setVisible(true);
     }//GEN-LAST:event_MenuItemMateApoActionPerformed
