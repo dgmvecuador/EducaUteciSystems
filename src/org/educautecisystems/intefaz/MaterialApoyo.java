@@ -56,6 +56,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     
     /* Lista de archivos */
     private DefaultListModel listaDocumentosTeoria = new DefaultListModel();
+    private String listaCompletaDocumentosTeoricas = "";
 
     /**
      * Creates new form MaterialApoyo
@@ -102,6 +103,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         RUTA_TAREA = carpetaConfArchivosTarea.getAbsolutePath();
         
         this.ventanaPrincipal = ventanaPrincipal;
+        
+        /* Actualizar la lista por pimera vez. */
+        actualizarListaArchivos();
     }
     
     private static void copiarArchivos( File origen, File destino ) throws Exception {
@@ -396,17 +400,30 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
     private void actualizarListaArchivos() {
         synchronized (this) {
-            /* Limpiar las listas. */
-            listaDocumentosTeoria.clear();
-            
             /* Colocar las listas. */
             File rutaDocumentosTeoria = new File(RUTA_DOCUMENTO_TEORIA);
+            String tmpListaCompletaDocumentosTeoria = "";
             
             for ( File archivo:rutaDocumentosTeoria.listFiles() ) {
                 if ( archivo.isFile() && archivo.canRead() ) {
-                    listaDocumentosTeoria.addElement(new ArchivoMaterialApoyo(archivo));
+                    tmpListaCompletaDocumentosTeoria += archivo.getName()+";";
                 }
             }
+            
+            /* Actualizar la lista, si es necesario. */
+            if ( !tmpListaCompletaDocumentosTeoria.equals(listaCompletaDocumentosTeoricas) ) {
+                /* Limpiar las listas. */
+                listaDocumentosTeoria.clear();
+                
+                for (File archivo : rutaDocumentosTeoria.listFiles()) {
+                    if (archivo.isFile() && archivo.canRead()) {
+                        listaDocumentosTeoria.addElement(new ArchivoMaterialApoyo(archivo));
+                    }
+                }
+                listaCompletaDocumentosTeoricas = tmpListaCompletaDocumentosTeoria;
+            }
+            
+            
         }
     }
     
@@ -431,6 +448,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 public void run() {
                     try {
                         MaterialApoyo.copiarArchivos(origen, destino);
+                        MaterialApoyo.this.actualizarListaArchivos();
                     } catch ( Exception e ) {
                         Sistema.mostrarMensajeError("No se pudo subir archivo.");
                     }
