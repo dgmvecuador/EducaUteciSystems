@@ -44,7 +44,6 @@ import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_CO
 public class MaterialApoyo extends javax.swing.JInternalFrame {
     private VentanaPrincipal ventanaPrincipal;
     private final JFileChooser fc;
-    DefaultListModel listaArchivosModelo = new DefaultListModel();
     
     /* Direcciones de carpatas */
     private final String RUTA_DOCUMENTO_TEORIA;
@@ -54,6 +53,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     
     /* Constantes */
     public static final String MENSAJE_SUBIENDO_ARCHIVO = "Subiendo archivo";
+    
+    /* Lista de archivos */
+    private DefaultListModel listaDocumentosTeoria = new DefaultListModel();
 
     /**
      * Creates new form MaterialApoyo
@@ -168,6 +170,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
+        listaDocumentos.setModel(listaDocumentosTeoria);
         jScrollPane1.setViewportView(listaDocumentos);
 
         btnEliminarDocumentoTeoria.setText("Eliminar");
@@ -220,7 +223,6 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
-        jListDoc1.setModel(listaArchivosModelo);
         jListDoc1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jListDoc1);
 
@@ -394,7 +396,17 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
     private void actualizarListaArchivos() {
         synchronized (this) {
-            /* TODO: Cargar la lista de los archivos en todas las cajas. */
+            /* Limpiar las listas. */
+            listaDocumentosTeoria.clear();
+            
+            /* Colocar las listas. */
+            File rutaDocumentosTeoria = new File(RUTA_DOCUMENTO_TEORIA);
+            
+            for ( File archivo:rutaDocumentosTeoria.listFiles() ) {
+                if ( archivo.isFile() && archivo.canRead() ) {
+                    listaDocumentosTeoria.addElement(new ArchivoMaterialApoyo(archivo));
+                }
+            }
         }
     }
     
