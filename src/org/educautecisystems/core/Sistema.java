@@ -72,6 +72,10 @@ public class Sistema {
     public static final String NOMBRE_CARPETA_CONFIGURACION = "EducaUteciSystems";
     public static final String NOMBRE_CARPETA_CONF_CHAT = "Chat";
     public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS = "Compartido";
+    public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_DOCUMENTOS_TEORIA = "DocumentosTeoria";
+    public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO = "PracticaLaboratorio";
+    public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS = "EjerciciosResueltos";
+    public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA = "Tarea";
     public static final String CHAT_CONF_XML = "ChatServerConf.xml";
 
     /* Configuración de Chat */
@@ -197,6 +201,12 @@ public class Sistema {
         File carpetaConfiguracion = new File(carpetaUsuario, NOMBRE_CARPETA_CONFIGURACION);
         File carpetaConfChat = new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_CHAT);
         File carpetaConfArchivos = new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS);
+        
+        /* Materiales de apoyo */
+        File carpetaConfArchivosDocumentosTeoria = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_DOCUMENTOS_TEORIA);
+        File carpetaConfArchivosPracticaLaboratorio = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO);
+        File carpetaConfArchivosEjercicioResueltos = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS);
+        File carpetaConfArchivosTarea = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA);
 
         /* Crear carpetas si no existen */
         if (!carpetaConfiguracion.exists()) {
@@ -207,6 +217,20 @@ public class Sistema {
         }
         if (!carpetaConfArchivos.exists()) {
             carpetaConfArchivos.mkdirs();
+            
+            /* Añadir las nuevas carpetas, si existen */
+            if ( !carpetaConfArchivosDocumentosTeoria.exists() ) {
+                carpetaConfArchivosDocumentosTeoria.mkdirs();
+            }
+            if ( !carpetaConfArchivosPracticaLaboratorio.exists() ) {
+                carpetaConfArchivosPracticaLaboratorio.mkdirs();
+            }
+            if ( !carpetaConfArchivosEjercicioResueltos.exists() ) {
+                carpetaConfArchivosEjercicioResueltos.mkdirs();
+            }
+            if ( !carpetaConfArchivosTarea.exists() ) {
+                carpetaConfArchivosTarea.mkdirs();
+            }
         }
 
         /* Archivos de configuración */

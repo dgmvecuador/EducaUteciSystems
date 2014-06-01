@@ -42,7 +42,7 @@ import org.educautecisystems.core.chat.elements.UserChat;
  *
  * @author Guillermo
  */
-public class Material_Apoyo extends javax.swing.JInternalFrame {
+public class MaterialApoyo extends javax.swing.JInternalFrame {
     
     //private VentanaPrincipal ventanaPrincipal;
     private ClienteServidorChat clienteServidorChat;  
@@ -58,7 +58,7 @@ public class Material_Apoyo extends javax.swing.JInternalFrame {
     /**
      * Creates new form MaterialApoyo
      */
-    public Material_Apoyo() {
+    public MaterialApoyo() {
         initComponents();
         
         Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
