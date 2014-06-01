@@ -123,6 +123,43 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         in.close();
         out.close();
     }
+    
+    private void cargarArchivoDocumentoTeoria( String rutaSubida ) {
+         /* Leer un archivo, respetar el resto. */
+        int respuesta = fc.showSaveDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            final File origen = fc.getSelectedFile();
+            final File destino = new File(rutaSubida, origen.getName());
+            
+            if ( destino.exists() ) {
+                Sistema.mostrarMensajeError("El archivo ya existe.");
+                return;
+            }
+            barraProgresoSubidaArchivo.setIndeterminate(true);
+            ventanaPrincipal.setEnabled(false);
+            barraProgresoSubidaArchivo.setStringPainted(true);
+            
+            Thread hiloCopia = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        MaterialApoyo.copiarArchivos(origen, destino);
+                        MaterialApoyo.this.actualizarListaArchivos();
+                    } catch ( Exception e ) {
+                        Sistema.mostrarMensajeError("No se pudo subir archivo.");
+                    }
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setToolTipText("");
+                    MaterialApoyo.this.ventanaPrincipal.setEnabled(true);
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setIndeterminate(false);
+                    MaterialApoyo.this.barraProgresoSubidaArchivo.setStringPainted(false);
+                    
+                    Sistema.mostrarMensajeInformativo("Se ha sibido exitosamente el/los archivos.");
+                }
+            });
+            hiloCopia.start();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -428,38 +465,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }
     
     private void btnSubirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirDocumentoTeoriaActionPerformed
-        /* Leer un archivo, respetar el resto. */
-        int respuesta = fc.showSaveDialog(this);
-
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            final File origen = fc.getSelectedFile();
-            final File destino = new File(RUTA_DOCUMENTO_TEORIA, origen.getName());
-            
-            if ( destino.exists() ) {
-                Sistema.mostrarMensajeError("El archivo ya existe.");
-                return;
-            }
-            barraProgresoSubidaArchivo.setIndeterminate(true);
-            ventanaPrincipal.setEnabled(false);
-            barraProgresoSubidaArchivo.setStringPainted(true);
-            
-            Thread hiloCopia = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        MaterialApoyo.copiarArchivos(origen, destino);
-                        MaterialApoyo.this.actualizarListaArchivos();
-                    } catch ( Exception e ) {
-                        Sistema.mostrarMensajeError("No se pudo subir archivo.");
-                    }
-                    MaterialApoyo.this.barraProgresoSubidaArchivo.setToolTipText("");
-                    MaterialApoyo.this.ventanaPrincipal.setEnabled(true);
-                    MaterialApoyo.this.barraProgresoSubidaArchivo.setIndeterminate(false);
-                    MaterialApoyo.this.barraProgresoSubidaArchivo.setStringPainted(false);
-                }
-            });
-            hiloCopia.start();
-        }
+       cargarArchivoDocumentoTeoria(RUTA_DOCUMENTO_TEORIA);
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
     private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
