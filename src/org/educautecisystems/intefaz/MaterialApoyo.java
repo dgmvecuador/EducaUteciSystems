@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
 import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONFIGURACION;
@@ -124,7 +125,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         out.close();
     }
     
-    private void cargarArchivoDocumentoTeoria( String rutaSubida ) {
+    private void cargarArchivo( String rutaSubida ) {
          /* Leer un archivo, respetar el resto. */
         int respuesta = fc.showSaveDialog(this);
 
@@ -158,6 +159,19 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 }
             });
             hiloCopia.start();
+        }
+    }
+    
+    private void borrarArchivo( JList lista ) {
+        ArchivoMaterialApoyo archivo = (ArchivoMaterialApoyo) lista.getSelectedValue();
+        
+        if ( archivo != null ) {
+            if (Sistema.confirmarSiNoPregunta("Esta seguro de borra el archivo?")) {
+                if ( archivo.getArchivo().delete() ) {
+                    actualizarListaArchivos();
+                    Sistema.mostrarMensajeInformativo("Se ha borrado exitosamente el archivo.");
+                }
+            }
         }
     }
 
@@ -432,7 +446,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDocumentoTeoriaActionPerformed
-        // TODO add your handling code here:
+        borrarArchivo(listaDocumentos);
     }//GEN-LAST:event_btnEliminarDocumentoTeoriaActionPerformed
 
     private void actualizarListaArchivos() {
@@ -465,7 +479,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }
     
     private void btnSubirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirDocumentoTeoriaActionPerformed
-       cargarArchivoDocumentoTeoria(RUTA_DOCUMENTO_TEORIA);
+       cargarArchivo(RUTA_DOCUMENTO_TEORIA);
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
     private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
