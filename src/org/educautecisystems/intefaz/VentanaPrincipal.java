@@ -267,13 +267,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenManteDoceActionPerformed
 
     private void MenuItemIngMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngMatActionPerformed
-        Ingreso_Materia Est = new Ingreso_Materia();
+        IngresoMateria Est = new IngresoMateria();
         escritorioPrincipal.add(Est);
         Est.setVisible(true);
     }//GEN-LAST:event_MenuItemIngMatActionPerformed
 
     private void MenuItemIngFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngFacActionPerformed
-        Ingreso_Facultad Fac = new Ingreso_Facultad();
+        IngresoFacultad Fac = new IngresoFacultad();
         escritorioPrincipal.add(Fac);
         Fac.setVisible(true);
     }//GEN-LAST:event_MenuItemIngFacActionPerformed
@@ -303,9 +303,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             String OS = System.getProperty("os.name").toLowerCase();
             String nombrePrograma = null;
             
-            if ( OS.indexOf("win") >= 0 ) {
+            if ( OS.contains("win") ) {
                 nombrePrograma = "explorer";
-            } else if ( OS.indexOf("nux") >= 0 ) {
+            } else if ( OS.contains("nux") ) {
                 nombrePrograma = "gnome-open";
             } else {
                 Sistema.mostrarMensajeError("Sistema no soportado.");
@@ -321,7 +321,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnItemAyudaActionPerformed
 
     private void MenuItemMateApoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemMateApoActionPerformed
-          Material_Apoyo je = new Material_Apoyo();
+          MaterialApoyo je = new MaterialApoyo(this);
           escritorioPrincipal.add(je);
           je.setVisible(true);
     }//GEN-LAST:event_MenuItemMateApoActionPerformed

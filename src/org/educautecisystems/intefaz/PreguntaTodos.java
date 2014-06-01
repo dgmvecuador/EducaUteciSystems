@@ -1,6 +1,6 @@
 /*
  *  PreguntaTodos.java
- *  Copyright (C) 2013  Guillermo Pazos <shadowguiller@hotmail.com>
+ *  Copyright (C) 2013  Diego Estévez <dgmvecuador@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

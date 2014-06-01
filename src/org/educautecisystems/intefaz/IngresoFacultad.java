@@ -29,12 +29,12 @@ import org.educautecisystems.intefaz.objects.ObjComboBoxFacultad;
  *
  * @author Shadow2013
  */
-public class Ingreso_Facultad extends javax.swing.JInternalFrame {
+public class IngresoFacultad extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Ingreso_Facultad
      */
-    public Ingreso_Facultad() {
+    public IngresoFacultad() {
         initComponents();
         cargarFacultades();
     }
@@ -210,7 +210,7 @@ public class Ingreso_Facultad extends javax.swing.JInternalFrame {
                     .addComponent(jButCancelar)
                     .addComponent(jbModif)
                     .addComponent(jbElim))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();

@@ -33,12 +33,12 @@ import org.educautecisystems.intefaz.objects.ObjComboBoxMateria;
  *
  * @author Shadow2013
  */
-public class Ingreso_Materia extends javax.swing.JInternalFrame {
+public class IngresoMateria extends javax.swing.JInternalFrame {
 //private ArrayList <ObjComboBoxMateria> objHorarios = new ArrayList<ObjComboBoxMateria>();
     /**
      * Creates new form Ingreso_Materia
      */
-    public Ingreso_Materia() {
+    public IngresoMateria() {
         initComponents();
         cargarMaterias();     
     }

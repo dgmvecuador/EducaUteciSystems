@@ -1,4 +1,5 @@
 Response: OK
+Type: Message
 User-ID: {user-id}
 Content-Length: {size in bytes}
 

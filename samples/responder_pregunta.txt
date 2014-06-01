@@ -1,0 +1,6 @@
+CHAT-SERVER 1.0
+Command: responderPregunta
+User-Token: {md5-token}
+ID-Pregunta: {id-pregunta}
+Respuesta: {Si/No}
+
