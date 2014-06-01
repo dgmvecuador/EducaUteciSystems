@@ -267,13 +267,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenManteDoceActionPerformed
 
     private void MenuItemIngMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngMatActionPerformed
-        Ingreso_Materia Est = new Ingreso_Materia();
+        IngresoMateria Est = new IngresoMateria();
         escritorioPrincipal.add(Est);
         Est.setVisible(true);
     }//GEN-LAST:event_MenuItemIngMatActionPerformed
 
     private void MenuItemIngFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemIngFacActionPerformed
-        Ingreso_Facultad Fac = new Ingreso_Facultad();
+        IngresoFacultad Fac = new IngresoFacultad();
         escritorioPrincipal.add(Fac);
         Fac.setVisible(true);
     }//GEN-LAST:event_MenuItemIngFacActionPerformed
