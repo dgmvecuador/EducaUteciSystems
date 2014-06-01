@@ -20,14 +20,11 @@ package org.educautecisystems.intefaz;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
-import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
 import org.educautecisystems.core.chat.elements.FileChat;
 
 /**
@@ -35,10 +32,6 @@ import org.educautecisystems.core.chat.elements.FileChat;
  * @author Guillermo
  */
 public class MaterialApoyo extends javax.swing.JInternalFrame {
-    
-    //private VentanaPrincipal ventanaPrincipal;
-    private ClienteServidorChat clienteServidorChat;  
-    private ArrayList<FileChat> archivos;
     DefaultListModel listaArchivosModelo = new DefaultListModel(); 
 
     /**
@@ -355,44 +348,19 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
             File archivo = fc.getSelectedFile();
-            clienteServidorChat.descargarArchivo(fileChat, archivo);
         }
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
     private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
-        FileChat fileChat = (FileChat) jListDoc1.getSelectedValue();
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione archivo a subir");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-        File archivo = fc.getSelectedFile();
-        clienteServidorChat.subirArchivo(fileChat,archivo);
-        }
+        /* TODO: copy code */
     }//GEN-LAST:event_btnSubirPracticaLaboratorioActionPerformed
 
     private void jButSubir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir2ActionPerformed
-        FileChat fileChat = (FileChat) jListDoc2.getSelectedValue();
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione archivo a subir");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-        File archivo = fc.getSelectedFile();
-        clienteServidorChat.subirArchivo(fileChat,archivo);
-        }
+        /* TODO: copy code */
     }//GEN-LAST:event_jButSubir2ActionPerformed
 
     private void jButSubir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir3ActionPerformed
-        FileChat fileChat = (FileChat) jListDoc3.getSelectedValue();
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione archivo a subir");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-        File archivo = fc.getSelectedFile();
-        clienteServidorChat.subirArchivo(fileChat,archivo);
-        }
+        /* TODO: copy code */
     }//GEN-LAST:event_jButSubir3ActionPerformed
 
 
