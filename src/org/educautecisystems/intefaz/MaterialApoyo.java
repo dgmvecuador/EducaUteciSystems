@@ -58,6 +58,12 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     /* Lista de archivos */
     private DefaultListModel listaDocumentosTeoria = new DefaultListModel();
     private String listaCompletaDocumentosTeoricas = "";
+    private DefaultListModel listaPracticaLaboratorio = new DefaultListModel();
+    private String listaCompletaPracticaLaboratorio = "";
+    private DefaultListModel listaEjerciciosResueltos = new DefaultListModel();
+    private String listaCompletaEjerciciosResueltos = "";
+    private DefaultListModel listaTarea = new DefaultListModel();
+    private String listaCompletaTarea = "";
 
     /**
      * Creates new form MaterialApoyo
@@ -189,26 +195,26 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jlabAvis = new javax.swing.JLabel();
         btnSubirDocumentoTeoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaDocumentos = new javax.swing.JList();
+        controlListaDocumentosTeoria = new javax.swing.JList();
         btnEliminarDocumentoTeoria = new javax.swing.JButton();
         jPanelPractLab = new javax.swing.JPanel();
         jlabAvis1 = new javax.swing.JLabel();
         btnSubirPracticaLaboratorio = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListDoc1 = new javax.swing.JList();
+        controlListaPracticaLaboratorio = new javax.swing.JList();
         btnEliminarPracticaLaboratorio = new javax.swing.JButton();
         jPanelEjerResu = new javax.swing.JPanel();
         jlabAvis2 = new javax.swing.JLabel();
-        jButSubir2 = new javax.swing.JButton();
+        btnSubirEjerciciosResueltos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jListDoc2 = new javax.swing.JList();
-        jButEliminar2 = new javax.swing.JButton();
+        controlListaEjerciciosResueltos = new javax.swing.JList();
+        btnEliminarEjerciciosResueltos = new javax.swing.JButton();
         jPanelTarea = new javax.swing.JPanel();
         jlabAvis3 = new javax.swing.JLabel();
-        jButSubir3 = new javax.swing.JButton();
+        btnSubirTarea = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jListDoc3 = new javax.swing.JList();
-        jButEliminar3 = new javax.swing.JButton();
+        controlListaTarea = new javax.swing.JList();
+        btnEliminarTarea = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         barraProgresoSubidaArchivo = new javax.swing.JProgressBar();
 
@@ -225,8 +231,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
-        listaDocumentos.setModel(listaDocumentosTeoria);
-        jScrollPane1.setViewportView(listaDocumentos);
+        controlListaDocumentosTeoria.setModel(listaDocumentosTeoria);
+        jScrollPane1.setViewportView(controlListaDocumentosTeoria);
 
         btnEliminarDocumentoTeoria.setText("Eliminar");
         btnEliminarDocumentoTeoria.addActionListener(new java.awt.event.ActionListener() {
@@ -278,10 +284,16 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
-        jListDoc1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(jListDoc1);
+        controlListaPracticaLaboratorio.setModel(listaPracticaLaboratorio);
+        controlListaPracticaLaboratorio.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(controlListaPracticaLaboratorio);
 
         btnEliminarPracticaLaboratorio.setText("Eliminar");
+        btnEliminarPracticaLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPracticaLaboratorioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPractLabLayout = new javax.swing.GroupLayout(jPanelPractLab);
         jPanelPractLab.setLayout(jPanelPractLabLayout);
@@ -320,16 +332,22 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
         jlabAvis2.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
-        jButSubir2.setText("Subir");
-        jButSubir2.addActionListener(new java.awt.event.ActionListener() {
+        btnSubirEjerciciosResueltos.setText("Subir");
+        btnSubirEjerciciosResueltos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButSubir2ActionPerformed(evt);
+                btnSubirEjerciciosResueltosActionPerformed(evt);
             }
         });
 
-        jScrollPane3.setViewportView(jListDoc2);
+        controlListaEjerciciosResueltos.setModel(listaEjerciciosResueltos);
+        jScrollPane3.setViewportView(controlListaEjerciciosResueltos);
 
-        jButEliminar2.setText("Eliminar");
+        btnEliminarEjerciciosResueltos.setText("Eliminar");
+        btnEliminarEjerciciosResueltos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarEjerciciosResueltosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelEjerResuLayout = new javax.swing.GroupLayout(jPanelEjerResu);
         jPanelEjerResu.setLayout(jPanelEjerResuLayout);
@@ -340,9 +358,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlabAvis2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelEjerResuLayout.createSequentialGroup()
-                        .addComponent(jButSubir2)
+                        .addComponent(btnSubirEjerciciosResueltos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButEliminar2)))
+                        .addComponent(btnEliminarEjerciciosResueltos)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
@@ -357,8 +375,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addComponent(jlabAvis2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButSubir2)
-                            .addComponent(jButEliminar2))
+                            .addComponent(btnSubirEjerciciosResueltos)
+                            .addComponent(btnEliminarEjerciciosResueltos))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -367,16 +385,22 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
 
         jlabAvis3.setText("<html><b>Seleccione una opci&oacute;n:</b></html>");
 
-        jButSubir3.setText("Subir");
-        jButSubir3.addActionListener(new java.awt.event.ActionListener() {
+        btnSubirTarea.setText("Subir");
+        btnSubirTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButSubir3ActionPerformed(evt);
+                btnSubirTareaActionPerformed(evt);
             }
         });
 
-        jScrollPane4.setViewportView(jListDoc3);
+        controlListaTarea.setModel(listaTarea);
+        jScrollPane4.setViewportView(controlListaTarea);
 
-        jButEliminar3.setText("Eliminar");
+        btnEliminarTarea.setText("Eliminar");
+        btnEliminarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarTareaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTareaLayout = new javax.swing.GroupLayout(jPanelTarea);
         jPanelTarea.setLayout(jPanelTareaLayout);
@@ -387,9 +411,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlabAvis3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelTareaLayout.createSequentialGroup()
-                        .addComponent(jButSubir3)
+                        .addComponent(btnSubirTarea)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButEliminar3)))
+                        .addComponent(btnEliminarTarea)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
@@ -404,8 +428,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addComponent(jlabAvis3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButSubir3)
-                            .addComponent(jButEliminar3))
+                            .addComponent(btnSubirTarea)
+                            .addComponent(btnEliminarTarea))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -446,18 +470,43 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDocumentoTeoriaActionPerformed
-        borrarArchivo(listaDocumentos);
+        borrarArchivo(controlListaDocumentosTeoria);
     }//GEN-LAST:event_btnEliminarDocumentoTeoriaActionPerformed
 
     private void actualizarListaArchivos() {
         synchronized (this) {
             /* Colocar las listas. */
             File rutaDocumentosTeoria = new File(RUTA_DOCUMENTO_TEORIA);
+            File rutaPracticaLaboratorio = new File(RUTA_PRACTICA_LABORATORIO);
+            File rutaEjerciciosResueltos = new File(RUTA_EJERCICIOS_RESUELTOS);
+            File rutaTarea = new File(RUTA_TAREA);
             String tmpListaCompletaDocumentosTeoria = "";
+            String tmpListaCompletaPracticaLaboratorio = "";
+            String tmpListaCompletaEjerciciosResueltos = "";
+            String tmpListaCompletaTarea = "";
             
+            /* Verificar los si las listas han cambiado. */
             for ( File archivo:rutaDocumentosTeoria.listFiles() ) {
                 if ( archivo.isFile() && archivo.canRead() ) {
                     tmpListaCompletaDocumentosTeoria += archivo.getName()+";";
+                }
+            }
+            
+            for ( File archivo:rutaPracticaLaboratorio.listFiles() ) {
+                if ( archivo.isFile() && archivo.canRead() ) {
+                    tmpListaCompletaPracticaLaboratorio += archivo.getName()+";";
+                }
+            }
+            
+            for ( File archivo:rutaEjerciciosResueltos.listFiles() ) {
+                if ( archivo.isFile() && archivo.canRead() ) {
+                    tmpListaCompletaEjerciciosResueltos += archivo.getName()+";";
+                }
+            }
+            
+            for ( File archivo:rutaTarea.listFiles() ) {
+                if ( archivo.isFile() && archivo.canRead() ) {
+                    tmpListaCompletaTarea += archivo.getName()+";";
                 }
             }
             
@@ -474,7 +523,41 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 listaCompletaDocumentosTeoricas = tmpListaCompletaDocumentosTeoria;
             }
             
+            if ( !tmpListaCompletaPracticaLaboratorio.equals(listaCompletaPracticaLaboratorio) ) {
+                /* Limpiar las listas. */
+                listaPracticaLaboratorio.clear();
+                
+                for (File archivo : rutaPracticaLaboratorio.listFiles()) {
+                    if (archivo.isFile() && archivo.canRead()) {
+                        listaPracticaLaboratorio.addElement(new ArchivoMaterialApoyo(archivo));
+                    }
+                }
+                listaCompletaPracticaLaboratorio = tmpListaCompletaPracticaLaboratorio;
+            }
             
+            if ( !tmpListaCompletaEjerciciosResueltos.equals(listaCompletaEjerciciosResueltos) ) {
+                /* Limpiar las listas. */
+                listaEjerciciosResueltos.clear();
+                
+                for (File archivo : rutaEjerciciosResueltos.listFiles()) {
+                    if (archivo.isFile() && archivo.canRead()) {
+                        listaEjerciciosResueltos.addElement(new ArchivoMaterialApoyo(archivo));
+                    }
+                }
+                listaCompletaEjerciciosResueltos = tmpListaCompletaEjerciciosResueltos;
+            }
+            
+            if ( !tmpListaCompletaTarea.equals(listaCompletaTarea) ) {
+                /* Limpiar las listas. */
+                listaTarea.clear();
+                
+                for (File archivo : rutaTarea.listFiles()) {
+                    if (archivo.isFile() && archivo.canRead()) {
+                        listaTarea.addElement(new ArchivoMaterialApoyo(archivo));
+                    }
+                }
+                listaCompletaTarea = tmpListaCompletaTarea;
+            }
         }
     }
     
@@ -483,32 +566,45 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
     private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
-        /* TODO: copy code */
+        cargarArchivo(RUTA_PRACTICA_LABORATORIO);
     }//GEN-LAST:event_btnSubirPracticaLaboratorioActionPerformed
 
-    private void jButSubir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir2ActionPerformed
-        /* TODO: copy code */
-    }//GEN-LAST:event_jButSubir2ActionPerformed
+    private void btnSubirEjerciciosResueltosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirEjerciciosResueltosActionPerformed
+        cargarArchivo(RUTA_EJERCICIOS_RESUELTOS);
+    }//GEN-LAST:event_btnSubirEjerciciosResueltosActionPerformed
 
-    private void jButSubir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSubir3ActionPerformed
-        /* TODO: copy code */
-    }//GEN-LAST:event_jButSubir3ActionPerformed
+    private void btnSubirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirTareaActionPerformed
+        cargarArchivo(RUTA_TAREA);
+    }//GEN-LAST:event_btnSubirTareaActionPerformed
+
+    private void btnEliminarPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPracticaLaboratorioActionPerformed
+        borrarArchivo(controlListaPracticaLaboratorio);
+    }//GEN-LAST:event_btnEliminarPracticaLaboratorioActionPerformed
+
+    private void btnEliminarEjerciciosResueltosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEjerciciosResueltosActionPerformed
+        borrarArchivo(controlListaEjerciciosResueltos);
+    }//GEN-LAST:event_btnEliminarEjerciciosResueltosActionPerformed
+
+    private void btnEliminarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTareaActionPerformed
+        borrarArchivo(controlListaTarea);
+    }//GEN-LAST:event_btnEliminarTareaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgresoSubidaArchivo;
     private javax.swing.JButton btnEliminarDocumentoTeoria;
+    private javax.swing.JButton btnEliminarEjerciciosResueltos;
     private javax.swing.JButton btnEliminarPracticaLaboratorio;
+    private javax.swing.JButton btnEliminarTarea;
     private javax.swing.JButton btnSubirDocumentoTeoria;
+    private javax.swing.JButton btnSubirEjerciciosResueltos;
     private javax.swing.JButton btnSubirPracticaLaboratorio;
-    private javax.swing.JButton jButEliminar2;
-    private javax.swing.JButton jButEliminar3;
-    private javax.swing.JButton jButSubir2;
-    private javax.swing.JButton jButSubir3;
+    private javax.swing.JButton btnSubirTarea;
+    private javax.swing.JList controlListaDocumentosTeoria;
+    private javax.swing.JList controlListaEjerciciosResueltos;
+    private javax.swing.JList controlListaPracticaLaboratorio;
+    private javax.swing.JList controlListaTarea;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jListDoc1;
-    private javax.swing.JList jListDoc2;
-    private javax.swing.JList jListDoc3;
     private javax.swing.JTabbedPane jMaterApoytabpanel;
     private javax.swing.JPanel jPanelEjerResu;
     private javax.swing.JPanel jPanelPractLab;
@@ -522,6 +618,5 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlabAvis1;
     private javax.swing.JLabel jlabAvis2;
     private javax.swing.JLabel jlabAvis3;
-    private javax.swing.JList listaDocumentos;
     // End of variables declaration//GEN-END:variables
 }

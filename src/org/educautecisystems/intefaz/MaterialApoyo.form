@@ -130,7 +130,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="listaDocumentos">
+                <Component class="javax.swing.JList" name="controlListaDocumentosTeoria">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="listaDocumentosTeoria" type="code"/>
@@ -221,8 +221,11 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jListDoc1">
+                <Component class="javax.swing.JList" name="controlListaPracticaLaboratorio">
                   <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="listaPracticaLaboratorio" type="code"/>
+                    </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
                 </Component>
@@ -232,6 +235,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarPracticaLaboratorioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -252,9 +258,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jlabAvis2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButSubir2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSubirEjerciciosResueltos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButEliminar2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarEjerciciosResueltos" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -273,8 +279,8 @@
                               <Component id="jlabAvis2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButSubir2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButEliminar2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSubirEjerciciosResueltos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEliminarEjerciciosResueltos" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -290,12 +296,12 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButSubir2">
+            <Component class="javax.swing.JButton" name="btnSubirEjerciciosResueltos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Subir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButSubir2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirEjerciciosResueltosActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
@@ -305,14 +311,22 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jListDoc2">
+                <Component class="javax.swing.JList" name="controlListaEjerciciosResueltos">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="listaEjerciciosResueltos" type="code"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButEliminar2">
+            <Component class="javax.swing.JButton" name="btnEliminarEjerciciosResueltos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarEjerciciosResueltosActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -333,9 +347,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jlabAvis3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButSubir3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSubirTarea" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButEliminar3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarTarea" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -354,8 +368,8 @@
                               <Component id="jlabAvis3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButSubir3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButEliminar3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSubirTarea" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEliminarTarea" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -371,12 +385,12 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;Seleccione una opci&amp;oacute;n:&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButSubir3">
+            <Component class="javax.swing.JButton" name="btnSubirTarea">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Subir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButSubir3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirTareaActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
@@ -386,14 +400,22 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jListDoc3">
+                <Component class="javax.swing.JList" name="controlListaTarea">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="listaTarea" type="code"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButEliminar3">
+            <Component class="javax.swing.JButton" name="btnEliminarTarea">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarTareaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
