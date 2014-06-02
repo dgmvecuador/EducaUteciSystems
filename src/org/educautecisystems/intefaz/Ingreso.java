@@ -18,6 +18,7 @@
 
 package org.educautecisystems.intefaz;
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 import org.educautecisystems.controladores.AdministradorJpaController;
 import org.educautecisystems.controladores.DocenteJpaController;
@@ -109,6 +110,18 @@ private VentanaPrincipal principal;
             }
         });
 
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
+            }
+        });
+
+        txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtClaveKeyPressed(evt);
+            }
+        });
+
         jLabel4.setText("Tipo:");
 
         tipoUsuarioCombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admistrador", "Docente" }));
@@ -164,7 +177,7 @@ private VentanaPrincipal principal;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonIngreso)
                     .addComponent(buttonCancelar))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,6 +237,18 @@ private VentanaPrincipal principal;
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void txtClaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyPressed
+        if ( evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+            ButtonIngresoActionPerformed(null);
+        }
+    }//GEN-LAST:event_txtClaveKeyPressed
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        if ( evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+            ButtonIngresoActionPerformed(null);
+        }
+    }//GEN-LAST:event_txtUsuarioKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonIngreso;
