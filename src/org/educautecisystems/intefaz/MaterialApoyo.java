@@ -73,8 +73,9 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         
         /* Iniciar el diálogo */
         fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
+        fc.setDialogTitle("Escoja el archivo que desea subir.");
         fc.setSelectedFile(new File(fc.getCurrentDirectory(), "*.*"));
+        fc.setMultiSelectionEnabled(true);
         
         Timer actualizarListaArchivosTimer = new Timer(2000, new ActionListener() {
             @Override
@@ -131,18 +132,13 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         out.close();
     }
     
-    private void cargarArchivo( String rutaSubida ) {
+    private void cargarArchivos( final String rutaSubida ) {
          /* Leer un archivo, respetar el resto. */
         int respuesta = fc.showSaveDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
-            final File origen = fc.getSelectedFile();
-            final File destino = new File(rutaSubida, origen.getName());
+            final File [] archivosSubir = fc.getSelectedFiles();
             
-            if ( destino.exists() ) {
-                Sistema.mostrarMensajeError("El archivo ya existe.");
-                return;
-            }
             barraProgresoSubidaArchivo.setIndeterminate(true);
             ventanaPrincipal.setEnabled(false);
             barraProgresoSubidaArchivo.setStringPainted(true);
@@ -151,8 +147,23 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                 @Override
                 public void run() {
                     try {
-                        MaterialApoyo.copiarArchivos(origen, destino);
-                        MaterialApoyo.this.actualizarListaArchivos();
+                        /* Copiar cada archivo */
+                        for ( File origen:archivosSubir ) {
+                            File destino = new File(rutaSubida, origen.getName());
+                            
+                            /* Preguntar si existe. */
+                            if (destino.exists()) {
+                                if ( !Sistema.confirmarSiNoPregunta("¿Desea sobreescribir el archivo \""+destino.getName()+"\"?") ) {
+                                    continue;
+                                }
+                                
+                                /* Borrar archivo */
+                                destino.delete();
+                            }
+                            
+                            MaterialApoyo.copiarArchivos(origen, destino);
+                            MaterialApoyo.this.actualizarListaArchivos();
+                        }
                     } catch ( Exception e ) {
                         Sistema.mostrarMensajeError("No se pudo subir archivo.");
                     }
@@ -161,7 +172,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                     MaterialApoyo.this.barraProgresoSubidaArchivo.setIndeterminate(false);
                     MaterialApoyo.this.barraProgresoSubidaArchivo.setStringPainted(false);
                     
-                    Sistema.mostrarMensajeInformativo("Se ha sibido exitosamente el/los archivos.");
+                    Sistema.mostrarMensajeInformativo("Se ha subido exitosamente el/los archivos.");
                 }
             });
             hiloCopia.start();
@@ -172,7 +183,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         ArchivoMaterialApoyo archivo = (ArchivoMaterialApoyo) lista.getSelectedValue();
         
         if ( archivo != null ) {
-            if (Sistema.confirmarSiNoPregunta("Esta seguro de borra el archivo?")) {
+            if (Sistema.confirmarSiNoPregunta("¿Está seguro de borra el archivo?")) {
                 if ( archivo.getArchivo().delete() ) {
                     actualizarListaArchivos();
                     Sistema.mostrarMensajeInformativo("Se ha borrado exitosamente el archivo.");
@@ -564,19 +575,19 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     }
     
     private void btnSubirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirDocumentoTeoriaActionPerformed
-       cargarArchivo(RUTA_DOCUMENTO_TEORIA);
+       cargarArchivos(RUTA_DOCUMENTO_TEORIA);
     }//GEN-LAST:event_btnSubirDocumentoTeoriaActionPerformed
 
     private void btnSubirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirPracticaLaboratorioActionPerformed
-        cargarArchivo(RUTA_PRACTICA_LABORATORIO);
+        cargarArchivos(RUTA_PRACTICA_LABORATORIO);
     }//GEN-LAST:event_btnSubirPracticaLaboratorioActionPerformed
 
     private void btnSubirEjerciciosResueltosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirEjerciciosResueltosActionPerformed
-        cargarArchivo(RUTA_EJERCICIOS_RESUELTOS);
+        cargarArchivos(RUTA_EJERCICIOS_RESUELTOS);
     }//GEN-LAST:event_btnSubirEjerciciosResueltosActionPerformed
 
     private void btnSubirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirTareaActionPerformed
-        cargarArchivo(RUTA_TAREA);
+        cargarArchivos(RUTA_TAREA);
     }//GEN-LAST:event_btnSubirTareaActionPerformed
 
     private void btnEliminarPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPracticaLaboratorioActionPerformed
