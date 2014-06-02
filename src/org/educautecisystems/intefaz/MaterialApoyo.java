@@ -53,7 +53,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
     private final String RUTA_TAREA;
     
     /* Constantes */
-    public static final String MENSAJE_SUBIENDO_ARCHIVO = "Subiendo archivo";
+    public static final String MENSAJE_SUBIENDO_ARCHIVO = "Subiendo archivo \"%n\"";
     
     /* Lista de archivos */
     private DefaultListModel listaDocumentosTeoria = new DefaultListModel();
@@ -141,6 +141,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             
             barraProgresoSubidaArchivo.setIndeterminate(true);
             ventanaPrincipal.setEnabled(false);
+            barraProgresoSubidaArchivo.setString("Cargando..");
             barraProgresoSubidaArchivo.setStringPainted(true);
             
             Thread hiloCopia = new Thread(new Runnable() {
@@ -150,6 +151,7 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         /* Copiar cada archivo */
                         for ( File origen:archivosSubir ) {
                             File destino = new File(rutaSubida, origen.getName());
+                            barraProgresoSubidaArchivo.setString(MENSAJE_SUBIENDO_ARCHIVO.replaceAll("%n", destino.getName()));
                             
                             /* Preguntar si existe. */
                             if (destino.exists()) {
