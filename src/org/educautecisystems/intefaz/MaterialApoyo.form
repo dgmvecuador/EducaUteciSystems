@@ -83,6 +83,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEliminarDocumentoTeoria" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="btnAbrirDocumentoTeoria" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="601" max="32767" attributes="0"/>
@@ -103,6 +104,8 @@
                                   <Component id="btnSubirDocumentoTeoria" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnEliminarDocumentoTeoria" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAbrirDocumentoTeoria" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -149,6 +152,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDocumentoTeoriaActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnAbrirDocumentoTeoria">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirDocumentoTeoriaActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelPractLab">
@@ -172,6 +183,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEliminarPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="btnAbrirPracticaLaboratorio" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" pref="601" max="32767" attributes="0"/>
@@ -190,6 +202,8 @@
                                   <Component id="btnEliminarPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnSubirPracticaLaboratorio" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAbrirPracticaLaboratorio" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -241,6 +255,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarPracticaLaboratorioActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnAbrirPracticaLaboratorio">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirPracticaLaboratorioActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelEjerResu">
@@ -264,6 +286,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEliminarEjerciciosResueltos" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="btnAbrirEjercicioResuelto" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" pref="601" max="32767" attributes="0"/>
@@ -284,6 +307,8 @@
                                   <Component id="btnSubirEjerciciosResueltos" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnEliminarEjerciciosResueltos" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAbrirEjercicioResuelto" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -330,6 +355,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarEjerciciosResueltosActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnAbrirEjercicioResuelto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirEjercicioResueltoActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelTarea">
@@ -353,6 +386,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEliminarTarea" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="btnAbrirTarea" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane4" pref="601" max="32767" attributes="0"/>
@@ -373,6 +407,8 @@
                                   <Component id="btnSubirTarea" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnEliminarTarea" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAbrirTarea" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -417,6 +453,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarTareaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAbrirTarea">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirTareaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

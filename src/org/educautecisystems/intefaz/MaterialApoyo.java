@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
@@ -193,6 +194,40 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         }
     }
+    
+    private void abrirArchivo( JList lista ) {
+        ArchivoMaterialApoyo archivo = (ArchivoMaterialApoyo) lista.getSelectedValue();
+        
+        if ( archivo != null ) {
+            File archivoAbrir = archivo.getArchivo();
+            
+            /* Revisar si se tiene acceso al archivo. */
+            if ( !archivoAbrir.canRead() ) {
+                Sistema.mostrarMensajeError("No se tiene acceso para leer el archivo seleccionado.");
+                return;
+            }
+            
+            Runtime rt = Runtime.getRuntime();
+            try {
+                String OS = System.getProperty("os.name").toLowerCase();
+                String nombrePrograma = null;
+
+                if (OS.contains("win")) {
+                    nombrePrograma = "explorer";
+                } else if (OS.contains("nux")) {
+                    nombrePrograma = "gnome-open";
+                } else {
+                    Sistema.mostrarMensajeError("Sistema no soportado.");
+                    return;
+                }
+
+                String[] command = {nombrePrograma, archivoAbrir.getAbsolutePath()};
+                rt.exec(command);
+            } catch (IOException ex) {
+                Sistema.mostrarMensajeError("No existe el Archivo");
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -210,24 +245,28 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         controlListaDocumentosTeoria = new javax.swing.JList();
         btnEliminarDocumentoTeoria = new javax.swing.JButton();
+        btnAbrirDocumentoTeoria = new javax.swing.JButton();
         jPanelPractLab = new javax.swing.JPanel();
         jlabAvis1 = new javax.swing.JLabel();
         btnSubirPracticaLaboratorio = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         controlListaPracticaLaboratorio = new javax.swing.JList();
         btnEliminarPracticaLaboratorio = new javax.swing.JButton();
+        btnAbrirPracticaLaboratorio = new javax.swing.JButton();
         jPanelEjerResu = new javax.swing.JPanel();
         jlabAvis2 = new javax.swing.JLabel();
         btnSubirEjerciciosResueltos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         controlListaEjerciciosResueltos = new javax.swing.JList();
         btnEliminarEjerciciosResueltos = new javax.swing.JButton();
+        btnAbrirEjercicioResuelto = new javax.swing.JButton();
         jPanelTarea = new javax.swing.JPanel();
         jlabAvis3 = new javax.swing.JLabel();
         btnSubirTarea = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         controlListaTarea = new javax.swing.JList();
         btnEliminarTarea = new javax.swing.JButton();
+        btnAbrirTarea = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         barraProgresoSubidaArchivo = new javax.swing.JProgressBar();
 
@@ -256,6 +295,13 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAbrirDocumentoTeoria.setText("Abrir");
+        btnAbrirDocumentoTeoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirDocumentoTeoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTeoLayout = new javax.swing.GroupLayout(jPanelTeo);
         jPanelTeo.setLayout(jPanelTeoLayout);
         jPanelTeoLayout.setHorizontalGroup(
@@ -267,7 +313,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                     .addGroup(jPanelTeoLayout.createSequentialGroup()
                         .addComponent(btnSubirDocumentoTeoria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarDocumentoTeoria)))
+                        .addComponent(btnEliminarDocumentoTeoria))
+                    .addComponent(btnAbrirDocumentoTeoria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addContainerGap())
@@ -284,6 +331,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addGroup(jPanelTeoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSubirDocumentoTeoria)
                             .addComponent(btnEliminarDocumentoTeoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAbrirDocumentoTeoria)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -310,6 +359,13 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAbrirPracticaLaboratorio.setText("Abrir");
+        btnAbrirPracticaLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirPracticaLaboratorioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelPractLabLayout = new javax.swing.GroupLayout(jPanelPractLab);
         jPanelPractLab.setLayout(jPanelPractLabLayout);
         jPanelPractLabLayout.setHorizontalGroup(
@@ -321,7 +377,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                     .addGroup(jPanelPractLabLayout.createSequentialGroup()
                         .addComponent(btnSubirPracticaLaboratorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarPracticaLaboratorio)))
+                        .addComponent(btnEliminarPracticaLaboratorio))
+                    .addComponent(btnAbrirPracticaLaboratorio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addContainerGap())
@@ -336,6 +393,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addGroup(jPanelPractLabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminarPracticaLaboratorio)
                             .addComponent(btnSubirPracticaLaboratorio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAbrirPracticaLaboratorio)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPractLabLayout.createSequentialGroup()
                         .addContainerGap()
@@ -364,6 +423,13 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAbrirEjercicioResuelto.setText("Abrir");
+        btnAbrirEjercicioResuelto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirEjercicioResueltoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEjerResuLayout = new javax.swing.GroupLayout(jPanelEjerResu);
         jPanelEjerResu.setLayout(jPanelEjerResuLayout);
         jPanelEjerResuLayout.setHorizontalGroup(
@@ -375,7 +441,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                     .addGroup(jPanelEjerResuLayout.createSequentialGroup()
                         .addComponent(btnSubirEjerciciosResueltos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarEjerciciosResueltos)))
+                        .addComponent(btnEliminarEjerciciosResueltos))
+                    .addComponent(btnAbrirEjercicioResuelto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addContainerGap())
@@ -392,6 +459,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addGroup(jPanelEjerResuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSubirEjerciciosResueltos)
                             .addComponent(btnEliminarEjerciciosResueltos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAbrirEjercicioResuelto)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -417,6 +486,13 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAbrirTarea.setText("Abrir");
+        btnAbrirTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirTareaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTareaLayout = new javax.swing.GroupLayout(jPanelTarea);
         jPanelTarea.setLayout(jPanelTareaLayout);
         jPanelTareaLayout.setHorizontalGroup(
@@ -428,7 +504,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                     .addGroup(jPanelTareaLayout.createSequentialGroup()
                         .addComponent(btnSubirTarea)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarTarea)))
+                        .addComponent(btnEliminarTarea))
+                    .addComponent(btnAbrirTarea))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addContainerGap())
@@ -445,6 +522,8 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
                         .addGroup(jPanelTareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSubirTarea)
                             .addComponent(btnEliminarTarea))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAbrirTarea)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -604,9 +683,29 @@ public class MaterialApoyo extends javax.swing.JInternalFrame {
         borrarArchivo(controlListaTarea);
     }//GEN-LAST:event_btnEliminarTareaActionPerformed
 
+    private void btnAbrirDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirDocumentoTeoriaActionPerformed
+        abrirArchivo(controlListaDocumentosTeoria);
+    }//GEN-LAST:event_btnAbrirDocumentoTeoriaActionPerformed
+
+    private void btnAbrirPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirPracticaLaboratorioActionPerformed
+        abrirArchivo(controlListaPracticaLaboratorio);
+    }//GEN-LAST:event_btnAbrirPracticaLaboratorioActionPerformed
+
+    private void btnAbrirEjercicioResueltoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirEjercicioResueltoActionPerformed
+        abrirArchivo(controlListaEjerciciosResueltos);
+    }//GEN-LAST:event_btnAbrirEjercicioResueltoActionPerformed
+
+    private void btnAbrirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirTareaActionPerformed
+        abrirArchivo(controlListaTarea);
+    }//GEN-LAST:event_btnAbrirTareaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgresoSubidaArchivo;
+    private javax.swing.JButton btnAbrirDocumentoTeoria;
+    private javax.swing.JButton btnAbrirEjercicioResuelto;
+    private javax.swing.JButton btnAbrirPracticaLaboratorio;
+    private javax.swing.JButton btnAbrirTarea;
     private javax.swing.JButton btnEliminarDocumentoTeoria;
     private javax.swing.JButton btnEliminarEjerciciosResueltos;
     private javax.swing.JButton btnEliminarPracticaLaboratorio;
