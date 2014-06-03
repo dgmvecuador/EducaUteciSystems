@@ -398,7 +398,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        listaArchivos = new javax.swing.JList();
+        listaArchivosDocumentosTeoria = new javax.swing.JList();
         btnDescargar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -467,9 +467,9 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Eliga y Descarge la teoria");
 
-        listaArchivos.setModel(listaArchivosModelo);
-        listaArchivos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(listaArchivos);
+        listaArchivosDocumentosTeoria.setModel(listaArchivosModelo);
+        listaArchivosDocumentosTeoria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(listaArchivosDocumentosTeoria);
 
         btnDescargar.setText("Descargar");
         btnDescargar.addActionListener(new java.awt.event.ActionListener() {
@@ -485,7 +485,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDescargar)
@@ -493,7 +493,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
@@ -511,7 +511,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addContainerGap(44, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("Teoria", jPanel1);
+        jTabbedPane1.addTab("Documentos Teoria", jPanel1);
 
         jLabel6.setText("Eliga y Descarge la practica de laboratorio");
 
@@ -531,7 +531,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDescargar1)
@@ -539,7 +539,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
@@ -580,7 +580,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnDescargar2)))
@@ -621,7 +621,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnDescargar3)))
@@ -650,10 +650,9 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel4)))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -707,7 +706,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 852, 699);
+        setBounds(0, 0, 927, 699);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
@@ -734,7 +733,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
-        FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -810,7 +809,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGenerarReporteAsistenciaActionPerformed
 
     private void btnDescargar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar1ActionPerformed
-           FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+           FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -830,7 +829,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDescargar1ActionPerformed
 
     private void btnDescargar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar2ActionPerformed
-        FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -850,7 +849,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDescargar2ActionPerformed
 
     private void btnDescargar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar3ActionPerformed
-         FileChat fileChat = (FileChat) listaArchivos.getSelectedValue();
+         FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -901,7 +900,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JList listaArchivo1;
-    private javax.swing.JList listaArchivos;
+    private javax.swing.JList listaArchivosDocumentosTeoria;
     private javax.swing.JEditorPane txtListaUsuarios;
     private javax.swing.JTextField txtTexto;
     // End of variables declaration//GEN-END:variables
