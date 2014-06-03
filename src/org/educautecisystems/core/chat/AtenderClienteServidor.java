@@ -380,6 +380,7 @@ public class AtenderClienteServidor extends Thread {
         if (header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_GET_FILE)) {
             String userToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
             String fileName = header.getVar(ChatConstants.LABEL_FILE_NAME);
+            String type = header.getVar(ChatConstants.LABEL_TYPE);
 
             /* Must be a valid token */
             if (!ServidorChat.testToken(userToken)) {
@@ -390,7 +391,7 @@ public class AtenderClienteServidor extends Thread {
 
             /* Don't allow other folder file */
             fileName = fileName.replace("/", "_");
-            File folderShare = Sistema.getShareFolder();
+            File folderShare = Sistema.getShareFolder(type);
 
             /* Don't allow "null" errors. */
             if (folderShare == null) {

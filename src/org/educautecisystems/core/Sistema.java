@@ -499,7 +499,20 @@ public class Sistema {
         return files;
     }
 
-    public static File getShareFolder() {
-        return new File(pathShareFolder);
+    public static File getShareFolder( String type ) {
+        String subfolder = "";
+        
+        /* Colocar la carpeta correcta. */
+        if ( type.equals(FileChat.TIPO_DOCUMENTO_TEORIA) ) {
+            subfolder = NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_DOCUMENTOS_TEORIA;
+        } else if ( type.equals(FileChat.TIPO_PRACTICA_LABORATORIO) ) {
+            subfolder = NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO;
+        } else if ( type.equals(FileChat.TIPO_EJERCICIOS_RESUELTOS) ) {
+            subfolder = NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS;
+        } else if ( type.equals(FileChat.TIPO_TAREA) ) {
+            subfolder = NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA;
+        }
+        
+        return new File(pathShareFolder, subfolder);
     }
 }

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
@@ -430,6 +431,27 @@ public final class Chat extends javax.swing.JInternalFrame {
             this.archivos = archivos;
         }
     }
+    
+    public void descargarArchivo( JList lista ) {
+        FileChat fileChat = (FileChat) lista.getSelectedValue();
+
+        /* Revisar si existe algún elemento seleccionado. */
+        if (fileChat == null) {
+            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
+            return;
+        }
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Seleccione donde guardar el archivo.");
+        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName().
+                replaceAll("\\[", "_").replaceAll("\\]", "_")));
+        int respuesta = fc.showSaveDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivo = fc.getSelectedFile();
+            clienteServidorChat.descargarArchivo(fileChat, archivo);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -458,22 +480,22 @@ public final class Chat extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaArchivosDocumentosTeoria = new javax.swing.JList();
-        btnDescargar = new javax.swing.JButton();
+        btnDescargarDocumentoTeoria = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         listaArchivoPracticaLaboratorio = new javax.swing.JList();
-        btnDescargar1 = new javax.swing.JButton();
+        btnDescargarPracticaLaboratorio = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         listaArchivoEjerciciosResueltos = new javax.swing.JList();
-        btnDescargar2 = new javax.swing.JButton();
+        btnDescargarEjerciciosResueltos = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         listaArchivoTarea = new javax.swing.JList();
-        btnDescargar3 = new javax.swing.JButton();
+        btnDescargarTarea = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -530,10 +552,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivosDocumentosTeoria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(listaArchivosDocumentosTeoria);
 
-        btnDescargar.setText("Descargar");
-        btnDescargar.addActionListener(new java.awt.event.ActionListener() {
+        btnDescargarDocumentoTeoria.setText("Descargar");
+        btnDescargarDocumentoTeoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescargarActionPerformed(evt);
+                btnDescargarDocumentoTeoriaActionPerformed(evt);
             }
         });
 
@@ -547,7 +569,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap(349, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDescargar)
+                .addComponent(btnDescargarDocumentoTeoria)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -561,7 +583,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
-                .addComponent(btnDescargar)
+                .addComponent(btnDescargarDocumentoTeoria)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -577,10 +599,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivoPracticaLaboratorio.setModel(listaArchivosModeloPracticaLaboratorio);
         jScrollPane4.setViewportView(listaArchivoPracticaLaboratorio);
 
-        btnDescargar1.setText("Descargar");
-        btnDescargar1.addActionListener(new java.awt.event.ActionListener() {
+        btnDescargarPracticaLaboratorio.setText("Descargar");
+        btnDescargarPracticaLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescargar1ActionPerformed(evt);
+                btnDescargarPracticaLaboratorioActionPerformed(evt);
             }
         });
 
@@ -594,7 +616,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap(242, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDescargar1)
+                .addComponent(btnDescargarPracticaLaboratorio)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -608,7 +630,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
-                .addComponent(btnDescargar1)
+                .addComponent(btnDescargarPracticaLaboratorio)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -624,10 +646,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivoEjerciciosResueltos.setModel(listaArchivosModeloEjerciciosResueltos);
         jScrollPane5.setViewportView(listaArchivoEjerciciosResueltos);
 
-        btnDescargar2.setText("Descargar");
-        btnDescargar2.addActionListener(new java.awt.event.ActionListener() {
+        btnDescargarEjerciciosResueltos.setText("Descargar");
+        btnDescargarEjerciciosResueltos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescargar2ActionPerformed(evt);
+                btnDescargarEjerciciosResueltosActionPerformed(evt);
             }
         });
 
@@ -644,7 +666,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnDescargar2)))
+                        .addComponent(btnDescargarEjerciciosResueltos)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -655,7 +677,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDescargar2)
+                .addComponent(btnDescargarEjerciciosResueltos)
                 .addContainerGap())
         );
 
@@ -666,10 +688,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivoTarea.setModel(listaArchivosModeloTarea);
         jScrollPane6.setViewportView(listaArchivoTarea);
 
-        btnDescargar3.setText("Descargar");
-        btnDescargar3.addActionListener(new java.awt.event.ActionListener() {
+        btnDescargarTarea.setText("Descargar");
+        btnDescargarTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescargar3ActionPerformed(evt);
+                btnDescargarTareaActionPerformed(evt);
             }
         });
 
@@ -686,7 +708,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnDescargar3)))
+                        .addComponent(btnDescargarTarea)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -697,7 +719,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDescargar3)
+                .addComponent(btnDescargarTarea)
                 .addContainerGap())
         );
 
@@ -794,25 +816,9 @@ public final class Chat extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
-        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
-
-        /* Revisar si existe algún elemento seleccionado. */
-        if (fileChat == null) {
-            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-            return;
-        }
-
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivo = fc.getSelectedFile();
-            clienteServidorChat.descargarArchivo(fileChat, archivo);
-        }
-    }//GEN-LAST:event_btnDescargarActionPerformed
+    private void btnDescargarDocumentoTeoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarDocumentoTeoriaActionPerformed
+        descargarArchivo(listaArchivosDocumentosTeoria);
+    }//GEN-LAST:event_btnDescargarDocumentoTeoriaActionPerformed
 
     private void btnGenerarReporteAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteAsistenciaActionPerformed
         String defaultReport = "Asistencia.html";
@@ -870,72 +876,24 @@ public final class Chat extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGenerarReporteAsistenciaActionPerformed
 
-    private void btnDescargar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar1ActionPerformed
-        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
+    private void btnDescargarPracticaLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarPracticaLaboratorioActionPerformed
+        descargarArchivo(listaArchivoPracticaLaboratorio);
+    }//GEN-LAST:event_btnDescargarPracticaLaboratorioActionPerformed
 
-        /* Revisar si existe algún elemento seleccionado. */
-        if (fileChat == null) {
-            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-            return;
-        }
+    private void btnDescargarEjerciciosResueltosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarEjerciciosResueltosActionPerformed
+        descargarArchivo(listaArchivoEjerciciosResueltos);
+    }//GEN-LAST:event_btnDescargarEjerciciosResueltosActionPerformed
 
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivo = fc.getSelectedFile();
-            clienteServidorChat.descargarArchivo(fileChat, archivo);
-        }
-    }//GEN-LAST:event_btnDescargar1ActionPerformed
-
-    private void btnDescargar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar2ActionPerformed
-        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
-
-        /* Revisar si existe algún elemento seleccionado. */
-        if (fileChat == null) {
-            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-            return;
-        }
-
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivo = fc.getSelectedFile();
-            clienteServidorChat.descargarArchivo(fileChat, archivo);
-        }
-    }//GEN-LAST:event_btnDescargar2ActionPerformed
-
-    private void btnDescargar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar3ActionPerformed
-        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
-
-        /* Revisar si existe algún elemento seleccionado. */
-        if (fileChat == null) {
-            Sistema.mostrarMensajeError("Por favor seleccione un archivo.");
-            return;
-        }
-
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("Seleccione donde guardar el archivo.");
-        fc.setSelectedFile(new File(fc.getCurrentDirectory(), fileChat.getName()));
-        int respuesta = fc.showSaveDialog(this);
-
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivo = fc.getSelectedFile();
-            clienteServidorChat.descargarArchivo(fileChat, archivo);
-        }
-    }//GEN-LAST:event_btnDescargar3ActionPerformed
+    private void btnDescargarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarTareaActionPerformed
+        descargarArchivo(listaArchivoTarea);
+    }//GEN-LAST:event_btnDescargarTareaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnDescargar;
-    private javax.swing.JButton btnDescargar1;
-    private javax.swing.JButton btnDescargar2;
-    private javax.swing.JButton btnDescargar3;
+    private javax.swing.JButton btnDescargarDocumentoTeoria;
+    private javax.swing.JButton btnDescargarEjerciciosResueltos;
+    private javax.swing.JButton btnDescargarPracticaLaboratorio;
+    private javax.swing.JButton btnDescargarTarea;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnGenerarReporteAsistencia;
     private javax.swing.JEditorPane contenidoChat;

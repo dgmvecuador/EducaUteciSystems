@@ -402,6 +402,8 @@ public class ClienteServidorChat extends Thread {
                             "" + clienteToken));
                     mensaje.append(generateHeaderValue(ChatConstants.LABEL_FILE_NAME,
                             fileChat.getName()));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_TYPE,
+                            fileChat.getTipo()));
                     mensaje.append(ChatConstants.CHAT_END_HEADER);
 
                     salida.write(mensaje.toString().getBytes());
