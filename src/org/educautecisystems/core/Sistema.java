@@ -83,6 +83,10 @@ public class Sistema {
     private static String pathShareFolder = null;
     private static ChatServerConf chatServerConf;
     private static ChatSessionConf chatSessionConf;
+    private static String pathShareDocumentosTeoria = null;
+    private static String pathSharePracticaLaborario = null;
+    private static String pathShareEjerciciosResueltos = null;
+    private static String pathShareTarea = null;
 
     /* Archivo por defecto */
     private static final String ip_defecto = "localhost";
@@ -239,6 +243,11 @@ public class Sistema {
         pathChatConf = archivoConfChatXML.getAbsolutePath();
         pathGeneralConf = archivoConfPrincipal.getAbsolutePath();
         pathShareFolder = carpetaConfArchivos.getAbsolutePath();
+        
+        pathShareDocumentosTeoria = carpetaConfArchivosDocumentosTeoria.getAbsolutePath();
+        pathSharePracticaLaborario = carpetaConfArchivosPracticaLaboratorio.getAbsolutePath();
+        pathShareEjerciciosResueltos = carpetaConfArchivosEjercicioResueltos.getAbsolutePath();
+        pathShareTarea = carpetaConfArchivosTarea.getAbsolutePath();
 
         if (archivoConfChatXML.exists() && archivoConfChatXML.isFile()) {
             cargarChatConf(archivoConfChatXML);
@@ -432,15 +441,57 @@ public class Sistema {
 
     public static ArrayList<FileChat> getFileChatList() {
         ArrayList<FileChat> files = new ArrayList<FileChat>();
-        File folderShare = new File(pathShareFolder);
-        File[] filesRAW = folderShare.listFiles();
+        
+        File folderShareDocumentosTeoria = new File(pathShareDocumentosTeoria);
+        File folderSharePracticaLaboratorio = new File(pathSharePracticaLaborario);
+        File folderShareEjerciciosResueltos = new File(pathShareEjerciciosResueltos);
+        File folderShareTarea = new File(pathShareTarea);
+        
+        File[] filesRawDocumentosTeoria = folderShareDocumentosTeoria.listFiles();
+        File[] filesRawPracticaLaboratorio = folderSharePracticaLaboratorio.listFiles();
+        File[] filesRawEjerciciosResueltos = folderShareEjerciciosResueltos.listFiles();
+        File[] filesRawTarea = folderShareTarea.listFiles();
 
-        for (File fileInFolder : filesRAW) {
+        for (File fileInFolder : filesRawDocumentosTeoria) {
             if (fileInFolder.isFile() && fileInFolder.canRead()) {
                 FileChat fileChat = new FileChat();
                 fileChat.setName(fileInFolder.getName());
                 fileChat.setSize(fileInFolder.length());
                 fileChat.setHidden(fileInFolder.isHidden());
+                fileChat.setTipo(FileChat.TIPO_DOCUMENTO_TEORIA);
+                files.add(fileChat);
+            }
+        }
+        
+        for (File fileInFolder : filesRawPracticaLaboratorio) {
+            if (fileInFolder.isFile() && fileInFolder.canRead()) {
+                FileChat fileChat = new FileChat();
+                fileChat.setName(fileInFolder.getName());
+                fileChat.setSize(fileInFolder.length());
+                fileChat.setHidden(fileInFolder.isHidden());
+                fileChat.setTipo(FileChat.TIPO_PRACTICA_LABORATORIO);
+                files.add(fileChat);
+            }
+        }
+        
+        for (File fileInFolder : filesRawEjerciciosResueltos) {
+            if (fileInFolder.isFile() && fileInFolder.canRead()) {
+                FileChat fileChat = new FileChat();
+                fileChat.setName(fileInFolder.getName());
+                fileChat.setSize(fileInFolder.length());
+                fileChat.setHidden(fileInFolder.isHidden());
+                fileChat.setTipo(FileChat.TIPO_EJERCICIOS_RESUELTOS);
+                files.add(fileChat);
+            }
+        }
+        
+        for (File fileInFolder : filesRawTarea) {
+            if (fileInFolder.isFile() && fileInFolder.canRead()) {
+                FileChat fileChat = new FileChat();
+                fileChat.setName(fileInFolder.getName());
+                fileChat.setSize(fileInFolder.length());
+                fileChat.setHidden(fileInFolder.isHidden());
+                fileChat.setTipo(FileChat.TIPO_TAREA);
                 files.add(fileChat);
             }
         }

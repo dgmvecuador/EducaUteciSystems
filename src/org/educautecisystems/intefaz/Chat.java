@@ -48,12 +48,20 @@ public final class Chat extends javax.swing.JInternalFrame {
     private ClienteServidorChat clienteServidorChat;
     private ArrayList<UserChat> usuarios;
     private ArrayList<FileChat> archivos;
-    DefaultListModel listaArchivosModelo = new DefaultListModel();
     private long actualSize = 0;
     private long actualSizeListaUsuarios = 0;
-    private long actualSizeListaArchivos = 0;
+    private long actualSizeListaArchivosDocumentosTeoria = 0;
+    private long actualSizeListaArchivosPracticaLaboratorio = 0;
+    private long actualSizeListaArchivosEjerciciosResueltos = 0;
+    private long actualSizeListaArchivosTarea = 0;
     private final PantallaProfesor pantallaProfesor = new PantallaProfesor(this);
     private BufferedImage pantallaActual = null;
+
+    /* Modelos de las listas. */
+    DefaultListModel listaArchivosModeloDocumentosTeoria = new DefaultListModel();
+    DefaultListModel listaArchivosModeloPracticaLaboratorio = new DefaultListModel();
+    DefaultListModel listaArchivosModeloEjerciciosResueltos = new DefaultListModel();
+    DefaultListModel listaArchivosModeloTarea = new DefaultListModel();
 
     /**
      * Creates new form ChaPrueba
@@ -319,11 +327,11 @@ public final class Chat extends javax.swing.JInternalFrame {
             for (UserChat usuarioChat : usuarios) {
                 listaUsuarios.append("<font color=\"green\"><i><b>" + usuarioChat.getNickName() + "&nbsp;</b></i><font>");
 
-                /* Exconcer los nombres cuando no son docentes. */
+                /* Esconder los nombres cuando no son docentes. */
 //                if (esDocente) {
 //                    listaUsuarios.append("(<font color=\"blue\">" + usuarioChat.getRealName() + ")</font><br/>");
 //                } else {
-                    listaUsuarios.append("<br/>");
+                listaUsuarios.append("<br/>");
 //                }
 
             }
@@ -340,23 +348,74 @@ public final class Chat extends javax.swing.JInternalFrame {
 
     private void actualizarListaArchivos() {
         synchronized (this) {
-            StringBuilder comprobador = new StringBuilder();
+            StringBuilder comprobadorDocumentosTeoria = new StringBuilder();
+            StringBuilder comprobadorPracticasLaboratorio = new StringBuilder();
+            StringBuilder comprobadorEjerciciosResueltos = new StringBuilder();
+            StringBuilder comprobadorTarea = new StringBuilder();
 
             for (FileChat fileChat : archivos) {
-                comprobador.append(fileChat.toString());
+                if ( fileChat.getTipo().equals(FileChat.TIPO_DOCUMENTO_TEORIA) ) {
+                    comprobadorDocumentosTeoria.append(fileChat.toString());
+                }
+                if ( fileChat.getTipo().equals(FileChat.TIPO_PRACTICA_LABORATORIO) ) {
+                    comprobadorPracticasLaboratorio.append(fileChat.toString());
+                }
+                if ( fileChat.getTipo().equals(FileChat.TIPO_EJERCICIOS_RESUELTOS) ) {
+                    comprobadorEjerciciosResueltos.append(fileChat.toString());
+                }
+                if ( fileChat.getTipo().equals(FileChat.TIPO_TAREA) ) {
+                    comprobadorTarea.append(fileChat.toString());
+                }
             }
 
-            /* No actualizar la lista si no es necesario. */
-            if (actualSizeListaArchivos == comprobador.toString().length()) {
-                return;
-            }
+            /* Actualizar la lista de archivos. */
+            if (actualSizeListaArchivosDocumentosTeoria != comprobadorDocumentosTeoria.toString().length()) {
+                listaArchivosModeloDocumentosTeoria.clear();
 
-            listaArchivosModelo.clear();
-
-            for (FileChat fileChat : archivos) {
-                listaArchivosModelo.addElement(fileChat);
+                for (FileChat fileChat : archivos) {
+                    if ( fileChat.getTipo().equals(FileChat.TIPO_DOCUMENTO_TEORIA) ) {
+                        listaArchivosModeloDocumentosTeoria.addElement(fileChat);
+                    }
+                }
+                
+                actualSizeListaArchivosDocumentosTeoria = comprobadorDocumentosTeoria.toString().length();
             }
-            actualSizeListaArchivos = comprobador.toString().length();
+            
+            if (actualSizeListaArchivosPracticaLaboratorio != comprobadorPracticasLaboratorio.toString().length()) {
+                listaArchivosModeloPracticaLaboratorio.clear();
+
+                for (FileChat fileChat : archivos) {
+                    if ( fileChat.getTipo().equals(FileChat.TIPO_PRACTICA_LABORATORIO) ) {
+                        listaArchivosModeloPracticaLaboratorio.addElement(fileChat);
+                    }
+                }
+                
+                actualSizeListaArchivosPracticaLaboratorio = comprobadorPracticasLaboratorio.toString().length();
+            }
+            
+            if (actualSizeListaArchivosEjerciciosResueltos != comprobadorEjerciciosResueltos.toString().length()) {
+                listaArchivosModeloEjerciciosResueltos.clear();
+
+                for (FileChat fileChat : archivos) {
+                    if ( fileChat.getTipo().equals(FileChat.TIPO_EJERCICIOS_RESUELTOS) ) {
+                        listaArchivosModeloEjerciciosResueltos.addElement(fileChat);
+                    }
+                }
+                
+                actualSizeListaArchivosEjerciciosResueltos = comprobadorEjerciciosResueltos.toString().length();
+            }
+            
+            if (actualSizeListaArchivosTarea != comprobadorTarea.toString().length()) {
+                listaArchivosModeloTarea.clear();
+
+                for (FileChat fileChat : archivos) {
+                    if ( fileChat.getTipo().equals(FileChat.TIPO_TAREA) ) {
+                        listaArchivosModeloTarea.addElement(fileChat);
+                    }
+                }
+                
+                actualSizeListaArchivosTarea = comprobadorTarea.toString().length();
+            }
         }
     }
 
@@ -403,17 +462,17 @@ public final class Chat extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listaArchivo1 = new javax.swing.JList();
+        listaArchivoPracticaLaboratorio = new javax.swing.JList();
         btnDescargar1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        listaArchivoEjerciciosResueltos = new javax.swing.JList();
         btnDescargar2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList();
+        listaArchivoTarea = new javax.swing.JList();
         btnDescargar3 = new javax.swing.JButton();
 
         setClosable(true);
@@ -467,7 +526,7 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Eliga y Descarge la teoria");
 
-        listaArchivosDocumentosTeoria.setModel(listaArchivosModelo);
+        listaArchivosDocumentosTeoria.setModel(listaArchivosModeloDocumentosTeoria);
         listaArchivosDocumentosTeoria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(listaArchivosDocumentosTeoria);
 
@@ -515,7 +574,8 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Eliga y Descarge la practica de laboratorio");
 
-        jScrollPane4.setViewportView(listaArchivo1);
+        listaArchivoPracticaLaboratorio.setModel(listaArchivosModeloPracticaLaboratorio);
+        jScrollPane4.setViewportView(listaArchivoPracticaLaboratorio);
 
         btnDescargar1.setText("Descargar");
         btnDescargar1.addActionListener(new java.awt.event.ActionListener() {
@@ -561,7 +621,8 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Eliga y Descarge los Ejercicios Resueltos");
 
-        jScrollPane5.setViewportView(jList2);
+        listaArchivoEjerciciosResueltos.setModel(listaArchivosModeloEjerciciosResueltos);
+        jScrollPane5.setViewportView(listaArchivoEjerciciosResueltos);
 
         btnDescargar2.setText("Descargar");
         btnDescargar2.addActionListener(new java.awt.event.ActionListener() {
@@ -602,7 +663,8 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Eliga y Descarge la tarea");
 
-        jScrollPane6.setViewportView(jList3);
+        listaArchivoTarea.setModel(listaArchivosModeloTarea);
+        jScrollPane6.setViewportView(listaArchivoTarea);
 
         btnDescargar3.setText("Descargar");
         btnDescargar3.addActionListener(new java.awt.event.ActionListener() {
@@ -809,7 +871,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGenerarReporteAsistenciaActionPerformed
 
     private void btnDescargar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar1ActionPerformed
-           FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
+        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -849,7 +911,7 @@ public final class Chat extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDescargar2ActionPerformed
 
     private void btnDescargar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargar3ActionPerformed
-         FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
+        FileChat fileChat = (FileChat) listaArchivosDocumentosTeoria.getSelectedValue();
 
         /* Revisar si existe algún elemento seleccionado. */
         if (fileChat == null) {
@@ -886,8 +948,6 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList jList2;
-    private javax.swing.JList jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -899,7 +959,9 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JList listaArchivo1;
+    private javax.swing.JList listaArchivoEjerciciosResueltos;
+    private javax.swing.JList listaArchivoPracticaLaboratorio;
+    private javax.swing.JList listaArchivoTarea;
     private javax.swing.JList listaArchivosDocumentosTeoria;
     private javax.swing.JEditorPane txtListaUsuarios;
     private javax.swing.JTextField txtTexto;

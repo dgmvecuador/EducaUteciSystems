@@ -2,11 +2,13 @@
 <chat:files xmlns:chat="http://free.chat.com/">
     <chat:file>
         <name>example.doc</name>
+        <tipo>DocumentoTeoria</tipo>
         <size>156789</size>
         <hidden>false</hidden>
     </chat:file>
     <chat:file>
         <name>example.avi</name>
+        <tipo>PracticaLaboratorio</tipo>
         <size>78562367</size>
         <hidden>false</hidden>
     </chat:file>
