@@ -78,6 +78,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         MenuItemInSerCha = new javax.swing.JMenuItem();
         MenuItemChatDoc = new javax.swing.JMenuItem();
         MenuItemMateApo = new javax.swing.JMenuItem();
+        MenuDesTarRea = new javax.swing.JMenuItem();
         MenuAdmi = new javax.swing.JMenu();
         MenuItemNuePer = new javax.swing.JMenuItem();
         MenManteni = new javax.swing.JMenu();
@@ -153,6 +154,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         MenuDoce.add(MenuItemMateApo);
+
+        MenuDesTarRea.setText("Descargar Tareas Realizadas");
+        MenuDesTarRea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuDesTarReaActionPerformed(evt);
+            }
+        });
+        MenuDoce.add(MenuDesTarRea);
 
         jMenuBar1.add(MenuDoce);
 
@@ -326,6 +335,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           je.setVisible(true);
     }//GEN-LAST:event_MenuItemMateApoActionPerformed
 
+    private void MenuDesTarReaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDesTarReaActionPerformed
+          RevisionTareas jeje = new RevisionTareas();
+          escritorioPrincipal.add(jeje);
+          jeje.setVisible(true);
+    }//GEN-LAST:event_MenuDesTarReaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenManteAdmin;
@@ -333,6 +348,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenManteni;
     private javax.swing.JMenu MenuAdmi;
     private javax.swing.JMenu MenuAyuda;
+    private javax.swing.JMenuItem MenuDesTarRea;
     private javax.swing.JMenu MenuDoce;
     private javax.swing.JMenu MenuEstu;
     private javax.swing.JMenu MenuItemArchivo;

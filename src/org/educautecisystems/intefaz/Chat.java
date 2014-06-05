@@ -28,15 +28,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONFIGURACION;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS;
+import static org.educautecisystems.core.Sistema.NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA;
 import org.educautecisystems.core.chat.ServidorChat;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
 import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.UserChat;
+import static org.educautecisystems.intefaz.MaterialApoyo.MENSAJE_SUBIENDO_ARCHIVO;
 
 /**
  *
@@ -58,13 +63,14 @@ public final class Chat extends javax.swing.JInternalFrame {
     private long actualSizeListaArchivosTarea = 0;
     private final PantallaProfesor pantallaProfesor = new PantallaProfesor(this);
     private BufferedImage pantallaActual = null;
+    
 
     /* Modelos de las listas. */
     DefaultListModel listaArchivosModeloDocumentosTeoria = new DefaultListModel();
     DefaultListModel listaArchivosModeloPracticaLaboratorio = new DefaultListModel();
     DefaultListModel listaArchivosModeloEjerciciosResueltos = new DefaultListModel();
     DefaultListModel listaArchivosModeloTarea = new DefaultListModel();
-
+    private final String RUTA_TAREA;
     /**
      * Creates new form ChaPrueba
      */
@@ -125,6 +131,14 @@ public final class Chat extends javax.swing.JInternalFrame {
                 actualizarListaArchivos();
             }
         });
+        
+        Properties propiedadesSistema = System.getProperties();
+        String carpetaUsuario = propiedadesSistema.getProperty("user.home");
+        File carpetaConfiguracion = new File(carpetaUsuario, NOMBRE_CARPETA_CONFIGURACION);
+        File carpetaConfArchivos = new File(carpetaConfiguracion, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS);
+        File carpetaConfArchivosTarea = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA);
+        RUTA_TAREA = carpetaConfArchivosTarea.getAbsolutePath();
+        
         actualizarListaArchivosTimer.start();
     }
 
@@ -361,6 +375,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             StringBuilder comprobadorPracticasLaboratorio = new StringBuilder();
             StringBuilder comprobadorEjerciciosResueltos = new StringBuilder();
             StringBuilder comprobadorTarea = new StringBuilder();
+            
 
             for (FileChat fileChat : archivos) {
                 if ( fileChat.getTipo().equals(FileChat.TIPO_DOCUMENTO_TEORIA) ) {
@@ -460,6 +475,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             clienteServidorChat.descargarArchivo(fileChat, archivo);
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -504,6 +520,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         listaArchivoTarea = new javax.swing.JList();
         btnDescargarTarea = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -708,6 +725,13 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Subir Tarea");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -718,9 +742,10 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDescargarTarea)))
                 .addContainerGap())
         );
@@ -730,9 +755,11 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDescargarTarea)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDescargarTarea)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -746,16 +773,18 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(0, 856, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addComponent(jTabbedPane1)
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(jLabel2))
@@ -768,10 +797,11 @@ public final class Chat extends javax.swing.JInternalFrame {
                                 .addComponent(ckbxPantallaDocente))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtTexto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(2, 2, 2)
                         .addComponent(btnEnviar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCerrarSesion)))
+                        .addComponent(btnCerrarSesion)
+                        .addGap(4, 4, 4)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -779,7 +809,7 @@ public final class Chat extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -791,6 +821,12 @@ public final class Chat extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGenerarReporteAsistencia)
+                            .addComponent(jCheckBox1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(ckbxPantallaDocente)))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -798,12 +834,12 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCerrarSesion)
-                    .addComponent(btnEnviar))
+                    .addComponent(btnEnviar)
+                    .addComponent(btnCerrarSesion))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 927, 699);
+        setBounds(0, 0, 927, 676);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
@@ -904,6 +940,9 @@ public final class Chat extends javax.swing.JInternalFrame {
     private void ckbxPantallaDocenteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckbxPantallaDocenteStateChanged
         ServidorChat.mostrarPantallaDocente = ckbxPantallaDocente.isSelected();
     }//GEN-LAST:event_ckbxPantallaDocenteStateChanged
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+              // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
@@ -915,6 +954,8 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGenerarReporteAsistencia;
     private javax.swing.JCheckBox ckbxPantallaDocente;
     private javax.swing.JEditorPane contenidoChat;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
