@@ -33,6 +33,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.Timer;
 import org.educautecisystems.core.Sistema;
+import org.educautecisystems.core.chat.ServidorChat;
 import org.educautecisystems.core.chat.cliente.ClienteServidorChat;
 import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.UserChat;
@@ -95,6 +96,13 @@ public final class Chat extends javax.swing.JInternalFrame {
                 }
             });
             actualizarPantallaProfesor.start();
+            
+            /* No mostrar opción. */
+            ckbxPantallaDocente.setVisible(false);
+        } else {
+            /* Mostrar la pantalla y su contenido. */
+            ckbxPantallaDocente.setVisible(true);
+            ckbxPantallaDocente.setSelected(ServidorChat.mostrarPantallaDocente);
         }
 
         Timer actualizadorChat = new Timer(500, new ActionListener() {
@@ -474,7 +482,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         btnGenerarReporteAsistencia = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        ckbxPantallaDocente = new javax.swing.JCheckBox();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -544,7 +552,12 @@ public final class Chat extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Escriba aqui el mensaje");
 
-        jCheckBox1.setText("Mostrar Pantalla Docente");
+        ckbxPantallaDocente.setText("Mostrar Pantalla Docente");
+        ckbxPantallaDocente.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ckbxPantallaDocenteStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("Eliga y Descarge la teoria");
 
@@ -752,7 +765,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGenerarReporteAsistencia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox1))))
+                                .addComponent(ckbxPantallaDocente))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtTexto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -778,7 +791,7 @@ public final class Chat extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGenerarReporteAsistencia)
-                            .addComponent(jCheckBox1)))
+                            .addComponent(ckbxPantallaDocente)))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -888,6 +901,10 @@ public final class Chat extends javax.swing.JInternalFrame {
         descargarArchivo(listaArchivoTarea);
     }//GEN-LAST:event_btnDescargarTareaActionPerformed
 
+    private void ckbxPantallaDocenteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckbxPantallaDocenteStateChanged
+        ServidorChat.mostrarPantallaDocente = ckbxPantallaDocente.isSelected();
+    }//GEN-LAST:event_ckbxPantallaDocenteStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnDescargarDocumentoTeoria;
@@ -896,8 +913,8 @@ public final class Chat extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDescargarTarea;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnGenerarReporteAsistencia;
+    private javax.swing.JCheckBox ckbxPantallaDocente;
     private javax.swing.JEditorPane contenidoChat;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -36,6 +36,7 @@ import org.educautecisystems.core.chat.elements.FileChat;
 import org.educautecisystems.core.chat.elements.MessageHeaderParser;
 import org.educautecisystems.core.chat.elements.PreguntaMessage;
 import org.educautecisystems.core.chat.elements.UserChat;
+import org.educautecisystems.intefaz.Chat;
 
 /**
  *
@@ -454,7 +455,15 @@ public class AtenderClienteServidor extends Thread {
             }
 
             /* Take ScreenShot */
-            BufferedImage image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+            BufferedImage image = null;
+            
+            /* Obtener imagen. */
+            if ( ServidorChat.mostrarPantallaDocente ) {
+                image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+            } else {
+                image = ImageIO.read(Chat.class.getResourceAsStream("img/advertencia.png"));
+            }
+            
             ByteArrayOutputStream imgBytes = new ByteArrayOutputStream();
             ImageIO.write(image, "png", imgBytes);
 

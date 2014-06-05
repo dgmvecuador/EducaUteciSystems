@@ -40,6 +40,9 @@ public class ServidorChat extends Thread {
 
     /* Valores constantes */
     public static final int PUERTO_SERVIDOR = 7586;
+    
+    /* Mostrar la pantalla o no. */
+    public static boolean mostrarPantallaDocente = false;
 
     public ServidorChat(LogChatManager logChatManager) {
         continuar = true;
