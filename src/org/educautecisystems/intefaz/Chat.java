@@ -109,6 +109,9 @@ public final class Chat extends javax.swing.JInternalFrame {
             /* Mostrar la pantalla y su contenido. */
             ckbxPantallaDocente.setVisible(true);
             ckbxPantallaDocente.setSelected(ServidorChat.mostrarPantallaDocente);
+            
+            /* El profesor no necesita subir tareas. */
+            btnSubirTarea.setVisible(false);
         }
 
         Timer actualizadorChat = new Timer(500, new ActionListener() {
