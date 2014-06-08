@@ -108,7 +108,6 @@ public class ChatServerInterface extends javax.swing.JInternalFrame implements L
         cbActualizar = new javax.swing.JCheckBox();
         btnPreguntaTodos = new javax.swing.JButton();
 
-        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Sevidor Chat");
 

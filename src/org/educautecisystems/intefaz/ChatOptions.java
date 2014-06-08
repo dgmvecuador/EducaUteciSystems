@@ -119,8 +119,7 @@ public class ChatOptions extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7)
@@ -174,8 +173,7 @@ public class ChatOptions extends javax.swing.JInternalFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-396)/2, (screenSize.height-314)/2, 396, 314);
+        setBounds(0, 0, 396, 314);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
