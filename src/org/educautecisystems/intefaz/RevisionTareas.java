@@ -119,6 +119,8 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
         btnDescargarTodasLasTareas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnDescargarTarea = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnBorrarTodas = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Revisión Tareas");
@@ -144,6 +146,20 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
             }
         });
 
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+
+        btnBorrarTodas.setText("Borrar Todas");
+        btnBorrarTodas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarTodasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,7 +175,11 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
                                 .addComponent(btnDescargarTodasLasTareas)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDescargarTarea)
-                                .addGap(0, 409, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBorrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBorrarTodas)
+                                .addGap(0, 239, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -172,7 +192,9 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDescargarTodasLasTareas)
-                    .addComponent(btnDescargarTarea))
+                    .addComponent(btnDescargarTarea)
+                    .addComponent(btnBorrar)
+                    .addComponent(btnBorrarTodas))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -185,7 +207,7 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
         if ( tareaSubida != null ) {
             JFileChooser fc = new JFileChooser();
             fc.setDialogTitle("Seleccione donde guardar el archivo.");
-            fc.setSelectedFile(new File(fc.getCurrentDirectory(), tareaSubida.getNombreArchivo()));
+            fc.setSelectedFile(new File(fc.getCurrentDirectory(), new File(tareaSubida.getDireccionArchivo()).getName()));
             int respuesta = fc.showSaveDialog(this);
 
             if (respuesta == JFileChooser.APPROVE_OPTION) {
@@ -220,11 +242,52 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
                 }
                 Sistema.mostrarMensajeInformativo("Se ha terminado de copiar los archivos.");
             }
+        } else {
+            Sistema.mostrarMensajeError("La lista esta vacia.");
         }
     }//GEN-LAST:event_btnDescargarTodasLasTareasActionPerformed
 
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        TareaSubida tareaSubida = (TareaSubida) listaTareasSubidas.getSelectedValue();
+        
+        if ( tareaSubida != null ) {
+            File archivo = new File(tareaSubida.getDireccionArchivo());
+            
+            if ( archivo.exists() ) {
+                if ( archivo.delete() ) {
+                    Sistema.mostrarMensajeInformativo("Se ha borrado exitosamente el archivo.");
+                } else {
+                    Sistema.mostrarMensajeError("No se pudo borrar el archivo.");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnBorrarTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTodasActionPerformed
+        if ( !modeloListaArchivosSubidos.isEmpty() ) {
+            File[] archivosSubidos = new File(Sistema.getFolderTareasSubidas()).listFiles();
+
+            for (File archivo : archivosSubidos) {
+                if (archivo.getName().matches("(.*?) - (.*?) - (.*)")) {
+                    if (archivo.exists()) {
+                        if (archivo.delete()) {
+                            System.out.println("Borrado: "+archivo.getName());
+                        } else {
+                            Sistema.mostrarMensajeError("No se pudo borrar el archivo.");
+                        }
+                    }
+                }
+            }
+            Sistema.mostrarMensajeInformativo("Se han borrado los archivos exitosamente.");
+        } else {
+            Sistema.mostrarMensajeError("La lista esta vacia.");
+        }
+    }//GEN-LAST:event_btnBorrarTodasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBorrarTodas;
     private javax.swing.JButton btnDescargarTarea;
     private javax.swing.JButton btnDescargarTodasLasTareas;
     private javax.swing.JLabel jLabel1;
