@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -500,6 +501,59 @@ public class AtenderClienteServidor extends Thread {
             servidorChat.enviarRespuestaPregunta(Integer.parseInt(idPregunta), respuesta);
             
             sendResponseOk();
+            return;
+        }
+        
+        if (header.getVar(ChatConstants.LABEL_COMMAND).equals(ChatConstants.COMMAND_UPLOAD_FILE)) {
+            String userToken = header.getVar(ChatConstants.LABEL_USER_TOKEN);
+            String fileName = header.getVar(ChatConstants.LABEL_FILE_NAME);
+            String contentLength = header.getVar(ChatConstants.LABEL_CONTENT_LENGHT);
+            String realName = header.getVar(ChatConstants.LABEL_REAL_NAME);
+            
+            /* Must be a valid token */
+            if (!ServidorChat.testToken(userToken)) {
+                logChatManager.logError("Un usuario no registrado a intentado acceder a información del chat.");
+                sendResponseError("User not found.");
+                return;
+            }
+            
+            File archivosNuevoSubir = new File(Sistema.getFolderTareasSubidas(), 
+                    Sistema.generarNombreArchivoCompartido(fileName, realName));
+            File archivoLocalSubido = Sistema.comprobarTareaCompartida(fileName, 
+                    realName);
+            
+            /* Borrar el archivo si existe. */
+            if ( archivoLocalSubido != null ){
+                archivoLocalSubido.delete();
+            }
+            
+            long contentLengthLong = -1;
+
+            try {
+                contentLengthLong = Long.parseLong(contentLength);
+            } catch (NumberFormatException nfe) {
+                logChatManager.logError("Error no se pudo transformar a long: "+contentLength);
+                return;
+            }
+            
+            FileOutputStream fos = new FileOutputStream(archivosNuevoSubir);
+            logChatManager.logInfo("Recibiendo archivo: " + archivosNuevoSubir.getName());
+
+            for (long i = 0; i < contentLengthLong; i++) {
+                int byteRead = entrada.read();
+                if (byteRead == -1) {
+                    archivosNuevoSubir.delete();
+                    logChatManager.logError("Se ha cortado la conexión,\n"
+                            + "por favor intente de nuevo más tarde.");
+                    return;
+                }
+                fos.write(byteRead);
+            }
+            
+            fos.flush();
+            fos.close();
+            
+            detenerCliente();
             return;
         }
 

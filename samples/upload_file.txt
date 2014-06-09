@@ -1,0 +1,8 @@
+CHAT-SERVER 1.0
+Command: uploadFile
+FileName: {name of file}
+RealName: {Real name of user}
+User-Token: {md5-token}
+Content-Length: {size in bytes}
+
+{file content}

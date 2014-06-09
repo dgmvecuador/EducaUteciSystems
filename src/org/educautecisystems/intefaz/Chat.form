@@ -466,9 +466,11 @@
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane6" alignment="1" pref="503" max="32767" attributes="0"/>
+                          <Component id="jScrollPane6" alignment="1" pref="482" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="btnSubirTarea" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="barraProgreso" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnDescargarTarea" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -483,11 +485,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane6" pref="212" max="32767" attributes="0"/>
+                      <Component id="jScrollPane6" pref="208" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnDescargarTarea" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSubirTarea" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="barraProgreso" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -531,6 +534,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirTareaActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JProgressBar" name="barraProgreso">
+              <Properties>
+                <Property name="indeterminate" type="boolean" value="true"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

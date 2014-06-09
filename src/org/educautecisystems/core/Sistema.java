@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -76,6 +78,7 @@ public class Sistema {
     public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO = "PracticaLaboratorio";
     public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS = "EjerciciosResueltos";
     public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA = "Tarea";
+    public static final String NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREAS_SUBIDAS = "TareaSubidas";
     public static final String CHAT_CONF_XML = "ChatServerConf.xml";
 
     /* Configuración de Chat */
@@ -87,6 +90,7 @@ public class Sistema {
     private static String pathSharePracticaLaborario = null;
     private static String pathShareEjerciciosResueltos = null;
     private static String pathShareTarea = null;
+    private static String pathShareTareasSubidos = null;
 
     /* Archivo por defecto */
     private static final String ip_defecto = "localhost";
@@ -211,6 +215,7 @@ public class Sistema {
         File carpetaConfArchivosPracticaLaboratorio = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_PRACTICA_LABORATORIO);
         File carpetaConfArchivosEjercicioResueltos = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_EJERCICIOS_RESUELTOS);
         File carpetaConfArchivosTarea = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREA);
+        File carpetaConfArchivosTareasSubidas = new File(carpetaConfArchivos, NOMBRE_CARPETA_CONF_ARCHIVOS_COMPARTIDOS_TAREAS_SUBIDAS);
 
         /* Crear carpetas si no existen */
         if (!carpetaConfiguracion.exists()) {
@@ -236,6 +241,9 @@ public class Sistema {
         if (!carpetaConfArchivosTarea.exists()) {
             carpetaConfArchivosTarea.mkdirs();
         }
+        if (!carpetaConfArchivosTareasSubidas.exists()) {
+            carpetaConfArchivosTareasSubidas.mkdirs();
+        }
 
         /* Archivos de configuración */
         File archivoConfChatXML = new File(carpetaConfChat, CHAT_CONF_XML);
@@ -248,6 +256,7 @@ public class Sistema {
         pathSharePracticaLaborario = carpetaConfArchivosPracticaLaboratorio.getAbsolutePath();
         pathShareEjerciciosResueltos = carpetaConfArchivosEjercicioResueltos.getAbsolutePath();
         pathShareTarea = carpetaConfArchivosTarea.getAbsolutePath();
+        pathShareTareasSubidos = carpetaConfArchivosTareasSubidas.getAbsolutePath();
 
         if (archivoConfChatXML.exists() && archivoConfChatXML.isFile()) {
             cargarChatConf(archivoConfChatXML);
@@ -514,5 +523,37 @@ public class Sistema {
         }
         
         return new File(pathShareFolder, subfolder);
+    }
+    
+    public static String getFolderTareasSubidas() {
+        return pathShareTareasSubidos;
+    }
+    
+    public static File comprobarTareaCompartida( String fileName, String realName ) {
+        File [] compartidos = new File(pathShareTareasSubidos).listFiles();
+        
+        /* Comprobar si coincide el nombre y el que compartio el archivo. */
+        for ( File archivoLocal:compartidos ) {
+            String nombreArchivo = archivoLocal.getName().replaceAll("(.*?) - (.*?) - (.*)","$3");
+            String nombreReal = archivoLocal.getName().replaceAll("(.*?) - (.*?) - (.*)","$1");
+            
+            if ( nombreArchivo.equals(fileName) && nombreReal.equals(realName) ) {
+                return archivoLocal;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static String generarNombreArchivoCompartido( String fileName, String realName ) {
+        Calendar fechaActual = Calendar.getInstance();
+        String fecha = String.format("%02d%02d%02d%02d%02d",
+                fechaActual.get(Calendar.DAY_OF_MONTH),
+                fechaActual.get(Calendar.MONTH)+1,
+                fechaActual.get(Calendar.YEAR),
+                fechaActual.get(Calendar.HOUR_OF_DAY),
+                fechaActual.get(Calendar.MINUTE));
+        
+        return realName+" - "+fecha+" - "+fileName;
     }
 }

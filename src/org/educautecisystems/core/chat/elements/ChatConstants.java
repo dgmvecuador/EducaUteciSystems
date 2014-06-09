@@ -52,6 +52,8 @@ public class ChatConstants {
     public static final String COMMAND_SEND_MESSAGE =       "sendMessage";
     public static final String COMMAND_GET_SCREEN_SHOT =    "getScreenShot";
     public static final String COMMAND_RESPONDER_PREGUNTA = "responderPregunta";
+    public static final String COMMAND_UPLOAD_FILE =        "uploadFile";
+    public static final String COMMAND_REAL_NAME =          "RealName";
 
     /* Responses */
     public static final String RESPONSE_OK =    "OK";

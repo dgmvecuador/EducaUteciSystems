@@ -460,6 +460,61 @@ public class ClienteServidorChat extends Thread {
         hiloDescargarArchivo.start();
     }
     
+    public void subirTarea( final File archivoSubir ) {
+        final String nombreReal = Sistema.getChatSessionConf().getRealName();
+        
+        Thread hiloSubidaArchivo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pantallaChat.setSubiendo(true);
+                try {
+                    Socket socket = new Socket(Sistema.getChatServerConf().getIp(),
+                            Integer.parseInt(Sistema.getChatServerConf().getPort()));
+                    OutputStream salida = socket.getOutputStream();
+                    InputStream entrada = socket.getInputStream();
+ 
+                    /* Generar salida. */
+                    StringBuilder mensaje = new StringBuilder();
+                    mensaje.append(ChatConstants.CHAT_HEADER_MAIN_COMMAND);
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_COMMAND,
+                            ChatConstants.COMMAND_UPLOAD_FILE));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_FILE_NAME,
+                            archivoSubir.getName()));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_REAL_NAME,
+                            nombreReal));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_USER_TOKEN,
+                            "" + clienteToken));
+                    mensaje.append(generateHeaderValue(ChatConstants.LABEL_CONTENT_LENGHT,
+                            "" + archivoSubir.length()));
+                    mensaje.append(ChatConstants.CHAT_END_HEADER);
+                    
+                    salida.write(mensaje.toString().getBytes());
+                    salida.flush();
+                    
+                    FileInputStream fis = new FileInputStream(archivoSubir);
+                    int singleByte = fis.read();
+
+                    while (singleByte != -1) {
+                        salida.write(singleByte);
+                        singleByte = fis.read();
+                    }
+
+                    fis.close();
+                    salida.close();
+                    entrada.close();
+                    socket.close();
+                    Thread.sleep(500);
+                    Sistema.mostrarMensajeInformativo("Se ha subido el archivo exitosamente.");
+                } catch ( Exception e ) {
+                    pantallaChat.mostrarError("No se pudo subir el archivo: " + e);
+                }
+                pantallaChat.setSubiendo(false);
+            }
+        });
+        hiloSubidaArchivo.start();
+    }
+    
     public void subirArchivo(final FileChat fileChat, final File destino) {
         Thread hiloDescargarArchivo = new Thread() {
             @Override

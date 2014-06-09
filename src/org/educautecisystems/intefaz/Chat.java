@@ -82,6 +82,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         activarBotones(false);
         clienteServidorChat.start();
         usuarios = null;
+        barraProgreso.setVisible(false);
 
         if (!esDocente) {
             /* Generar pantalla. */
@@ -479,7 +480,11 @@ public final class Chat extends javax.swing.JInternalFrame {
         }
     }
     
-
+    public void setSubiendo( boolean c ) {
+        btnSubirTarea.setEnabled(!c);
+        barraProgreso.setVisible(c);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -524,6 +529,7 @@ public final class Chat extends javax.swing.JInternalFrame {
         listaArchivoTarea = new javax.swing.JList();
         btnDescargarTarea = new javax.swing.JButton();
         btnSubirTarea = new javax.swing.JButton();
+        barraProgreso = new javax.swing.JProgressBar();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -735,6 +741,8 @@ public final class Chat extends javax.swing.JInternalFrame {
             }
         });
 
+        barraProgreso.setIndeterminate(true);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -745,9 +753,11 @@ public final class Chat extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(btnSubirTarea)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(barraProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDescargarTarea)))
                 .addContainerGap())
@@ -758,11 +768,12 @@ public final class Chat extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnDescargarTarea)
-                    .addComponent(btnSubirTarea))
+                    .addComponent(btnSubirTarea)
+                    .addComponent(barraProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -939,10 +950,17 @@ public final class Chat extends javax.swing.JInternalFrame {
         ServidorChat.mostrarPantallaDocente = ckbxPantallaDocente.isSelected();
     }//GEN-LAST:event_ckbxPantallaDocenteStateChanged
     private void btnSubirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirTareaActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Seleccione donde el archivo que desea subir.");
+        int respuesta = fc.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            clienteServidorChat.subirTarea(fc.getSelectedFile());
+        }
     }//GEN-LAST:event_btnSubirTareaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barraProgreso;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnDescargarDocumentoTeoria;
     private javax.swing.JButton btnDescargarEjerciciosResueltos;
