@@ -1,22 +1,108 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *  Chat.java
+ *  Copyright (C) 2014  Guillermo Pazos <shadowguiller@hotmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.educautecisystems.intefaz;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import javax.imageio.IIOException;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.Timer;
+import org.educautecisystems.core.Sistema;
 
 /**
  *
  * @author Guillermo
  */
 public class RevisionTareas extends javax.swing.JInternalFrame {
+    private final DefaultListModel modeloListaArchivosSubidos = new DefaultListModel() ;
+    private String comprobadorListaArchivosSubidos = "";
 
     /**
      * Creates new form RevisionTareas
      */
     public RevisionTareas() {
         initComponents();
+        
+        Timer actualizarListaArchivosSubidos = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarListaArchivosSubidos();
+            }
+        });
+        actualizarListaArchivosSubidos.start();
+        actualizarListaArchivosSubidos();
+    }
+    
+    private void actualizarListaArchivosSubidos() {
+        synchronized (this) {
+            File[] archivosSubidos = new File(Sistema.getFolderTareasSubidas()).listFiles();
+            String tmpComprobadorListaArchivosSubidos = "";
+
+            for (File archivo : archivosSubidos) {
+                if (archivo.getName().matches("(.*?) - (.*?) - (.*)")) {
+                    tmpComprobadorListaArchivosSubidos += archivo.getAbsolutePath();
+                }
+            }
+
+            if (!tmpComprobadorListaArchivosSubidos.equals(comprobadorListaArchivosSubidos)) {
+                modeloListaArchivosSubidos.clear();
+                for (File archivo : archivosSubidos) {
+                    if (archivo.getName().matches("(.*?) - (.*?) - (.*)")) {
+                        TareaSubida tareaSubida = new TareaSubida();
+                        String nombreOriginalArchivo = archivo.getName();
+                        String nombreReal = nombreOriginalArchivo.replaceAll("(.*?) - (.*?) - (.*)", "$1");
+                        String fecha = nombreOriginalArchivo.replaceAll("(.*?) - (.*?) - (.*)", "$2");
+                        String nombreArchivo = nombreOriginalArchivo.replaceAll("(.*?) - (.*?) - (.*)", "$3");
+
+                        tareaSubida.setNombreReal(nombreReal);
+                        tareaSubida.setFecha(fecha);
+                        tareaSubida.setNombreArchivo(nombreArchivo);
+                        tareaSubida.setDireccionArchivo(archivo.getAbsolutePath());
+
+                        modeloListaArchivosSubidos.addElement(tareaSubida);
+                    }
+                }
+                comprobadorListaArchivosSubidos = tmpComprobadorListaArchivosSubidos;
+            }
+        }
+    }
+    
+    private static void copiarArchivos( File origen, File destino ) throws Exception {
+        InputStream in = new FileInputStream(origen);
+        OutputStream out = new FileOutputStream(destino);
+        
+        byte[] buf = new byte[1024];
+        int len;
+
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        
+        out.flush();
+        in.close();
+        out.close();
     }
 
     /**
@@ -29,59 +115,120 @@ public class RevisionTareas extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
+        listaTareasSubidas = new javax.swing.JList();
+        btnDescargarTodasLasTareas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnDescargarTarea = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Revisión Tareas");
         setName("revisionTareas"); // NOI18N
 
-        jScrollPane1.setViewportView(jList1);
+        listaTareasSubidas.setModel(modeloListaArchivosSubidos);
+        jScrollPane1.setViewportView(listaTareasSubidas);
 
-        jButton1.setText("Descargar Tareas");
+        btnDescargarTodasLasTareas.setText("Descargar Todas las Tareas");
+        btnDescargarTodasLasTareas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarTodasLasTareasActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("Lista de tareas subidas");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("<html><b>Lista de tareas subidas</b></html>");
+
+        btnDescargarTarea.setText("Descargar Tarea");
+        btnDescargarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarTareaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDescargarTodasLasTareas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDescargarTarea)
+                                .addGap(0, 409, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDescargarTodasLasTareas)
+                    .addComponent(btnDescargarTarea))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(0, 0, 729, 432);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDescargarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarTareaActionPerformed
+        TareaSubida tareaSubida = (TareaSubida) listaTareasSubidas.getSelectedValue();
+        
+        if ( tareaSubida != null ) {
+            JFileChooser fc = new JFileChooser();
+            fc.setDialogTitle("Seleccione donde guardar el archivo.");
+            fc.setSelectedFile(new File(fc.getCurrentDirectory(), tareaSubida.getNombreArchivo()));
+            int respuesta = fc.showSaveDialog(this);
+
+            if (respuesta == JFileChooser.APPROVE_OPTION) {
+                try {
+                    copiarArchivos(new File(tareaSubida.getDireccionArchivo()), fc.getSelectedFile());
+                    Sistema.mostrarMensajeInformativo("Se ha guardado el archivo exitosamente.");
+                } catch ( Exception e ) {
+                    Sistema.mostrarMensajeError("No se pudo guardar el archivo.");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnDescargarTareaActionPerformed
+
+    private void btnDescargarTodasLasTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarTodasLasTareasActionPerformed
+        if ( !modeloListaArchivosSubidos.isEmpty() ) {
+            JFileChooser fc = new JFileChooser();
+            fc.setDialogTitle("Seleccione donde guardar el archivo.");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int respuesta = fc.showSaveDialog(this);
+
+            if (respuesta == JFileChooser.APPROVE_OPTION) {
+                File[] archivosSubidos = new File(Sistema.getFolderTareasSubidas()).listFiles();
+                
+                for ( File archivo:archivosSubidos ) {
+                    if (archivo.getName().matches("(.*?) - (.*?) - (.*)")) {
+                        try {
+                            copiarArchivos(archivo, new File(fc.getSelectedFile(), archivo.getName()));
+                        } catch ( Exception e ) {
+                            Sistema.mostrarMensajeError("No se puede guardar al archivo: "+archivo.getName());
+                        }
+                    }
+                }
+                Sistema.mostrarMensajeInformativo("Se ha terminado de copiar los archivos.");
+            }
+        }
+    }//GEN-LAST:event_btnDescargarTodasLasTareasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDescargarTarea;
+    private javax.swing.JButton btnDescargarTodasLasTareas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listaTareasSubidas;
     // End of variables declaration//GEN-END:variables
 }
