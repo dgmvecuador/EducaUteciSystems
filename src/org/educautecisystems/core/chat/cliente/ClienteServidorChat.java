@@ -500,6 +500,7 @@ public class ClienteServidorChat extends Thread {
                         singleByte = fis.read();
                     }
 
+                    salida.flush();
                     fis.close();
                     salida.close();
                     entrada.close();
